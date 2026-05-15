@@ -13,14 +13,13 @@ export function ThemeSection() {
       pageKey="home"
       className="relative w-full overflow-hidden pt-2 pb-5"
     >
-      <div className="mx-auto w-[calc(100vw-76px)] max-w-[2800px]">
+      <div className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px]">
         <motion.div
           initial={{ opacity: 0, scale: 0.96, y: 20 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease }}
-          className="gold-glow relative w-full overflow-hidden rounded-3xl glass-panel-dark text-center"
-          style={{ padding: "clamp(2rem,4vw,5rem) clamp(1.5rem,4vw,5rem) clamp(1.5rem,3vw,4rem)" }}
+          className="gold-glow relative w-full overflow-hidden rounded-3xl glass-panel-dark text-center px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
         >
           <p className="label-cap font-bold text-[var(--accent-gold)]" style={{ fontSize: "clamp(0.875rem,1.3vw,1.35rem)" }}>{THEME_2026.label}</p>
 
@@ -31,7 +30,10 @@ export function ThemeSection() {
             as="h2"
             className="mx-auto mt-3 max-w-3xl font-display font-semibold text-ink-on-dark text-balance"
           >
-            <span style={{ fontSize: "clamp(2rem, 3.6vw + 0.6rem, 3.5rem)", lineHeight: 1.15 }}>
+            <span
+              className="block leading-[1.15] lg:leading-[1.15]"
+              style={{ fontSize: "clamp(2rem, 3.6vw + 0.6rem, 3.5rem)" }}
+            >
               “{THEME_2026.scripture}”
             </span>
           </EditableText>

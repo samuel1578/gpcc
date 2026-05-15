@@ -18,11 +18,11 @@ export function PastorWelcome() {
       id="home.pastor-welcome"
       label="Pastor Welcome"
       pageKey="home"
-      className="mx-auto w-[calc(100vw-76px)] max-w-[2800px] py-5"
+      className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-5"
     >
       <div
-        className="grid w-full items-center rounded-3xl glass-panel-strong md:grid-cols-[minmax(0,clamp(240px,22vw,480px))_1fr]"
-        style={{ padding: "clamp(1.5rem,3vw,4.5rem)", gap: "clamp(2rem,4vw,5rem)" }}
+        className="grid w-full items-center rounded-3xl glass-panel-strong md:grid-cols-[minmax(0,clamp(240px,22vw,480px))_1fr] px-6 py-10 lg:p-[clamp(1.5rem,3vw,4.5rem)]"
+        style={{ gap: "clamp(2rem,4vw,5rem)" }}
       >
         <motion.div
           initial={{ opacity: 0, x: -24 }}
@@ -69,7 +69,7 @@ export function PastorWelcome() {
             label="Pastor Welcome Message"
             pageKey="home"
             as="p"
-            className="mt-5 body-lg text-ink-muted text-pretty"
+            className="mt-4 lg:mt-5 body-lg text-ink-muted text-pretty leading-[1.5] lg:leading-relaxed"
           >
             {PASTOR.shortMessage}
           </EditableText>
@@ -94,7 +94,7 @@ export function PastorWelcome() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.8, ease }}
-        className="mt-6 rounded-3xl glass-panel-strong p-6 sm:p-8 lg:p-12 w-full"
+        className="mt-6 rounded-3xl glass-panel-strong px-6 py-10 sm:p-8 lg:p-12 w-full"
       >
         <div className="space-y-6">
           {/* Heading and Description */}

@@ -34,7 +34,7 @@ export function MinistriesGrid() {
       id="home.ministries"
       label="Ministries"
       pageKey="home"
-      className="mx-auto w-[calc(100vw-76px)] max-w-[2800px] py-5"
+      className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-5"
     >
       <Reveal className="mx-auto max-w-3xl text-center">
         <p className="font-display font-semibold text-red-600" style={{ fontSize: "clamp(1.5rem,2.5vw,3rem)" }}>Our Ministries</p>

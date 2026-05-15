@@ -73,6 +73,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${cormorant.variable} ${inter.variable} ${quantico.variable}`}>
       <body className="font-sans antialiased text-ink">
+        <div className="fixed-bg" aria-hidden="true" />
         <DesignModeProvider>
           <div className="relative flex min-h-screen flex-col">
             <SiteHeader />

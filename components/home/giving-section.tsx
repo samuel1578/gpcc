@@ -14,15 +14,14 @@ export function GivingSection() {
       id="home.giving"
       label="Giving"
       pageKey="home"
-      className="mx-auto w-[calc(100vw-76px)] max-w-[2800px] py-5"
+      className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-5"
     >
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7, ease }}
-        className="gold-glow relative w-full overflow-hidden rounded-3xl glass-panel-dark text-center"
-        style={{ padding: "clamp(3rem,5vw,6rem) clamp(1.5rem,4vw,5rem)" }}
+        className="gold-glow relative w-full overflow-hidden rounded-3xl glass-panel-dark text-center px-6 py-10 lg:p-[clamp(3rem,5vw,6rem)_clamp(1.5rem,4vw,5rem)]"
       >
         <div className="relative mx-auto -mt-4 h-16 w-16 sm:h-20 sm:w-20 lg:h-24 lg:w-24">
           <Image

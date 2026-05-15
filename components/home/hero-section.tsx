@@ -40,7 +40,7 @@ export function HeroSection() {
         </div>
         <div
           className="absolute inset-0 -z-10"
-          style={{ background: `rgba(255,255,255,${overlay / 2})` }}
+          style={{ background: `rgba(255,255,255,${overlay / 4})` }}
           aria-hidden
         />
 
@@ -51,7 +51,7 @@ export function HeroSection() {
             transition={{ duration: 0.7, ease, delay: 0.1 }}
             className="w-full px-6 sm:px-8 lg:px-12 2xl:px-16 font-display italic text-slate-800"
             style={{
-              fontSize: "clamp(1rem, 2vw, 2rem)",
+              fontSize: "clamp(1.35rem, 2.5vw, 2rem)",
               lineHeight: 0.85,
             }}
           >

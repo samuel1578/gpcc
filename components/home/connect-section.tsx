@@ -43,7 +43,7 @@ export function ConnectSection() {
       id="home.connect"
       label="Connect"
       pageKey="home"
-      className="mx-auto w-[calc(100vw-76px)] max-w-[2800px] py-5"
+      className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-5"
     >
       <div className="overflow-hidden rounded-3xl glass-panel-strong">
         <div className="grid lg:grid-cols-[clamp(600px,75%,1400px)_1fr] lg:min-h-[clamp(440px,48vw,620px)] [@media(min-width:1024px)_and_(max-width:1536px)]:lg:grid-cols-[1.2fr_1fr]">
@@ -71,7 +71,7 @@ export function ConnectSection() {
           </div>
 
           {/* Content column */}
-          <div className="flex flex-col justify-center" style={{ padding: "clamp(2.75rem,4.5vw,5.5rem) clamp(1.75rem,3.25vw,4.5rem)" }}>
+          <div className="flex flex-col justify-center px-6 py-10 lg:p-[clamp(2.75rem,4.5vw,5.5rem)_clamp(1.75rem,3.25vw,4.5rem)]">
             <Reveal className="max-w-2xl">
               <p className="font-display font-semibold text-red-600" style={{ fontSize: "clamp(1.5rem,2.5vw,3rem)" }}>Stay connected</p>
               <EditableText

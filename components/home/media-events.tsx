@@ -20,9 +20,9 @@ export function MediaEvents() {
       id="home.media-events"
       label="Media & Events"
       pageKey="home"
-      className="mx-auto w-[calc(100vw-76px)] max-w-[2800px] py-5"
+      className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-5"
     >
-      <div className="w-full rounded-3xl glass-panel" style={{ padding: "clamp(3rem,5vw,6rem) clamp(1.5rem,3vw,4rem)" }}>
+      <div className="w-full rounded-3xl glass-panel px-6 py-10 lg:p-[clamp(3rem,5vw,6rem)_clamp(1.5rem,3vw,4rem)]">
         <Reveal className="text-center">
           <p className="font-display font-semibold text-red-600" style={{ fontSize: "clamp(1.5rem,2.5vw,3rem)" }}>Tune In &amp; Join Us</p>
           <EditableText

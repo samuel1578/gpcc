@@ -71,7 +71,7 @@ export function SiteHeader() {
         overHero ? "bg-transparent" : "glass-panel-dark-strong",
       )}
     >
-      <div className="flex h-[64px] lg:h-[80px] xl:h-[96px] w-full items-center justify-between px-4 sm:px-6 lg:px-10 2xl:px-16">
+      <div className="flex h-[72px] lg:h-[80px] xl:h-[96px] w-full items-center justify-between px-4 sm:px-6 lg:px-10 2xl:px-16">
         {/* Brand */}
         <Link
           href="/"
@@ -83,7 +83,7 @@ export function SiteHeader() {
             alt={`${SITE.name} Logo`}
             width={96}
             height={96}
-            className="h-[clamp(40px,3.5vw,60px)] object-contain 2xl:h-[clamp(44px,6vw,96px)]"
+            className="h-[clamp(52px,4.5vw,60px)] object-contain 2xl:h-[clamp(44px,6vw,96px)]"
             style={{ width: "auto" }}
           />
           <span
@@ -189,12 +189,12 @@ export function SiteHeader() {
           type="button"
           onClick={() => setMobileOpen(true)}
           className={cn(
-            "inline-flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur lg:hidden",
+            "inline-flex h-12 w-12 items-center justify-center rounded-full border backdrop-blur lg:hidden",
             overHero ? "border-slate-400/30 bg-white/20 text-slate-900" : "border-white/20 bg-white/10 text-white"
           )}
           aria-label="Open menu"
         >
-          <Menu className="h-5 w-5" />
+          <Menu className="h-6 w-6" />
         </button>
       </div>
 
