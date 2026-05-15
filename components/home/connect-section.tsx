@@ -54,7 +54,7 @@ export function ConnectSection() {
               src="/images/media/stay.jpg"
               alt="Community at Global Peace Christian Centre"
               fill
-              className="hidden md:block object-cover object-center"
+              className="hidden lg:block object-cover object-center"
               unoptimized={true}
               aria-hidden="true"
               sizes="(max-width: 1024px) 100vw, 40vw"
@@ -63,7 +63,7 @@ export function ConnectSection() {
               src="/images/mcg.jpg"
               alt="Community at Global Peace Christian Centre"
               fill
-              className="block md:hidden object-cover object-[center_top]"
+              className="block lg:hidden object-cover object-[center_top]"
               unoptimized={true}
               aria-hidden="true"
               sizes="100vw"

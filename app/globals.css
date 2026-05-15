@@ -60,7 +60,7 @@
   --shadow-dramatic: 0 24px 64px rgba(0, 0, 0, 0.18);
 
   /* Page background — fixed image-ready, with neutral fallback */
-  --page-bg-image: url('/images/backgrounds/site-bg.jpg');
+  --page-bg-image: url('/images/media/stay.jpg');
   --page-bg-color: #f5f3ee;
 }
 
@@ -127,6 +127,15 @@
     background-attachment: fixed;
     background-repeat: no-repeat;
     min-height: 100vh;
+  }
+
+  @media (max-width: 1024px) {
+    body {
+      background-image:
+        linear-gradient(180deg, rgba(245, 243, 238, 0.55), rgba(232, 226, 215, 0.45)),
+        url('/images/mcg.jpg');
+      background-attachment: scroll;
+    }
   }
 
   /* If background image is missing, the gradient + base color still look good */
