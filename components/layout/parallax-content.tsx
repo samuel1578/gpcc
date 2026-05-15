@@ -13,17 +13,7 @@ interface ParallaxContentProps {
 export function ParallaxContent({ children }: ParallaxContentProps) {
     return (
         <div className="relative w-full">
-            {/* Fixed background image for parallax effect */}
-            <div
-                className="fixed inset-0 -z-20 w-full h-screen bg-cover bg-center bg-attachment-fixed"
-                style={{
-                    backgroundImage: "url('/images/bcg.webp')",
-                    backgroundAttachment: "fixed",
-                }}
-                aria-hidden="true"
-            />
-
-            {/* Content container that scrolls over the fixed background */}
+            {/* Content container that scrolls over the global body background */}
             <div className="relative z-10 w-full">
                 {children}
             </div>

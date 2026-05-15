@@ -133,8 +133,9 @@
     body {
       background-image:
         linear-gradient(180deg, rgba(245, 243, 238, 0.55), rgba(232, 226, 215, 0.45)),
-        url('/images/mcg.jpg');
-      background-attachment: scroll;
+        url('/images/mcg.jpg') !important;
+      background-attachment: scroll !important;
+      background-position: center top;
     }
   }
 
