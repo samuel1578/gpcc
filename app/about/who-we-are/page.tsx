@@ -40,7 +40,7 @@ export default function WhoWeArePage() {
 
     return (
         <>
-            <section className="relative flex min-h-[420px] w-full flex-col items-center justify-center overflow-hidden bg-[#BADCF7] pt-16 lg:pt-20 xl:pt-24 pb-0 text-center">
+            <section className="relative flex min-h-[420px] w-full flex-col items-center justify-center overflow-hidden bg-[#BADCF7] pt-28 lg:pt-32 xl:pt-36 pb-0 text-center">
                 {/* Watermark */}
                 <motion.div
                     {...mProps({
@@ -141,7 +141,7 @@ export default function WhoWeArePage() {
                     id="who-we-are.origin"
                     label="Our Origin"
                     pageKey="who-we-are"
-                    className="mx-auto w-[calc(100vw-76px)] max-w-[2800px] py-10"
+                    className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-10"
                 >
                     <motion.div
                         {...mProps({
@@ -150,14 +150,13 @@ export default function WhoWeArePage() {
                             transition: { duration: isMobile ? 0.5 : 0.65, ease: "easeOut" },
                             viewport: { once: true, margin: "-10%" }
                         })}
-                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong"
-                        style={{ padding: "clamp(2rem, 5vw, 5rem)" }}
+                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
                     >
                         <div className="mx-auto max-w-4xl">
                             <p className="label-cap text-red-600">Our Story</p>
                             <h2 className="mt-3 h-section text-ink">The Coming Into Being of Global Peace Christian Centre</h2>
-                            <div className="mt-8 space-y-8">
-                                <p className="body-lg text-ink-muted">
+                            <div className="mt-6 lg:mt-8 space-y-8">
+                                <p className="body-lg text-ink-muted" style={isMobile ? { lineHeight: 1.5 } : {}}>
                                     In September 1990, The Lord called Pastor Henry Ampoomah-Boateng —
                                     OUR FOUNDER AND CHAIRMAN. It was during his final year (level 400)
                                     and final day as a student of KNUST, formerly University of Science
@@ -168,7 +167,7 @@ export default function WhoWeArePage() {
                                 </p>
 
                                 <div className="relative overflow-hidden rounded-2xl border-l-4 border-red-600 bg-white/50 p-6 shadow-sm sm:p-8 lg:p-10">
-                                    <p className="body-lg italic text-ink">
+                                    <p className="body-lg italic text-ink" style={isMobile ? { lineHeight: 1.5 } : {}}>
                                         &quot;You may read the call of Pastor Henry Ampomah-Boateng in his maiden
                                         book titled &apos;JESUS WALKS INTO MY ROOM&apos;&quot;
                                     </p>
@@ -203,7 +202,7 @@ export default function WhoWeArePage() {
                                     </motion.div>
                                     <div className="flex-1 text-center sm:text-left">
                                         <h3 className="h-sub text-ink">Jesus Walks Into My Room</h3>
-                                        <p className="mt-2 body-lg text-ink-muted">The story of a divine encounter that changed everything.</p>
+                                        <p className="mt-2 body-lg text-ink-muted" style={isMobile ? { lineHeight: 1.5 } : {}}>The story of a divine encounter that changed everything.</p>
                                         <p className="mt-4 label-cap text-red-600">GHS 40.00</p>
                                         <div className="mt-6">
                                             <PillButton onClick={() => setIsModalOpen(true)} variant="primary" size="md">

@@ -54,8 +54,19 @@ export function ConnectSection() {
               src="/images/media/stay.jpg"
               alt="Community at Global Peace Christian Centre"
               fill
-              className="object-cover object-center lg:object-left"
+              className="hidden md:block object-cover object-center"
+              unoptimized={true}
+              aria-hidden="true"
               sizes="(max-width: 1024px) 100vw, 40vw"
+            />
+            <Image
+              src="/images/mcg.jpg"
+              alt="Community at Global Peace Christian Centre"
+              fill
+              className="block md:hidden object-cover object-[center_top]"
+              unoptimized={true}
+              aria-hidden="true"
+              sizes="100vw"
             />
           </div>
 
