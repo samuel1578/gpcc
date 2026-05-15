@@ -46,7 +46,7 @@ export function ConnectSection() {
       className="mx-auto w-[calc(100vw-76px)] max-w-[2800px] py-5"
     >
       <div className="overflow-hidden rounded-3xl glass-panel-strong">
-        <div className="grid lg:grid-cols-[clamp(600px,75%,1400px)_1fr] lg:min-h-[clamp(440px,48vw,620px)]">
+        <div className="grid lg:grid-cols-[clamp(600px,75%,1400px)_1fr] lg:min-h-[clamp(440px,48vw,620px)] [@media(min-width:1024px)_and_(max-width:1536px)]:lg:grid-cols-[1.2fr_1fr]">
 
           {/* Image column */}
           <div className="relative min-h-[280px] overflow-hidden lg:min-h-full lg:rounded-l-3xl">
@@ -74,7 +74,7 @@ export function ConnectSection() {
               </EditableText>
             </Reveal>
 
-            <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-12">
+            <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-12 [@media(min-width:1024px)_and_(max-width:1536px)]:lg:grid-cols-1 [@media(min-width:1024px)_and_(max-width:1536px)]:lg:gap-8">
               {/* Newsletter */}
               <Reveal>
                 <h3 className="font-display text-2xl font-semibold text-ink">Newsletter</h3>
@@ -105,7 +105,7 @@ export function ConnectSection() {
                     {submitting ? "Sending…" : "Sign Up"}
                   </PillButton>
                 </form>
-                <p className="mt-3 text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+                <p className="mt-3 text-[11px] uppercase tracking-[0.18em] text-ink-muted [@media(min-width:1024px)_and_(max-width:1536px)]:normal-case [@media(min-width:1024px)_and_(max-width:1536px)]:tracking-normal">
                   We respect your inbox — unsubscribe anytime.
                 </p>
                 <AnimatePresence>

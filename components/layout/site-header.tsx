@@ -83,7 +83,7 @@ export function SiteHeader() {
             alt={`${SITE.name} Logo`}
             width={96}
             height={96}
-            className="h-[clamp(44px,6vw,96px)] object-contain"
+            className="h-[clamp(40px,3.5vw,60px)] object-contain 2xl:h-[clamp(44px,6vw,96px)]"
             style={{ width: "auto" }}
           />
           <span
@@ -98,7 +98,7 @@ export function SiteHeader() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 lg:flex xl:gap-3 2xl:gap-5" aria-label="Primary">
+        <nav className="hidden items-center gap-1 lg:flex xl:gap-1 2xl:gap-3" aria-label="Primary">
           {NAV.map((item) => {
             if (item.children) {
               return (
@@ -109,7 +109,7 @@ export function SiteHeader() {
                     aria-haspopup="true"
                     aria-expanded={aboutOpen}
                     className={cn(
-                      "inline-flex items-center gap-1 px-3 py-2 text-[13px] lg:text-[15px] xl:text-[clamp(15px,1.4vw,22px)] xl:px-[clamp(0.75rem,1.2vw,2rem)] font-medium uppercase tracking-[0.16em] transition-colors",
+                      "inline-flex items-center gap-1 px-3 py-2 text-[12px] lg:text-[13px] xl:text-[13px] 2xl:text-[clamp(15px,1.4vw,22px)] xl:px-2 2xl:px-[clamp(0.75rem,1.2vw,2rem)] font-medium uppercase tracking-[0.12em] xl:tracking-[0.1em] 2xl:tracking-[0.16em] transition-colors",
                       isActive("/about")
                         ? "text-red-600"
                         : overHero ? "text-slate-800 hover:text-slate-900" : "text-white/85 hover:text-white",
@@ -166,7 +166,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "relative px-3 py-2 text-[13px] lg:text-[15px] xl:text-[clamp(15px,1.4vw,22px)] xl:px-[clamp(0.75rem,1.2vw,2rem)] font-medium uppercase tracking-[0.16em] transition-colors",
+                  "relative px-3 py-2 text-[12px] lg:text-[13px] xl:text-[13px] 2xl:text-[clamp(15px,1.4vw,22px)] xl:px-2 2xl:px-[clamp(0.75rem,1.2vw,2rem)] font-medium uppercase tracking-[0.12em] xl:tracking-[0.1em] 2xl:tracking-[0.16em] transition-colors",
                   isActive(item.href)
                     ? "text-red-600"
                     : overHero ? "text-slate-800 hover:text-slate-900" : "text-white/85 hover:text-white",

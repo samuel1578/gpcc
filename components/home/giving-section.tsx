@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion"
 import { Heart } from "lucide-react"
+import Image from "next/image"
+import { SITE } from "@/lib/site"
 import { ease } from "@/lib/motion"
 import { PillButton } from "@/components/ui/pill-button"
 import { EditableSection, EditableText } from "@/components/design-mode/editable"
@@ -22,10 +24,16 @@ export function GivingSection() {
         className="gold-glow relative w-full overflow-hidden rounded-3xl glass-panel-dark text-center"
         style={{ padding: "clamp(3rem,5vw,6rem) clamp(1.5rem,4vw,5rem)" }}
       >
-        <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/5 text-[var(--accent-gold-light)]">
-          <Heart className="h-5 w-5" />
-        </span>
-        <p className="mt-5 label-cap text-[var(--accent-gold)]">Partner with us</p>
+        <div className="relative mx-auto -mt-4 h-16 w-16 sm:h-20 sm:w-20 lg:h-24 lg:w-24">
+          <Image
+            src="/images/hero/logo.png"
+            alt={SITE.name}
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
+        <p className="mt-4 label-cap text-[var(--accent-gold)]">Partner with us</p>
         <EditableText
           id="home.giving.title"
           label="Giving Heading"

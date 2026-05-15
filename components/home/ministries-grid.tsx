@@ -2,25 +2,33 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { useRef } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
-import { Swiper, SwiperSlide } from "swiper/react"
-import { Autoplay, Pagination } from "swiper/modules"
 import { MINISTRIES } from "@/lib/site"
-import { ease, fadeUp } from "@/lib/motion"
+import { ease } from "@/lib/motion"
 import { Reveal } from "@/components/motion/reveal"
+import { PillButton } from "@/components/ui/pill-button"
 import { EditableSection, EditableText } from "@/components/design-mode/editable"
-import "swiper/css"
-import "swiper/css/pagination"
-
-const ministryImages: Record<string, string> = {
-  "Men's Ministry": "/images/media/men-ministry.webp",
-  "Women's Ministry": "/images/media/womenier.webp",
-  "Youth Ministry": "/images/media/youth-ministry.png",
-  "Children's Ministry": "/images/media/children-ministry.png",
-}
 
 export function MinistriesGrid() {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  })
+
+  const segments = MINISTRIES.length
+  const progress = useTransform(scrollYProgress, (value) => value * segments)
+  const slideIndices = Array.from({ length: MINISTRIES.length + 1 }, (_, i) => i)
+
+  const opacities = slideIndices.map((index) =>
+    useTransform(progress, [index - 0.6, index, index + 0.6], [0, 1, 0]),
+  )
+  const translateY = slideIndices.map((index) =>
+    useTransform(progress, [index - 0.6, index, index + 0.6], [40, 0, -40]),
+  )
+
   return (
     <EditableSection
       id="home.ministries"
@@ -28,7 +36,6 @@ export function MinistriesGrid() {
       pageKey="home"
       className="mx-auto w-[calc(100vw-76px)] max-w-[2800px] py-5"
     >
-      <div className="w-full rounded-3xl glass-panel-strong" style={{ padding: "clamp(1.5rem,3vw,4.5rem)" }}>
       <Reveal className="mx-auto max-w-3xl text-center">
         <p className="font-display font-semibold text-red-600" style={{ fontSize: "clamp(1.5rem,2.5vw,3rem)" }}>Our Ministries</p>
         <EditableText
@@ -45,75 +52,175 @@ export function MinistriesGrid() {
         </p>
       </Reveal>
 
-      <Reveal className="mt-14 overflow-visible">
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          spaceBetween={24}
-          slidesPerView={1.2}
-          grabCursor
-          autoplay={{ delay: 3000, disableOnInteraction: false }}
-          pagination={{ clickable: true }}
-          breakpoints={{
-            640: { slidesPerView: 1.2 },
-            1024: { slidesPerView: 2.05 },
-            1280: { slidesPerView: 2.4 },
-          }}
-          className="overflow-visible pb-4"
-        >
-          {MINISTRIES.map((m) => {
-            const imageSrc = ministryImages[m.name] || m.image || "/images/media/men-ministry.webp"
-            return (
-              <SwiperSlide key={m.name} className="overflow-visible">
-                <motion.article
-                  variants={fadeUp}
-                  transition={{ duration: 0.5, ease }}
-                  whileHover={{ y: -6 }}
-                  className="group relative overflow-hidden rounded-2xl p-0 text-center transition-shadow hover:shadow-[var(--shadow-elevated)] border-2 border-red-600 bg-white/5"
-                >
-                  <Link
-                    href="/ministries"
-                    className="absolute inset-0 z-10"
-                    aria-label={`Learn more about ${m.name}`}
-                  />
-                  <div className="relative w-full aspect-[4/3] overflow-hidden">
-                    {/* Watermark Icon - Top Left Corner */}
-                    <div
-                      className="absolute top-0 left-0 z-[5] pointer-events-none opacity-[0.20]"
-                      style={{
-                        width: "120px",
-                        height: "120px",
-                        backgroundImage: "url('/images/media/outline.webp')",
-                        backgroundPosition: "center",
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "contain",
-                      }}
-                    />
+      <div
+        ref={sectionRef}
+        className="relative mt-16 hidden lg:block"
+        style={{ height: `${segments * 100}vh` }}
+      >
+        <div className="sticky top-24">
+          <div className="overflow-hidden rounded-3xl glass-panel-strong">
+            <div className="grid min-h-[70vh] grid-cols-2">
+              <div className="relative h-full overflow-hidden bg-[#1a1a2e]">
+                {MINISTRIES.map((ministry, index) => (
+                  <motion.div
+                    key={ministry.name}
+                    className="absolute inset-0"
+                    style={{ opacity: opacities[index], y: translateY[index] }}
+                    transition={{ duration: 0.7, ease: "easeInOut" }}
+                  >
                     <Image
-                      src={imageSrc}
-                      alt={m.name}
+                      src={ministry.image || "/images/media/men-ministry.webp"}
+                      alt={ministry.name}
                       fill
-                      quality={100}
-                      className="object-cover"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover object-center"
+                      unoptimized
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                     />
+                  </motion.div>
+                ))}
+                {/* CTA Slide Image */}
+                <motion.div
+                  className="absolute inset-0"
+                  style={{ opacity: opacities[MINISTRIES.length], y: translateY[MINISTRIES.length] }}
+                  transition={{ duration: 0.7, ease: "easeInOut" }}
+                >
+                  <Image
+                    src="/images/media/MINCTA.jpg"
+                    alt="Find Your Place"
+                    fill
+                    className="object-cover object-center"
+                    unoptimized
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </motion.div>
+              </div>
+              <div className="relative flex h-full items-center justify-center" style={{ padding: "clamp(2.5rem,4vw,5rem)" }}>
+                {MINISTRIES.map((ministry, index) => (
+                  <motion.div
+                    key={ministry.name}
+                    className="absolute inset-0 flex w-full items-center justify-center"
+                    style={{ opacity: opacities[index], y: translateY[index] }}
+                    transition={{ duration: 0.7, ease: "easeInOut" }}
+                  >
+                    <div className="w-full max-w-[480px] text-left">
+                      <p className="label-cap text-red-600">{ministry.name}</p>
+                      <h3 className="mt-4 h-section text-ink">{ministry.name}</h3>
+                      <p className="mt-6 body-lg text-ink-muted">{ministry.description}</p>
+                      <Link
+                        href="/ministries"
+                        className="mt-8 inline-flex items-center gap-1 text-sm font-medium text-[var(--accent-deep)] hover:underline"
+                        aria-label={`Explore the ${ministry.name}`}
+                      >
+                        Explore <ArrowUpRight className="h-4 w-4" />
+                      </Link>
+                    </div>
+                  </motion.div>
+                ))}
+                {/* CTA Slide Content */}
+                <motion.div
+                  className="absolute inset-0 flex w-full items-center justify-center"
+                  style={{ opacity: opacities[MINISTRIES.length], y: translateY[MINISTRIES.length] }}
+                  transition={{ duration: 0.7, ease: "easeInOut" }}
+                >
+                  <div className="w-full max-w-[480px] text-left">
+                    <p className="label-cap text-red-600">Find Your Place</p>
+                    <h3 className="mt-4 h-section text-ink">Every ministry has a seat with your name on it.</h3>
+                    <div className="mt-6 space-y-4">
+                      <p className="body-lg text-ink-muted">
+                        Whether you&apos;re stepping in for the first time or looking to go
+                        deeper in your faith journey, our ministries are open, welcoming,
+                        and waiting for you. You won&apos;t regret walking through those doors.
+                      </p>
+                      <p className="text-sm text-ink-muted/70 italic">
+                        Come as you are. Leave changed.
+                      </p>
+                    </div>
+                    <div className="mt-8 flex flex-wrap gap-4">
+                      <PillButton href="#service-times" variant="primary" size="md">
+                        Visit Us This Sunday
+                      </PillButton>
+                      <PillButton href="/ministries" variant="ghost" size="md" className="!px-0 underline-offset-4 hover:underline">
+                        Explore All Ministries
+                      </PillButton>
+                    </div>
                   </div>
-                  <div className="relative z-10 px-6 py-5 text-center">
-                    <h3 className="font-display text-2xl font-semibold text-ink">
-                      {m.name}
-                    </h3>
-                    <p className="mx-auto mt-2 max-w-xl text-sm leading-snug text-ink-muted">
-                      {m.description}
-                    </p>
-                    <span className="mt-4 inline-flex items-center justify-center gap-1 text-xs font-medium uppercase tracking-[0.18em] text-[var(--accent-deep)]">
-                      Explore <ArrowUpRight className="h-3.5 w-3.5" />
-                    </span>
-                  </div>
-                </motion.article>
-              </SwiperSlide>
-            )
-          })}
-        </Swiper>
-      </Reveal>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-12 space-y-6 lg:hidden">
+        {MINISTRIES.map((ministry) => (
+          <motion.article
+            key={ministry.name}
+            whileHover={{ y: -6 }}
+            transition={{ duration: 0.5, ease }}
+            className="relative overflow-hidden rounded-2xl border-2 border-red-600 bg-white/5"
+          >
+            <Link
+              href="/ministries"
+              className="absolute inset-0 z-10"
+              aria-label={`Learn more about ${ministry.name}`}
+            />
+            <div className="relative aspect-[4/3] w-full overflow-hidden">
+              <Image
+                src={ministry.image || "/images/media/men-ministry.webp"}
+                alt={ministry.name}
+                fill
+                className="object-cover"
+                unoptimized
+                sizes="100vw"
+              />
+            </div>
+            <div className="relative z-10 px-6 py-6">
+              <p className="label-cap text-red-600">{ministry.name}</p>
+              <h3 className="mt-3 font-display text-2xl font-semibold text-ink">{ministry.name}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-muted">{ministry.description}</p>
+              <span className="mt-4 inline-flex items-center gap-1 text-xs font-medium uppercase tracking-[0.18em] text-[var(--accent-deep)]">
+                Explore <ArrowUpRight className="h-3.5 w-3.5" />
+              </span>
+            </div>
+          </motion.article>
+        ))}
+        {/* Mobile CTA Slide */}
+        <motion.article
+          whileHover={{ y: -6 }}
+          transition={{ duration: 0.5, ease }}
+          className="relative overflow-hidden rounded-2xl border-2 border-red-600 bg-white"
+        >
+          <div className="relative aspect-[4/3] w-full overflow-hidden">
+            <Image
+              src="/images/media/MINCTA.jpg"
+              alt="Find Your Place"
+              fill
+              className="object-cover"
+              unoptimized
+              sizes="100vw"
+            />
+          </div>
+          <div className="relative z-10 px-6 py-6">
+            <p className="label-cap text-red-600">Find Your Place</p>
+            <h3 className="mt-3 font-display text-2xl font-semibold text-ink">Every ministry has a seat with your name on it.</h3>
+            <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+              Whether you&apos;re stepping in for the first time or looking to go
+              deeper in your faith journey, our ministries are open, welcoming,
+              and waiting for you.
+            </p>
+            <p className="mt-2 text-xs italic text-ink-muted/70">
+              Come as you are. Leave changed.
+            </p>
+            <div className="mt-6 flex flex-col gap-3">
+              <PillButton href="#service-times" variant="primary" size="sm" className="w-full">
+                Visit Us This Sunday
+              </PillButton>
+              <PillButton href="/ministries" variant="ghost" size="sm" className="w-full">
+                Explore All Ministries
+              </PillButton>
+            </div>
+          </div>
+        </motion.article>
       </div>
     </EditableSection>
   )

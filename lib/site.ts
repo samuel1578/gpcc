@@ -12,8 +12,8 @@ export const SITE = {
     mapUrl: "https://www.google.com/maps/place/5.7171585,-0.2102711",
   },
   social: {
-    facebook: "https://facebook.com/",
-    youtube: "https://youtube.com/",
+    facebook: "https://www.facebook.com/GlobalPeaceChristianCentre/",
+    youtube: "https://www.youtube.com/channel/UCudojbvqQOsf6ulSWu5vV8w",
     whatsapp: "https://whatsapp.com/channel/0029Vb71EIeCMY09nXOeuG3c",
   },
   newsletter: "https://formspree.io/f/xblzaqyv",
@@ -61,25 +61,25 @@ export const MINISTRIES = [
     name: "Men's Ministry",
     icon: "Shield",
     description: "Building men of faith, strength, and purpose.",
-    image: "/images/ministries/men.jpg",
+    image: "/images/media/men-ministry.webp",
   },
   {
     name: "Women's Ministry",
     icon: "Heart",
     description: "Empowering women through grace and fellowship.",
-    image: "/images/ministries/women.jpg",
+    image: "/images/media/womenier.webp",
   },
   {
     name: "Youth Ministry",
     icon: "Zap",
     description: "Raising a generation on fire for God.",
-    image: "/images/ministries/youth.jpg",
+    image: "/images/media/youth-ministry.png",
   },
   {
     name: "Children's Ministry",
     icon: "Baby",
     description: "Nurturing young hearts in God's love.",
-    image: "/images/ministries/children.jpg",
+    image: "/images/media/children-ministry.png",
   },
 ] as const
 

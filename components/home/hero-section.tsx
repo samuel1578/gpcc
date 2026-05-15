@@ -51,7 +51,7 @@ export function HeroSection() {
             transition={{ duration: 0.7, ease, delay: 0.1 }}
             className="w-full px-6 sm:px-8 lg:px-12 2xl:px-16 font-display italic text-slate-800"
             style={{
-              fontSize: "clamp(1.5rem, 4vw, 4rem)",
+              fontSize: "clamp(1rem, 2vw, 2rem)",
               lineHeight: 0.85,
             }}
           >
@@ -71,7 +71,7 @@ export function HeroSection() {
               transition={{ duration: 0.8, ease, delay: 0.18 }}
               className="block"
               style={{
-                fontSize: "clamp(2.5rem, 8vw, 8rem)",
+                fontSize: "clamp(2rem, 4.5vw, 5rem)",
                 lineHeight: 0.95,
                 letterSpacing: "-0.02em",
               }}
@@ -87,7 +87,7 @@ export function HeroSection() {
             className="w-full px-6 sm:px-8 lg:px-12 2xl:px-16 mt-12 lg:mt-[3vh] max-w-2xl lg:max-w-6xl mx-auto leading-relaxed text-slate-900"
             style={{
               fontFamily: "var(--font-quantico)",
-              fontSize: "clamp(1.1rem, 2vw, 1.8rem)",
+              fontSize: "clamp(1rem, 1.2vw, 1.4rem)",
             }}
           >
             We are a Bible-Believing, life giving, Charismatic, and Pentecostal Church. Our goal is to infuse life and God's love into people and families through powerful Worship and Bible Teaching services that are relevant to today's world.
