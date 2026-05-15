@@ -221,7 +221,7 @@ export default function WhoWeArePage() {
                     id="who-we-are.mission"
                     label="Our Mission"
                     pageKey="who-we-are"
-                    className="mx-auto w-[calc(100vw-76px)] max-w-[2800px] py-10"
+                    className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-10"
                 >
                     <motion.div
                         {...mProps({
@@ -230,8 +230,7 @@ export default function WhoWeArePage() {
                             transition: { duration: isMobile ? 0.5 : 0.65, ease: "easeOut" },
                             viewport: { once: true, margin: "-10%" }
                         })}
-                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong"
-                        style={{ padding: "clamp(2rem, 5vw, 5rem)" }}
+                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
                     >
                         <div className="mx-auto max-w-4xl">
                             <motion.p
@@ -274,6 +273,7 @@ export default function WhoWeArePage() {
                                         viewport: { once: true, margin: "-10%" }
                                     })}
                                     className="pl-6 body-lg text-ink-muted"
+                                    style={isMobile ? { lineHeight: 1.5 } : {}}
                                 >
                                     The GPCC Ministry exists to carry out the great commission of our
                                     Lord Jesus Christ. To &apos;Go into all the world and preach the good news
@@ -289,7 +289,7 @@ export default function WhoWeArePage() {
                     id="who-we-are.vision"
                     label="Our Vision"
                     pageKey="who-we-are"
-                    className="mx-auto w-[calc(100vw-76px)] max-w-[2800px] py-10"
+                    className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-10"
                 >
                     <motion.div
                         {...mProps({
@@ -298,8 +298,7 @@ export default function WhoWeArePage() {
                             transition: { duration: isMobile ? 0.5 : 0.65, ease: "easeOut" },
                             viewport: { once: true, margin: "-10%" }
                         })}
-                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong"
-                        style={{ padding: "clamp(2rem, 5vw, 5rem)" }}
+                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
                     >
                         <div className="mx-auto max-w-4xl">
                             <motion.p
@@ -332,6 +331,7 @@ export default function WhoWeArePage() {
                                     viewport: { once: true, margin: "-10%" }
                                 })}
                                 className="mt-6 body-lg text-ink-muted"
+                                style={isMobile ? { lineHeight: 1.5 } : {}}
                             >
                                 The vision of the church is to become a Global Prophetic Healing and
                                 Teaching Ministry, helping people to know and accept Jesus Christ as
@@ -347,7 +347,7 @@ export default function WhoWeArePage() {
                     id="who-we-are.philosophy"
                     label="Our Philosophy"
                     pageKey="who-we-are"
-                    className="mx-auto w-[calc(100vw-76px)] max-w-[2800px] py-10"
+                    className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-10"
                 >
                     <motion.div
                         {...mProps({
@@ -356,14 +356,13 @@ export default function WhoWeArePage() {
                             transition: { duration: 0.5, ease: "easeOut" },
                             viewport: { once: true, margin: "-10%" }
                         })}
-                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong"
-                        style={{ padding: "clamp(2rem, 5vw, 5rem)" }}
+                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
                     >
                         <div className="mx-auto max-w-4xl">
                             <p className="label-cap text-red-600">Our Philosophy</p>
                             <h2 className="mt-3 h-section text-ink">Excellence That Reflects His Light</h2>
                             {isMobile ? (
-                                <p className="mt-6 body-lg text-ink-muted">
+                                <p className="mt-6 body-lg text-ink-muted" style={{ lineHeight: 1.5 }}>
                                     {philosophyText}
                                 </p>
                             ) : (
@@ -409,7 +408,7 @@ export default function WhoWeArePage() {
                     id="who-we-are.belief"
                     label="Our Belief"
                     pageKey="who-we-are"
-                    className="mx-auto w-[calc(100vw-76px)] max-w-[2800px] py-10"
+                    className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-10"
                 >
                     <motion.div
                         {...mProps({
@@ -418,13 +417,12 @@ export default function WhoWeArePage() {
                             transition: { duration: 0.6, ease: "easeOut" },
                             viewport: { once: true, margin: "-10%" }
                         })}
-                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong"
-                        style={{ padding: "clamp(2rem, 5vw, 5rem)" }}
+                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
                     >
                         <div className="mx-auto max-w-4xl">
                             <p className="label-cap text-red-600">Our Belief</p>
                             <h2 className="mt-3 h-section text-ink">One God. One Truth. One Way.</h2>
-                            <div className="mt-8 space-y-6">
+                            <div className="mt-6 lg:mt-8 space-y-6">
                                 <motion.p
                                     {...mProps({
                                         initial: { opacity: 0, y: isMobile ? 8 : 16 },
@@ -433,6 +431,7 @@ export default function WhoWeArePage() {
                                         viewport: { once: true, margin: "-10%" }
                                     })}
                                     className="body-lg text-ink-muted"
+                                    style={isMobile ? { lineHeight: 1.5 } : {}}
                                 >
                                     We believe that there is one True God — indefinable, but revealed as
                                     Triune Godhead: God the Father, God the Son, and God the Holy Spirit.
@@ -450,6 +449,7 @@ export default function WhoWeArePage() {
                                         viewport: { once: true, margin: "-10%" }
                                     })}
                                     className="body-lg text-ink-muted"
+                                    style={isMobile ? { lineHeight: 1.5 } : {}}
                                 >
                                     We believe the Bible to be the inspired Word of God — infallible in
                                     its declaration, final in its authority, all-sufficient in its
