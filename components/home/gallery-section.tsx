@@ -82,8 +82,30 @@ export function GallerySection() {
       {/* Mobile — horizontal snap scroll */}
       <div className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 scrollbar-hide sm:hidden">
         {tiles.map((t, i) => (
-          <div key={i} className="w-72 flex-shrink-0 snap-start">
-            <ImagePlaceholder label={t.label} aspect="aspect-[3/4]" />
+          <div key={i} className="w-72 flex-shrink-0 snap-start overflow-hidden rounded-2xl shadow-[var(--shadow-soft)]">
+            {t.label === "Sunday Worship" ? (
+              <div className="relative aspect-[3/4]">
+                <Image
+                  src="/images/gallery/sunday-6.jpg"
+                  alt="Sunday Worship"
+                  fill
+                  className="object-cover"
+                  sizes="288px"
+                />
+              </div>
+            ) : t.label === "Bible Teaching" ? (
+              <div className="relative aspect-[3/4]">
+                <Image
+                  src="/images/gallery/gallery3.jpg"
+                  alt="Bible Teaching"
+                  fill
+                  className="object-cover"
+                  sizes="288px"
+                />
+              </div>
+            ) : (
+              <ImagePlaceholder label={t.label} aspect="aspect-[3/4]" />
+            )}
           </div>
         ))}
       </div>
