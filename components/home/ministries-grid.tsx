@@ -34,7 +34,7 @@ export function MinistriesGrid() {
       id="home.ministries"
       label="Ministries"
       pageKey="home"
-      className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-5"
+      className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-40px)] max-w-[2800px] py-5"
     >
       <Reveal className="mx-auto max-w-3xl text-center">
         <p className="font-display font-semibold text-red-600" style={{ fontSize: "clamp(1.5rem,2.5vw,3rem)" }}>Our Ministries</p>
@@ -58,9 +58,9 @@ export function MinistriesGrid() {
         style={{ height: `${segments * 100}vh` }}
       >
         <div className="sticky top-24">
-          <div className="overflow-hidden rounded-3xl glass-panel-strong">
-            <div className="grid min-h-[70vh] grid-cols-2">
-              <div className="relative h-full overflow-hidden bg-[#1a1a2e]">
+          <div className="overflow-hidden rounded-3xl glass-panel-strong border-white/10 shadow-2xl">
+            <div className="grid min-h-[75vh] xl:min-h-[85vh] lg:grid-cols-[1fr_1fr] xl:grid-cols-[1.1fr_1fr] 2xl:grid-cols-[1.2fr_1fr]">
+              <div className="relative h-full overflow-hidden">
                 {MINISTRIES.map((ministry, index) => (
                   <motion.div
                     key={ministry.name}
@@ -72,7 +72,7 @@ export function MinistriesGrid() {
                       src={ministry.image || "/images/media/men-ministry.webp"}
                       alt={ministry.name}
                       fill
-                      className="object-cover object-center"
+                      className="object-cover object-[center_20%]"
                       unoptimized
                       sizes="(max-width: 1024px) 100vw, 50vw"
                     />
@@ -88,13 +88,13 @@ export function MinistriesGrid() {
                     src="/images/media/MINCTA.jpg"
                     alt="Find Your Place"
                     fill
-                    className="object-cover object-center"
+                    className="object-cover object-[center_20%]"
                     unoptimized
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 </motion.div>
               </div>
-              <div className="relative flex h-full items-center justify-center" style={{ padding: "clamp(2.5rem,4vw,5rem)" }}>
+              <div className="relative flex h-full items-center justify-center" style={{ padding: "clamp(1.5rem,4vw,6rem)" }}>
                 {MINISTRIES.map((ministry, index) => (
                   <motion.div
                     key={ministry.name}
@@ -102,9 +102,9 @@ export function MinistriesGrid() {
                     style={{ opacity: opacities[index], y: translateY[index] }}
                     transition={{ duration: 0.7, ease: "easeInOut" }}
                   >
-                    <div className="w-full max-w-[480px] text-left">
+                    <div className="w-full max-w-[640px] text-left px-8 lg:px-12">
                       <p className="label-cap text-red-600">{ministry.name}</p>
-                      <h3 className="mt-4 h-section text-ink">{ministry.name}</h3>
+                      <h3 className="mt-4 h-section text-ink text-balance">{ministry.name}</h3>
                       <p className="mt-6 body-lg text-ink-muted">{ministry.description}</p>
                       <Link
                         href="/ministries"
@@ -122,9 +122,9 @@ export function MinistriesGrid() {
                   style={{ opacity: opacities[MINISTRIES.length], y: translateY[MINISTRIES.length] }}
                   transition={{ duration: 0.7, ease: "easeInOut" }}
                 >
-                  <div className="w-full max-w-[480px] text-left">
+                  <div className="w-full max-w-[800px] text-left px-8 lg:px-12">
                     <p className="label-cap text-red-600">Find Your Place</p>
-                    <h3 className="mt-4 h-section text-ink">Every ministry has a seat with your name on it.</h3>
+                    <h3 className="mt-4 h-section text-ink text-pretty">Every ministry has a seat with your name on it.</h3>
                     <div className="mt-6 space-y-4">
                       <p className="body-lg text-ink-muted">
                         Whether you&apos;re stepping in for the first time or looking to go
@@ -164,12 +164,12 @@ export function MinistriesGrid() {
               className="absolute inset-0 z-10"
               aria-label={`Learn more about ${ministry.name}`}
             />
-            <div className="relative aspect-[4/3] w-full overflow-hidden">
+            <div className="relative aspect-video w-full overflow-hidden">
               <Image
                 src={ministry.image || "/images/media/men-ministry.webp"}
                 alt={ministry.name}
                 fill
-                className="object-cover"
+                className="object-cover object-[center_20%]"
                 unoptimized
                 sizes="100vw"
               />
@@ -190,12 +190,12 @@ export function MinistriesGrid() {
           transition={{ duration: 0.5, ease }}
           className="relative overflow-hidden rounded-2xl border-2 border-red-600 bg-white"
         >
-          <div className="relative aspect-[4/3] w-full overflow-hidden">
+          <div className="relative aspect-video w-full overflow-hidden">
             <Image
               src="/images/media/MINCTA.jpg"
               alt="Find Your Place"
               fill
-              className="object-cover"
+              className="object-cover object-[center_20%]"
               unoptimized
               sizes="100vw"
             />

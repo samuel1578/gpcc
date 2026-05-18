@@ -63,7 +63,7 @@ export default function WhoWeArePage() {
                 </motion.div>
 
                 {/* Content */}
-                <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 pb-20">
+                <div className="relative z-10 mx-auto flex w-full max-w-[1200px] lg:max-w-[min(92vw,1600px)] xl:max-w-[min(90vw,1800px)] 2xl:max-w-[min(90vw,2000px)] flex-col items-center px-6 pb-20">
                     <motion.p
                         {...mProps({
                             initial: { opacity: 0, y: 12 },
@@ -111,9 +111,9 @@ export default function WhoWeArePage() {
                                         delay: isMobile ? 0.65 + index * 0.08 : 0.7 + index * 0.1
                                     }
                                 })}
-                                className="relative flex flex-col items-center justify-center py-8 px-4"
+                                className="relative flex flex-col items-center justify-center py-8 lg:py-[clamp(2rem,4vh,4rem)] px-4"
                             >
-                                <span className="h-sub text-[#1a1a2e]">{stat.number}</span>
+                                <span className="h-sub text-[#1a1a2e]" style={{ fontSize: "clamp(1.25rem, 2vw, 2.5rem)" }}>{stat.number}</span>
                                 <span className="label-cap mt-1 text-slate-600/80">{stat.label}</span>
 
                                 {/* Vertical Divider */}
@@ -150,12 +150,18 @@ export default function WhoWeArePage() {
                             transition: { duration: isMobile ? 0.5 : 0.65, ease: "easeOut" },
                             viewport: { once: true, margin: "-10%" }
                         })}
-                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
+                        className="mx-auto w-full overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
                     >
-                        <div className="mx-auto max-w-4xl">
-                            <p className="label-cap text-red-600">Our Story</p>
-                            <h2 className="mt-3 h-section text-ink">The Coming Into Being of Global Peace Christian Centre</h2>
-                            <div className="mt-6 lg:mt-8 space-y-8">
+                        <div className="mx-auto flex w-full max-w-[1200px] lg:max-w-[min(92vw,1600px)] xl:max-w-[min(90vw,1800px)] 2xl:max-w-[min(90vw,2000px)] flex-col lg:flex-row gap-10 lg:gap-[clamp(2rem,5vw,8rem)]">
+                            <div className="lg:w-[35%]">
+                                <p className="label-cap text-red-600 lg:text-lg lg:font-bold lg:underline lg:underline-offset-4">Our Story</p>
+                                <h2 className="mt-3 h-section text-ink">
+                                    The Coming Into Being of <br className="hidden lg:block" />
+                                    Global Peace <br className="hidden lg:block" />
+                                    Christian Centre
+                                </h2>
+                            </div>
+                            <div className="flex-1 space-y-8">
                                 <p className="body-lg text-ink-muted" style={isMobile ? { lineHeight: 1.5 } : {}}>
                                     In September 1990, The Lord called Pastor Henry Ampoomah-Boateng —
                                     OUR FOUNDER AND CHAIRMAN. It was during his final year (level 400)
@@ -182,7 +188,7 @@ export default function WhoWeArePage() {
                                             transition: { duration: 0.6, ease: "easeOut" },
                                             viewport: { once: true, margin: "-10%" }
                                         })}
-                                        className="relative h-[200px] w-[130px] shrink-0 overflow-hidden rounded-lg shadow-lg"
+                                        className="relative h-[clamp(200px,15vw,300px)] w-[clamp(130px,10vw,200px)] shrink-0 overflow-hidden rounded-lg shadow-lg"
                                     >
                                         <motion.div
                                             {...mProps({
@@ -192,7 +198,7 @@ export default function WhoWeArePage() {
                                             className="relative h-full w-full"
                                         >
                                             <Image
-                                                src="/assets/pastoral-board/jwimr.jpg"
+                                                src="/images/media/jwimr.jpg"
                                                 alt="Jesus Walks Into My Room Book Cover"
                                                 fill
                                                 className="object-cover"
@@ -201,11 +207,11 @@ export default function WhoWeArePage() {
                                         </motion.div>
                                     </motion.div>
                                     <div className="flex-1 text-center sm:text-left">
-                                        <h3 className="h-sub text-ink">Jesus Walks Into My Room</h3>
+                                        <h3 className="h-sub text-ink" style={{ fontSize: "clamp(1.5rem, 2vw, 2.5rem)" }}>Jesus Walks Into My Room</h3>
                                         <p className="mt-2 body-lg text-ink-muted" style={isMobile ? { lineHeight: 1.5 } : {}}>The story of a divine encounter that changed everything.</p>
-                                        <p className="mt-4 label-cap text-red-600">GHS 40.00</p>
+                                        <p className="mt-4 label-cap text-red-600" style={{ fontSize: "clamp(0.875rem, 1.2vw, 1.25rem)" }}>GHS 40.00</p>
                                         <div className="mt-6">
-                                            <PillButton onClick={() => setIsModalOpen(true)} variant="primary" size="md">
+                                            <PillButton onClick={() => setIsModalOpen(true)} variant="primary" size="fluid" className="max-w-xs">
                                                 Order Your Copy
                                             </PillButton>
                                         </div>
@@ -230,32 +236,34 @@ export default function WhoWeArePage() {
                             transition: { duration: isMobile ? 0.5 : 0.65, ease: "easeOut" },
                             viewport: { once: true, margin: "-10%" }
                         })}
-                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
+                        className="mx-auto w-full overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
                     >
-                        <div className="mx-auto max-w-4xl">
-                            <motion.p
-                                {...mProps({
-                                    initial: { opacity: 0 },
-                                    whileInView: { opacity: 1 },
-                                    transition: { duration: 0.4 },
-                                    viewport: { once: true, margin: "-10%" }
-                                })}
-                                className="label-cap text-red-600"
-                            >
-                                Our Mission
-                            </motion.p>
-                            <motion.h2
-                                {...mProps({
-                                    initial: { opacity: 0, y: isMobile ? 10 : 20 },
-                                    whileInView: { opacity: 1, y: 0 },
-                                    transition: { duration: 0.55, delay: 0.1 },
-                                    viewport: { once: true, margin: "-10%" }
-                                })}
-                                className="mt-3 h-section text-ink"
-                            >
-                                Carrying the Great Commission Forward
-                            </motion.h2>
-                            <div className="relative mt-6">
+                        <div className="mx-auto flex w-full max-w-[1200px] lg:max-w-[min(92vw,1600px)] xl:max-w-[min(90vw,1800px)] 2xl:max-w-[min(90vw,2000px)] flex-col lg:flex-row gap-10 lg:gap-[clamp(2rem,5vw,8rem)]">
+                            <div className="lg:w-[35%]">
+                                <motion.p
+                                    {...mProps({
+                                        initial: { opacity: 0 },
+                                        whileInView: { opacity: 1 },
+                                        transition: { duration: 0.4 },
+                                        viewport: { once: true, margin: "-10%" }
+                                    })}
+                                    className="label-cap text-red-600 lg:text-lg lg:font-bold lg:underline lg:underline-offset-4"
+                                >
+                                    Our Mission
+                                </motion.p>
+                                <motion.h2
+                                    {...mProps({
+                                        initial: { opacity: 0, y: isMobile ? 10 : 20 },
+                                        whileInView: { opacity: 1, y: 0 },
+                                        transition: { duration: 0.55, delay: 0.1 },
+                                        viewport: { once: true, margin: "-10%" }
+                                    })}
+                                    className="mt-3 h-section text-ink"
+                                >
+                                    Carrying the Great Commission Forward
+                                </motion.h2>
+                            </div>
+                            <div className="relative flex-1">
                                 <motion.div
                                     {...mProps({
                                         initial: { scaleY: 0 },
@@ -298,46 +306,50 @@ export default function WhoWeArePage() {
                             transition: { duration: isMobile ? 0.5 : 0.65, ease: "easeOut" },
                             viewport: { once: true, margin: "-10%" }
                         })}
-                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
+                        className="mx-auto w-full overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
                     >
-                        <div className="mx-auto max-w-4xl">
-                            <motion.p
-                                {...mProps({
-                                    initial: { opacity: 0 },
-                                    whileInView: { opacity: 1 },
-                                    transition: { duration: 0.4 },
-                                    viewport: { once: true, margin: "-10%" }
-                                })}
-                                className="label-cap text-red-600"
-                            >
-                                Our Vision
-                            </motion.p>
-                            <motion.h2
-                                {...mProps({
-                                    initial: { opacity: 0, y: isMobile ? 10 : 20 },
-                                    whileInView: { opacity: 1, y: 0 },
-                                    transition: { duration: 0.55, delay: 0.1 },
-                                    viewport: { once: true, margin: "-10%" }
-                                })}
-                                className="mt-3 h-section text-ink"
-                            >
-                                A Global Prophetic Healing and Teaching Ministry
-                            </motion.h2>
-                            <motion.p
-                                {...mProps({
-                                    initial: { opacity: 0, y: isMobile ? 8 : 16 },
-                                    whileInView: { opacity: 1, y: 0 },
-                                    transition: { duration: 0.55, delay: 0.25 },
-                                    viewport: { once: true, margin: "-10%" }
-                                })}
-                                className="mt-6 body-lg text-ink-muted"
-                                style={isMobile ? { lineHeight: 1.5 } : {}}
-                            >
-                                The vision of the church is to become a Global Prophetic Healing and
-                                Teaching Ministry, helping people to know and accept Jesus Christ as
-                                their Lord and personal Saviour — and to understand the Word of God,
-                                empowering them to excel in all their endeavours.
-                            </motion.p>
+                        <div className="mx-auto flex w-full max-w-[1200px] lg:max-w-[min(92vw,1600px)] xl:max-w-[min(90vw,1800px)] 2xl:max-w-[min(90vw,2000px)] flex-col lg:flex-row gap-10 lg:gap-[clamp(2rem,5vw,8rem)]">
+                            <div className="lg:w-[35%]">
+                                <motion.p
+                                    {...mProps({
+                                        initial: { opacity: 0 },
+                                        whileInView: { opacity: 1 },
+                                        transition: { duration: 0.4 },
+                                        viewport: { once: true, margin: "-10%" }
+                                    })}
+                                    className="label-cap text-red-600 lg:text-lg lg:font-bold lg:underline lg:underline-offset-4"
+                                >
+                                    Our Vision
+                                </motion.p>
+                                <motion.h2
+                                    {...mProps({
+                                        initial: { opacity: 0, y: isMobile ? 10 : 20 },
+                                        whileInView: { opacity: 1, y: 0 },
+                                        transition: { duration: 0.55, delay: 0.1 },
+                                        viewport: { once: true, margin: "-10%" }
+                                    })}
+                                    className="mt-3 h-section text-ink"
+                                >
+                                    A Global Prophetic Healing and Teaching Ministry
+                                </motion.h2>
+                            </div>
+                            <div className="flex-1">
+                                <motion.p
+                                    {...mProps({
+                                        initial: { opacity: 0, y: isMobile ? 8 : 16 },
+                                        whileInView: { opacity: 1, y: 0 },
+                                        transition: { duration: 0.55, delay: 0.25 },
+                                        viewport: { once: true, margin: "-10%" }
+                                    })}
+                                    className="body-lg text-ink-muted"
+                                    style={isMobile ? { lineHeight: 1.5 } : {}}
+                                >
+                                    The vision of the church is to become a Global Prophetic Healing and
+                                    Teaching Ministry, helping people to know and accept Jesus Christ as
+                                    their Lord and personal Saviour — and to understand the Word of God,
+                                    empowering them to excel in all their endeavours.
+                                </motion.p>
+                            </div>
                         </div>
                     </motion.div>
                 </EditableSection>
@@ -356,49 +368,53 @@ export default function WhoWeArePage() {
                             transition: { duration: 0.5, ease: "easeOut" },
                             viewport: { once: true, margin: "-10%" }
                         })}
-                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
+                        className="mx-auto w-full overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
                     >
-                        <div className="mx-auto max-w-4xl">
-                            <p className="label-cap text-red-600">Our Philosophy</p>
-                            <h2 className="mt-3 h-section text-ink">Excellence That Reflects His Light</h2>
-                            {isMobile ? (
-                                <p className="mt-6 body-lg text-ink-muted" style={{ lineHeight: 1.5 }}>
-                                    {philosophyText}
-                                </p>
-                            ) : (
-                                <motion.div
-                                    {...mProps({
-                                        initial: "initial",
-                                        whileInView: "animate",
-                                        viewport: { once: true, margin: "-10%" },
-                                        variants: {
-                                            animate: {
-                                                transition: {
-                                                    staggerChildren: 0.04,
-                                                    delayChildren: 0.2
+                        <div className="mx-auto flex w-full max-w-[1200px] lg:max-w-[min(92vw,1600px)] xl:max-w-[min(90vw,1800px)] 2xl:max-w-[min(90vw,2000px)] flex-col lg:flex-row gap-10 lg:gap-[clamp(2rem,5vw,8rem)]">
+                            <div className="lg:w-[35%]">
+                                <p className="label-cap text-red-600 lg:text-lg lg:font-bold lg:underline lg:underline-offset-4">Our Philosophy</p>
+                                <h2 className="mt-3 h-section text-ink">Excellence That Reflects His Light</h2>
+                            </div>
+                            <div className="flex-1">
+                                {isMobile ? (
+                                    <p className="body-lg text-ink-muted" style={{ lineHeight: 1.5 }}>
+                                        {philosophyText}
+                                    </p>
+                                ) : (
+                                    <motion.div
+                                        {...mProps({
+                                            initial: "initial",
+                                            whileInView: "animate",
+                                            viewport: { once: true, margin: "-10%" },
+                                            variants: {
+                                                animate: {
+                                                    transition: {
+                                                        staggerChildren: 0.04,
+                                                        delayChildren: 0.2
+                                                    }
                                                 }
                                             }
-                                        }
-                                    })}
-                                    className="mt-6 body-lg text-ink-muted"
-                                >
-                                    {philosophyText.split(" ").map((word, i) => (
-                                        <motion.span
-                                            key={i}
-                                            {...mProps({
-                                                variants: {
-                                                    initial: { opacity: 0, y: 8 },
-                                                    animate: { opacity: 1, y: 0 }
-                                                }
-                                            })}
-                                            transition={{ duration: 0.35, ease: "easeOut" }}
-                                            className="inline-block mr-[0.25em]"
-                                        >
-                                            {word}
-                                        </motion.span>
-                                    ))}
-                                </motion.div>
-                            )}
+                                        })}
+                                        className="body-lg text-ink-muted"
+                                    >
+                                        {philosophyText.split(" ").map((word, i) => (
+                                            <motion.span
+                                                key={i}
+                                                {...mProps({
+                                                    variants: {
+                                                        initial: { opacity: 0, y: 8 },
+                                                        animate: { opacity: 1, y: 0 }
+                                                    }
+                                                })}
+                                                transition={{ duration: 0.35, ease: "easeOut" }}
+                                                className="inline-block mr-[0.25em]"
+                                            >
+                                                {word}
+                                            </motion.span>
+                                        ))}
+                                    </motion.div>
+                                )}
+                            </div>
                         </div>
                     </motion.div>
                 </EditableSection>
@@ -417,12 +433,14 @@ export default function WhoWeArePage() {
                             transition: { duration: 0.6, ease: "easeOut" },
                             viewport: { once: true, margin: "-10%" }
                         })}
-                        className="mx-auto max-w-7xl overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
+                        className="mx-auto w-full overflow-hidden rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(2rem,5vw,5rem)]"
                     >
-                        <div className="mx-auto max-w-4xl">
-                            <p className="label-cap text-red-600">Our Belief</p>
-                            <h2 className="mt-3 h-section text-ink">One God. One Truth. One Way.</h2>
-                            <div className="mt-6 lg:mt-8 space-y-6">
+                        <div className="mx-auto flex w-full max-w-[1200px] lg:max-w-[min(92vw,1600px)] xl:max-w-[min(90vw,1800px)] 2xl:max-w-[min(90vw,2000px)] flex-col lg:flex-row gap-10 lg:gap-[clamp(2rem,5vw,8rem)]">
+                            <div className="lg:w-[35%]">
+                                <p className="label-cap text-red-600 lg:text-lg lg:font-bold lg:underline lg:underline-offset-4">Our Belief</p>
+                                <h2 className="mt-3 h-section text-ink">One God. One Truth. One Way.</h2>
+                            </div>
+                            <div className="flex-1 space-y-6">
                                 <motion.p
                                     {...mProps({
                                         initial: { opacity: 0, y: isMobile ? 8 : 16 },

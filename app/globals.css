@@ -130,11 +130,12 @@
     background-color: var(--page-bg-color);
     background-image:
       linear-gradient(180deg, rgba(245, 243, 238, 0.2), rgba(232, 226, 215, 0.15)),
-      var(--page-bg-image);
+      url('/images/bcg.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     pointer-events: none;
+    background-attachment: fixed;
   }
 
   @media (max-width: 1024px) {
@@ -142,6 +143,7 @@
       background-image:
         linear-gradient(180deg, rgba(245, 243, 238, 0.2), rgba(232, 226, 215, 0.15)),
         url('/images/mcg.jpg');
+      background-attachment: scroll;
     }
   }
 
