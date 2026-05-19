@@ -94,11 +94,11 @@ export function PastorWelcome() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.8, ease }}
-        className="mt-6 rounded-3xl glass-panel-strong px-6 py-10 sm:p-8 lg:p-12 w-full"
+        className="mt-6 rounded-3xl glass-panel-strong p-6 sm:p-8 lg:p-10 w-full"
       >
-        <div className="space-y-6">
-          {/* Heading and Description */}
-          <div className="text-center space-y-3">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+          {/* Text Content */}
+          <div className="flex-1 text-center lg:text-left space-y-4">
             <EditableText
               id="home.fellowship.title"
               label="Fellowship Card Title"
@@ -106,43 +106,43 @@ export function PastorWelcome() {
               as="h3"
               className="h-section text-ink"
             >
-              Fellowship with us at <span className="italic text-red-600">"PEACE TEMPLE"</span>
+              Fellowship with us at <span className="text-red-600">"PEACE TEMPLE"</span>
             </EditableText>
             <EditableText
               id="home.fellowship.description"
               label="Fellowship Card Description"
               pageKey="home"
               as="p"
-              className="body-lg text-ink-muted max-w-2xl mx-auto"
+              className="body-lg text-ink-muted max-w-2xl mx-auto lg:mx-0"
             >
               Experience worship in our state-of-the-art auditorium, featuring acoustics, lighting, and seating for 2,000+, designed to create an atmosphere where hearts meet the presence of God.
             </EditableText>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+              <PillButton
+                href="https://www.google.com/maps/place/Global+Peace+Christian+Centre+(GPCC)/@5.7173525,-0.2082636,18.49z/data=!4m6!3m5!1s0xfdf9dedc886fb2f:0x4a651067c9806910!8m2!3d5.7171532!4d-0.2076962!16s%2Fg%2F11b6_9jv20?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="primary"
+              >
+                View Schedule
+              </PillButton>
+              <PillButton variant="secondary" className="border border-[var(--border-glass)]">
+                View in Maps
+              </PillButton>
+            </div>
           </div>
 
           {/* Image Container */}
-          <div className="relative w-full rounded-2xl overflow-hidden h-48 sm:h-64 md:h-80 lg:h-96">
+          <div className="relative w-full lg:w-[40%] shrink-0 rounded-2xl overflow-hidden h-48 sm:h-64 lg:h-72">
             <Image
               src="/images/media/locbanner.png"
               alt="Peace Temple"
               fill
               className="object-cover"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 40vw, 800px"
             />
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-            <PillButton
-              href="https://www.google.com/maps/place/Global+Peace+Christian+Centre+(GPCC)/@5.7173525,-0.2082636,18.49z/data=!4m6!3m5!1s0xfdf9dedc886fb2f:0x4a651067c9806910!8m2!3d5.7171532!4d-0.2076962!16s%2Fg%2F11b6_9jv20?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="primary"
-            >
-              View Schedule
-            </PillButton>
-            <PillButton variant="secondary" className="border border-[var(--border-glass)]">
-              View in Maps
-            </PillButton>
           </div>
         </div>
       </motion.div>

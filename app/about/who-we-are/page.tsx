@@ -40,30 +40,30 @@ export default function WhoWeArePage() {
 
     return (
         <>
-            <section className="relative flex min-h-[420px] w-full flex-col items-center justify-center overflow-hidden bg-[#BADCF7] pt-28 lg:pt-32 xl:pt-36 pb-0 text-center">
-                {/* Watermark */}
+            <section className="relative flex min-h-[420px] w-full flex-col items-center justify-center overflow-hidden bg-[#BADCF7] pt-28 lg:pt-32 xl:pt-36 pb-0 text-center lg:text-left">
+                {/* Watermark/Hero Image */}
                 <motion.div
                     {...mProps({
-                        initial: { opacity: 0 },
-                        animate: { opacity: 0.1 },
-                        transition: { duration: 0.4 }
+                        initial: { opacity: 0, x: 20 },
+                        animate: { opacity: 1, x: 0 },
+                        transition: { duration: 0.6, delay: 0.1 }
                     })}
-                    className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
+                    className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center lg:justify-end lg:pr-[10%] xl:pr-[15%]"
                     aria-hidden="true"
                 >
-                    <div className="relative h-[70%] max-h-[700px] w-[70%] max-w-[700px]">
+                    <div className="relative h-[55%] lg:h-[65%] max-h-[600px] w-[60%] lg:w-[45%] max-w-[700px] opacity-20 lg:opacity-25 lg:translate-y-12">
                         <Image
-                            src="/images/media/outline.webp"
+                            src="/images/media/outlene.webp"
                             alt=""
                             fill
-                            className="object-contain"
+                            className="object-contain object-center lg:object-right"
                             unoptimized={true}
                         />
                     </div>
                 </motion.div>
 
                 {/* Content */}
-                <div className="relative z-10 mx-auto flex w-full max-w-[1200px] lg:max-w-[min(92vw,1600px)] xl:max-w-[min(90vw,1800px)] 2xl:max-w-[min(90vw,2000px)] flex-col items-center px-6 pb-20">
+                <div className="relative z-10 mx-auto flex w-full max-w-[1200px] lg:max-w-[min(92vw,1600px)] xl:max-w-[min(90vw,1800px)] 2xl:max-w-[min(90vw,2000px)] flex-col items-center lg:items-start px-6 pb-20">
                     <motion.p
                         {...mProps({
                             initial: { opacity: 0, y: 12 },

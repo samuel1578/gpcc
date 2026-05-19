@@ -2,10 +2,11 @@ import type { Metadata } from "next"
 import { PageTransition } from "@/components/motion/page-transition"
 import { PageHero } from "@/components/layout/page-hero"
 import { LeadershipGrid } from "./_components/leadership-grid"
+import { ParallaxContent } from "@/components/layout/parallax-content"
 
 export const metadata: Metadata = {
-  title: "Leadership",
-  description: "Meet the pastors, elders, and ministry leaders serving Christ Apostolic Church Igbalubi.",
+  title: "The Leadership",
+  description: "Meet the spiritual leaders, pastors, elders, and ministry voices guiding the vision and growth of our church family.",
 }
 
 export default function LeadershipPage() {
@@ -13,10 +14,16 @@ export default function LeadershipPage() {
     <PageTransition>
       <PageHero
         eyebrow="Leadership"
-        title="Servants of the household of faith"
-        description="Our leadership team is committed to feeding the flock, equipping the saints, and pointing every soul to Christ."
+        title="The Leadership"
+        description="Meet the spiritual leaders, pastors, elders, and ministry voices guiding the vision and growth of our church family."
+        pageKey="leadership"
+        variant="light"
       />
-      <LeadershipGrid />
+      <ParallaxContent>
+        <div className="pb-10 lg:pb-16">
+          <LeadershipGrid />
+        </div>
+      </ParallaxContent>
     </PageTransition>
   )
 }
