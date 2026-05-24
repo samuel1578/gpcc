@@ -4,12 +4,18 @@ import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
-import { TESTIMONIES } from "@/lib/site"
 import { ease, fadeUp } from "@/lib/motion"
 import { Reveal, RevealStagger } from "@/components/motion/reveal"
 import { EditableSection, EditableText } from "@/components/design-mode/editable"
+import type { Testimony } from "@/lib/types/database"
 
-export function TestimoniesSection() {
+interface TestimoniesSectionProps {
+  testimonies: Testimony[]
+}
+
+export function TestimoniesSection({ testimonies }: TestimoniesSectionProps) {
+  if (!testimonies?.length) return null
+
   return (
     <EditableSection
       id="home.testimonies"
@@ -32,26 +38,32 @@ export function TestimoniesSection() {
         </Reveal>
 
         <RevealStagger className="mt-12 grid gap-6 md:grid-cols-2 lg:gap-8" staggerChildren={0.1}>
-          {TESTIMONIES.map((t) => (
+          {testimonies.map((t) => (
             <motion.article
-              key={t.title}
+              key={t.id}
               variants={fadeUp}
               transition={{ duration: 0.5, ease }}
               whileHover={{ y: -10, transition: { type: "spring", stiffness: 400, damping: 22 } }}
               className="group overflow-hidden rounded-3xl glass-panel-strong hover:shadow-2xl transition-shadow duration-300"
             >
               <div className="relative aspect-[16/9] w-full overflow-hidden">
-                <Image
-                  src={t.image}
-                  alt={t.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
+                {t.cover_image_url ? (
+                  <Image
+                    src={t.cover_image_url}
+                    alt={t.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
+                    <p className="text-ink-muted text-xs uppercase tracking-widest font-semibold opacity-30">GPCC Testimony</p>
+                  </div>
+                )}
               </div>
               <div className="p-7 sm:p-9">
                 <p className="text-xs uppercase tracking-[0.18em] text-ink-muted">
-                  {t.person}
+                  {t.is_confidential ? "Confidential" : (t.person_name || "Anonymous")}
                 </p>
                 <h3 className="mt-2 font-display text-2xl font-semibold text-ink">
                   {t.title}
@@ -60,7 +72,7 @@ export function TestimoniesSection() {
                   {t.excerpt}
                 </p>
                 <Link
-                  href="/about/testimonies"
+                  href={`/about/testimonies?slug=${t.slug}`}
                   className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-[var(--accent-deep)] hover:underline"
                 >
                   Read story <ArrowRight className="h-4 w-4" />

@@ -9,8 +9,11 @@ import { GallerySection } from "@/components/home/gallery-section"
 import { GivingSection } from "@/components/home/giving-section"
 import { ConnectSection } from "@/components/home/connect-section"
 import { ParallaxContent } from "@/components/layout/parallax-content"
+import { getFeaturedTestimonials } from "@/lib/actions/testimonies"
 
-export default function HomePage() {
+export default async function HomePage() {
+  const featuredTestimonials = await getFeaturedTestimonials()
+
   return (
     <>
       <HeroSection />
@@ -20,7 +23,7 @@ export default function HomePage() {
         <MinistriesGrid />
         <ServiceTimes />
         <MediaEvents />
-        <TestimoniesSection />
+        <TestimoniesSection testimonies={featuredTestimonials} />
         <GallerySection />
         <GivingSection />
         <ConnectSection />

@@ -9,6 +9,7 @@ import { SiteFooter } from "@/components/layout/site-footer"
 import { PageTransition } from "@/components/motion/page-transition"
 import { DesignModeProvider } from "@/components/design-mode/design-mode-provider"
 import { DesignModeShell } from "@/components/design-mode/design-mode-shell"
+import { Toaster } from "@/components/ui/sonner"
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -85,6 +86,7 @@ export default function RootLayout({
             <SiteFooter />
           </div>
           <DesignModeShell />
+          <Toaster position="top-right" />
         </DesignModeProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
