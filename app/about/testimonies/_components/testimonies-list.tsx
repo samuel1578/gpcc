@@ -52,53 +52,83 @@ export function TestimoniesList({ testimonies }: TestimoniesListProps) {
         )
     }
 
+    // Group testimonies by category
+    const groupedBy = testimonies.reduce((acc, t) => {
+        const cat = t.category || "other"
+        if (!acc[cat]) acc[cat] = []
+        acc[cat].push(t)
+        return acc
+    }, {} as Record<string, Testimony[]>)
+
+    const categoryTitleMap: Record<string, string> = {
+        book: "Book Testimonies",
+        ministry: "More Testimonies From Our Ministry",
+        healing: "Healing Testimonies",
+        other: "Other Testimonies"
+    }
+
     return (
-        <section className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-10 py-20">
-            <RevealStagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8" staggerChildren={0.08}>
-                {testimonies.map((t) => (
-                    <motion.article
-                        key={t.id}
-                        variants={fadeUp}
-                        transition={{ duration: 0.5, ease }}
-                        whileHover={{ y: -8 }}
-                        onClick={() => handleOpen(t)}
-                        className="group cursor-pointer overflow-hidden rounded-3xl glass-panel hover:shadow-[var(--shadow-elevated)] transition-all duration-300"
-                    >
-                        <div className="relative aspect-[4/3] w-full overflow-hidden">
-                            {t.cover_image_url ? (
-                                <Image
-                                    src={t.cover_image_url}
-                                    alt={t.title}
-                                    fill
-                                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                />
-                            ) : (
-                                <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
-                                    <p className="text-ink-muted text-xs uppercase tracking-widest font-semibold opacity-30">GPCC Story</p>
+        <div className="space-y-24 py-20">
+            {Object.entries(groupedBy).map(([category, items]) => (
+                <section
+                    key={category}
+                    id={category === "book" ? "book-testimonies" : undefined}
+                    className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-10"
+                >
+                    <Reveal className="mb-10">
+                        <h2 className="font-display text-3xl font-bold tracking-tight text-ink">
+                            {categoryTitleMap[category] || category}
+                        </h2>
+                        <div className="mt-2 h-1 w-20 bg-red-600 rounded-full" />
+                    </Reveal>
+
+                    <RevealStagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8" staggerChildren={0.08}>
+                        {items.map((t) => (
+                            <motion.article
+                                key={t.id}
+                                variants={fadeUp}
+                                transition={{ duration: 0.5, ease }}
+                                whileHover={{ y: -8 }}
+                                onClick={() => handleOpen(t)}
+                                className="group cursor-pointer overflow-hidden rounded-3xl glass-panel hover:shadow-[var(--shadow-elevated)] transition-all duration-300"
+                            >
+                                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                                    {t.cover_image_url ? (
+                                        <Image
+                                            src={t.cover_image_url}
+                                            alt={t.title}
+                                            fill
+                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                        />
+                                    ) : (
+                                        <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
+                                            <p className="text-ink-muted text-xs uppercase tracking-widest font-semibold opacity-30">GPCC Story</p>
+                                        </div>
+                                    )}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                                 </div>
-                            )}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </div>
-                        <div className="p-7">
-                            <div className="flex items-center justify-between gap-4">
-                                <p className="text-[10px] uppercase tracking-[0.2em] text-red-600 font-bold">
-                                    {t.is_confidential ? "Testimony" : (t.person_role || t.category || "Testimony")}
-                                </p>
-                                <span className="h-px flex-1 bg-black/5" />
-                            </div>
-                            <h3 className="mt-3 font-display text-2xl font-semibold text-ink group-hover:text-red-600 transition-colors">
-                                {t.title}
-                            </h3>
-                            <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-ink-muted">
-                                {t.excerpt}
-                            </p>
-                            <p className="mt-6 text-xs font-semibold text-ink uppercase tracking-wider">
-                                — {t.is_confidential ? "Confidential" : (t.person_name || "Anonymous")}
-                            </p>
-                        </div>
-                    </motion.article>
-                ))}
-            </RevealStagger>
+                                <div className="p-7">
+                                    <div className="flex items-center justify-between gap-4">
+                                        <p className="text-[10px] uppercase tracking-[0.2em] text-red-600 font-bold">
+                                            {t.is_confidential ? "Testimony" : (t.person_role || t.category || "Testimony")}
+                                        </p>
+                                        <span className="h-px flex-1 bg-black/5" />
+                                    </div>
+                                    <h3 className="mt-3 font-display text-2xl font-semibold text-ink group-hover:text-red-600 transition-colors">
+                                        {t.title}
+                                    </h3>
+                                    <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-ink-muted">
+                                        {t.excerpt}
+                                    </p>
+                                    <p className="mt-6 text-xs font-semibold text-ink uppercase tracking-wider">
+                                        — {t.is_confidential ? "Confidential" : (t.person_name || "Anonymous")}
+                                    </p>
+                                </div>
+                            </motion.article>
+                        ))}
+                    </RevealStagger>
+                </section>
+            ))}
 
             {/* Testimony Modal */}
             <AnimatePresence>
@@ -184,6 +214,6 @@ export function TestimoniesList({ testimonies }: TestimoniesListProps) {
                     </div>
                 )}
             </AnimatePresence>
-        </section>
+        </div>
     )
 }

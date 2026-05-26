@@ -26,6 +26,13 @@ import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
 import { Card } from "@/components/ui/card"
 import { ImageUpload } from "@/components/admin/image-upload"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
 interface TestimonyFormProps {
     initialData?: Testimony | null
@@ -366,9 +373,22 @@ export function TestimonyForm({ initialData }: TestimonyFormProps) {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Category</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="Healing / Financial / Family" {...field} value={field.value || ""} className="bg-white/50" />
-                                            </FormControl>
+                                            <Select
+                                                onValueChange={field.onChange}
+                                                defaultValue={field.value || ""}
+                                                disabled={isLoading}
+                                            >
+                                                <FormControl>
+                                                    <SelectTrigger className="bg-white/50 w-full">
+                                                        <SelectValue placeholder="Select a category" />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent>
+                                                    <SelectItem value="ministry">Ministry</SelectItem>
+                                                    <SelectItem value="book">Book</SelectItem>
+                                                    <SelectItem value="healing">Healing</SelectItem>
+                                                </SelectContent>
+                                            </Select>
                                             <FormMessage />
                                         </FormItem>
                                     )}

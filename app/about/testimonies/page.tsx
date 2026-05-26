@@ -2,6 +2,7 @@ import { PageHero } from "@/components/layout/page-hero"
 import { ParallaxContent } from "@/components/layout/parallax-content"
 import { getPublishedTestimonials } from "@/lib/actions/testimonies"
 import { TestimoniesList } from "./_components/testimonies-list"
+import { BookShowcase } from "./_components/book-showcase"
 
 export const metadata = {
     title: "Testimonies",
@@ -18,7 +19,9 @@ export default async function TestimoniesPage() {
                 eyebrow="Testimonies"
                 title="Stories of God's goodness."
                 description="We overcome by the blood of the Lamb and by the word of our testimony. Read how God is moving in the lives of our community."
+                variant="light"
             />
+            <BookShowcase />
             <ParallaxContent>
                 <TestimoniesList testimonies={testimonies} />
             </ParallaxContent>
