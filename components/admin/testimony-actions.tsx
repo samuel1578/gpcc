@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { MoreVertical, Edit2, Trash2, Eye, EyeOff, Loader2 } from "lucide-react"
+import { MoreVertical, Edit2, Trash2, Eye, EyeOff, Loader2, Star, StarOff } from "lucide-react"
 import { toast } from "sonner"
 import Link from "next/link"
 
@@ -46,6 +46,26 @@ export function TestimonyActions({ testimony }: TestimonyActionsProps) {
         }
     }
 
+    async function onToggleFeature() {
+        try {
+            setIsLoading(true)
+            const { created_at, id, ...rest } = testimony
+            const payload = {
+                ...rest,
+                is_featured: !testimony.is_featured
+            }
+
+            await updateTestimony(testimony.id, payload)
+            toast.success(testimony.is_featured ? "Testimony removed from homepage" : "Testimony featured on homepage")
+            router.refresh()
+        } catch (error: any) {
+            console.error("Toggle feature error:", error)
+            toast.error("Action failed", { description: error.message })
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
     async function onDelete() {
         if (!confirm("Are you sure you want to delete this testimony? This action cannot be undone.")) {
             return
@@ -82,6 +102,13 @@ export function TestimonyActions({ testimony }: TestimonyActionsProps) {
                         <><EyeOff className="h-4 w-4" /> Unpublish</>
                     ) : (
                         <><Eye className="h-4 w-4" /> Publish</>
+                    )}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={onToggleFeature} className="gap-2 cursor-pointer">
+                    {testimony.is_featured ? (
+                        <><StarOff className="h-4 w-4" /> Unfeature</>
+                    ) : (
+                        <><Star className="h-4 w-4" /> Feature</>
                     )}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-white/10" />

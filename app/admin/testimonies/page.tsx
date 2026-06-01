@@ -95,11 +95,15 @@ async function TestimoniesTable() {
                                 <td className="px-6 py-4">
                                     <div className="flex flex-col">
                                         <span className="font-medium text-ink line-clamp-1">{t.title}</span>
-                                        <span className="text-xs text-ink-muted md:hidden">{t.person}</span>
+                                        <span className="text-xs text-ink-muted md:hidden">
+                                            {t.is_confidential ? "Confidential" : (t.person_name || "Anonymous")}
+                                        </span>
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 hidden md:table-cell">
-                                    <span className="text-sm text-ink-muted">{t.person}</span>
+                                    <span className="text-sm text-ink-muted">
+                                        {t.is_confidential ? "Confidential" : (t.person_name || "Anonymous")}
+                                    </span>
                                 </td>
                                 <td className="px-6 py-4 hidden lg:table-cell">
                                     <div className="flex gap-2">

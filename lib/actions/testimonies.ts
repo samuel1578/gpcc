@@ -34,11 +34,12 @@ export async function getFeaturedTestimonials() {
 
     const { data, error } = await supabase
         .from("testimonies")
-        .select("*")
+        .select("id, title, slug, person_name, is_confidential, excerpt, cover_image_url, scripture_reference, quote, display_order, created_at")
         .eq("is_published", true)
         .eq("is_featured", true)
         .order("display_order", { ascending: true })
         .order("created_at", { ascending: false })
+        .limit(4)
 
     if (error) {
         console.error("Error fetching featured testimonials:", error)

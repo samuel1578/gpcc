@@ -58,8 +58,11 @@ export function SiteHeader() {
 
   const isHome = pathname === "/"
   const overHero = isHome && !scrolled
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/")
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/"
+    if (href === "/about" && pathname.startsWith("/about/testimonies")) return false
+    return pathname === href || pathname.startsWith(href + "/")
+  }
 
   return (
     <motion.header
