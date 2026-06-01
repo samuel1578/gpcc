@@ -12,6 +12,11 @@ import { ease } from "@/lib/motion"
 
 export function SiteHeader() {
   const pathname = usePathname() ?? "/"
+
+  if (pathname.startsWith("/admin")) {
+    return null
+  }
+
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [aboutOpen, setAboutOpen] = useState(false)

@@ -2,24 +2,29 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Radio, Tv, Calendar, ArrowRight } from "lucide-react"
+import { Radio, Tv, Calendar, ArrowRight, MapPin, Sparkles } from "lucide-react"
 import { MEDIA_STATIONS } from "@/lib/site"
 import { ease, fadeUp } from "@/lib/motion"
 import { Reveal, RevealStagger } from "@/components/motion/reveal"
 import { EditableSection, EditableText } from "@/components/design-mode/editable"
+import type { Event } from "@/lib/types/database"
+import { format } from "date-fns"
 
-const upcoming = [
-  { name: "Annual Convention 2026", date: "August 14 – 17 · Accra", slug: "annual-convention-2026" },
-  { name: "Youth Encounter Weekend", date: "May 9 – 10 · Peace Temple", slug: "youth-encounter" },
-  { name: "Community Outreach", date: "June 28 · Ablor Adjei", slug: "community-outreach" },
-]
+interface MediaEventsProps {
+  events: Event[]
+}
 
-export function MediaEvents() {
+export function MediaEvents({ events }: MediaEventsProps) {
+  // Sort events by start date ascending (upcoming first)
+  const sortedEvents = [...events].sort((a, b) => {
+    return new Date(a.start_date).getTime() - new Date(b.start_date).getTime()
+  })
+
   return (
     <EditableSection
       id="home.media-events"
-      label="Media & Events"
       pageKey="home"
+      label="Media & Events"
       className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-5"
     >
       <div className="w-full rounded-3xl glass-panel px-6 py-10 lg:p-[clamp(3rem,5vw,6rem)_clamp(1.5rem,3vw,4rem)]">
@@ -39,7 +44,7 @@ export function MediaEvents() {
         <div className="mt-14 grid gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Stations */}
           <div>
-            <h3 className="font-display text-2xl font-semibold text-ink">Broadcast schedule</h3>
+            <h3 className="font-display text-2xl font-semibold text-ink border-b border-white/10 pb-3">Broadcast schedule</h3>
             <RevealStagger className="mt-5 space-y-3" staggerChildren={0.06}>
               {MEDIA_STATIONS.map((s) => {
                 const isTV = s.name.toLowerCase().includes("tv")
@@ -49,7 +54,7 @@ export function MediaEvents() {
                     key={s.name}
                     variants={fadeUp}
                     transition={{ duration: 0.45, ease }}
-                    whileHover={{ y: -6, transition: { type: "spring", stiffness: 400, damping: 22 } }}
+                    whileHover={{ y: -4, transition: { type: "spring", stiffness: 400, damping: 22 } }}
                     className="flex items-center justify-between gap-4 rounded-xl glass-panel-subtle p-4 hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                   >
                     <div className="flex items-center gap-3">
@@ -88,35 +93,90 @@ export function MediaEvents() {
             </RevealStagger>
           </div>
 
-          {/* Events */}
-          <div>
-            <h3 className="font-display text-2xl font-semibold text-ink">Upcoming events</h3>
-            <RevealStagger className="mt-5 space-y-3" staggerChildren={0.07}>
-              {upcoming.map((e) => (
-                <motion.article
-                  key={e.slug}
-                  variants={fadeUp}
-                  transition={{ duration: 0.45, ease }}
-                  whileHover={{ y: -6, transition: { type: "spring", stiffness: 400, damping: 22 } }}
-                  className="rounded-xl glass-panel-subtle p-5 hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--accent-rose)]/10 text-[var(--accent-rose)]">
-                      <Calendar className="h-4 w-4" />
-                    </span>
-                    <div className="flex-1">
-                      <p className="font-display text-lg font-semibold text-ink">
-                        {e.name}
-                      </p>
-                      <p className="text-xs text-ink-muted">{e.date}</p>
-                    </div>
-                  </div>
-                </motion.article>
-              ))}
-            </RevealStagger>
+          {/* Dynamic Events */}
+          <div className="flex flex-col h-full">
+            <h3 className="font-display text-2xl font-semibold text-ink border-b border-white/10 pb-3">Featured gatherings</h3>
+
+            {sortedEvents.length === 0 ? (
+              <div className="mt-5 flex flex-col items-center justify-center flex-1 py-12 px-6 text-center rounded-2xl border border-dashed border-black/10 bg-black/5">
+                <Calendar className="h-8 w-8 text-ink-muted/50 mb-3" />
+                <p className="text-sm font-medium text-ink">No upcoming featured events</p>
+                <p className="text-xs text-ink-muted mt-1 max-w-xs">
+                  We are preparing our next special seasons and conventions. Check back soon!
+                </p>
+              </div>
+            ) : (
+              <RevealStagger className="mt-5 space-y-4 flex-1" staggerChildren={0.07}>
+                {sortedEvents.map((event) => {
+                  const startDate = event.start_date ? new Date(event.start_date) : null
+                  const isValidStart = startDate && !isNaN(startDate.getTime())
+                  const dateString = isValidStart ? format(startDate, "MMMM d, yyyy") : "Date TBD"
+
+                  return (
+                    <Link key={event.id} href={`/events/${event.slug}`}>
+                      <motion.article
+                        variants={fadeUp}
+                        transition={{ duration: 0.45, ease }}
+                        whileHover={{ y: -4, transition: { type: "spring", stiffness: 400, damping: 22 } }}
+                        className="group flex flex-col sm:flex-row gap-4 rounded-xl glass-panel-subtle p-4 hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden border border-white/10"
+                      >
+                        {/* Poster Image */}
+                        <div className="relative h-36 sm:h-24 w-full sm:w-20 shrink-0 overflow-hidden rounded-lg bg-black/5 border border-black/5 shadow-sm">
+                          {event.cover_image ? (
+                            <img
+                              src={event.cover_image}
+                              alt={event.title}
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                          ) : (
+                            <div className="flex h-full w-full items-center justify-center bg-red-500/10 text-red-600">
+                              <Calendar className="h-6 w-6" />
+                            </div>
+                          )}
+                          {event.featured && (
+                            <span className="absolute top-1.5 left-1.5 p-1 rounded-full bg-red-600/90 text-white shadow-md">
+                              <Sparkles className="h-3 w-3" />
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Content */}
+                        <div className="flex-1 flex flex-col justify-between">
+                          <div>
+                            <div className="flex items-center gap-2 mb-1.5">
+                              <span className="text-[10px] uppercase tracking-wider font-semibold text-red-600 px-2 py-0.5 rounded-full bg-red-500/10">
+                                {event.event_type === "week_event" ? "Week Event" : "Season Event"}
+                              </span>
+                              {event.venue && (
+                                <span className="inline-flex items-center gap-0.5 text-[10px] text-ink-muted">
+                                  <MapPin className="h-3 w-3" /> {event.venue}
+                                </span>
+                              )}
+                            </div>
+                            <h4 className="font-display text-lg font-bold text-ink group-hover:text-red-600 transition-colors line-clamp-1">
+                              {event.title}
+                            </h4>
+                            {event.theme && (
+                              <p className="text-xs text-ink-muted italic line-clamp-1 mt-0.5">
+                                Theme: "{event.theme}"
+                              </p>
+                            )}
+                          </div>
+                          <p className="text-xs text-ink-muted font-medium mt-2 flex items-center gap-1">
+                            <Calendar className="h-3.5 w-3.5 text-red-600/70" />
+                            {dateString}
+                          </p>
+                        </div>
+                      </motion.article>
+                    </Link>
+                  )
+                })}
+              </RevealStagger>
+            )}
+
             <Link
               href="/events"
-              className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--accent-deep)] hover:underline"
+              className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--accent-deep)] hover:underline"
             >
               View all events <ArrowRight className="h-4 w-4" />
             </Link>

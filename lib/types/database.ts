@@ -17,3 +17,25 @@ export interface Testimony {
     is_confidential: boolean;
     display_order: number;
 }
+
+export interface Event {
+    id: string;
+    title: string;
+    slug: string;
+    event_type: "week_event" | "season_event" | string;
+    status: "draft" | "published" | string;
+    short_description: string | null;
+    full_description: string | null;
+    theme: string | null;
+    scripture: string | null;
+    cover_image: string | null;
+    venue: string | null;
+    start_date: string;
+    end_date: string;
+    featured: boolean;
+    is_homepage_featured: boolean;
+    schedule: any;
+    gallery: any;
+    created_at: string;
+    updated_at: string | null;
+}

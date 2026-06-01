@@ -13,13 +13,15 @@ interface ImageUploadProps {
     onChange: (url: string | null) => void
     disabled?: boolean
     bucket?: string
+    folder?: string
 }
 
 export function ImageUpload({
     value,
     onChange,
     disabled,
-    bucket = "testimony-images"
+    bucket = "testimony-images",
+    folder
 }: ImageUploadProps) {
     const [isUploading, setIsUploading] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
@@ -53,7 +55,7 @@ export function ImageUpload({
 
             const fileExt = file.name.split(".").pop()
             const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`
-            const filePath = fileName
+            const filePath = folder ? `${folder}/${fileName}` : fileName
 
             const { error: uploadError, data } = await supabase.storage
                 .from(bucket)

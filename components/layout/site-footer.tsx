@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
 import { Facebook, Youtube, MessageCircle, Mail, Phone, MapPin } from "lucide-react"
 import { NAV, SITE } from "@/lib/site"
@@ -10,6 +11,12 @@ import { ease } from "@/lib/motion"
 const quickLinks = NAV.filter((n) => !n.children).slice(0, 6)
 
 export function SiteFooter() {
+  const pathname = usePathname() ?? "/"
+
+  if (pathname.startsWith("/admin")) {
+    return null
+  }
+
   return (
     <footer className="relative mt-24">
       <motion.div

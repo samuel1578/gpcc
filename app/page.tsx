@@ -10,9 +10,11 @@ import { GivingSection } from "@/components/home/giving-section"
 import { ConnectSection } from "@/components/home/connect-section"
 import { ParallaxContent } from "@/components/layout/parallax-content"
 import { getFeaturedTestimonials } from "@/lib/actions/testimonies"
+import { getHomepageFeaturedEvents } from "@/lib/actions/events"
 
 export default async function HomePage() {
   const featuredTestimonials = await getFeaturedTestimonials()
+  const homepageEvents = await getHomepageFeaturedEvents()
 
   return (
     <>
@@ -22,7 +24,7 @@ export default async function HomePage() {
         <PastorWelcome />
         <MinistriesGrid />
         <ServiceTimes />
-        <MediaEvents />
+        <MediaEvents events={homepageEvents} />
         <TestimoniesSection testimonies={featuredTestimonials} />
         <GallerySection />
         <GivingSection />
