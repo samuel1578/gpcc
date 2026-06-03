@@ -2,23 +2,23 @@ import type { Metadata } from "next"
 import { PageTransition } from "@/components/motion/page-transition"
 import { PageHero } from "@/components/layout/page-hero"
 import { ParallaxContent } from "@/components/layout/parallax-content"
-import { MediaList } from "./_components/media-list"
+import { MediaDirectory } from "./_components/media-directory"
 
 export const metadata: Metadata = {
-  title: "Media Center",
-  description: "Watch sermons, listen to messages, and download study materials from Christ Apostolic Church Igbalubi.",
+  title: "Media Center – Global Peace Christian Centre",
+  description: "Explore our sermons, events, and multimedia resources to stay connected with God's word and experience the transformative power of faith.",
 }
 
 export default function MediaCenterPage() {
   return (
     <PageTransition>
       <PageHero
-        eyebrow="Media Center"
-        title="Sermons, music & messages"
-        description="Catch up on the latest preaching, worship, and teaching from our pulpit and ministries."
+        eyebrow="Welcome to the"
+        title="Media Center"
+        description="Explore our sermons, events, and multimedia resources to stay connected with God's word and experience the transformative power of faith."
       />
       <ParallaxContent>
-        <MediaList />
+        <MediaDirectory />
       </ParallaxContent>
     </PageTransition>
   )
