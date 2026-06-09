@@ -5,6 +5,7 @@ import { useDesignMode } from "@/lib/design-mode/store"
 import { EditableSection } from "@/components/design-mode/editable"
 import { TestimoniesGrid } from "@/components/home/testimonies-grid"
 import { TestimoniesScroll } from "@/components/home/testimonies-scroll"
+import { PageContainer } from "@/components/layout/page-container"
 import type { Testimony } from "@/lib/types/database"
 
 interface TestimoniesSectionProps {
@@ -25,10 +26,12 @@ export function TestimoniesSection({ testimonies }: TestimoniesSectionProps) {
       id="home.testimonies"
       label="Testimonies"
       pageKey="home"
-      className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-5"
+      className="w-full"
     >
       {useStaticGrid ? (
-        <TestimoniesGrid testimonies={testimonies} />
+        <PageContainer className="py-5">
+          <TestimoniesGrid testimonies={testimonies} />
+        </PageContainer>
       ) : (
         <TestimoniesScroll testimonies={testimonies} />
       )}

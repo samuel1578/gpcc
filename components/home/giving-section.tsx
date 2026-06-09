@@ -7,6 +7,7 @@ import { SITE } from "@/lib/site"
 import { ease } from "@/lib/motion"
 import { PillButton } from "@/components/ui/pill-button"
 import { EditableSection, EditableText } from "@/components/design-mode/editable"
+import { PageContainer } from "@/components/layout/page-container"
 
 export function GivingSection() {
   return (
@@ -14,58 +15,60 @@ export function GivingSection() {
       id="home.giving"
       label="Giving"
       pageKey="home"
-      className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-5"
+      className="w-full"
     >
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.7, ease }}
-        className="gold-glow relative w-full overflow-hidden rounded-3xl glass-panel-dark text-center px-6 py-10 lg:p-[clamp(3rem,5vw,6rem)_clamp(1.5rem,4vw,5rem)]"
-      >
-        <div className="relative mx-auto -mt-4 h-16 w-16 sm:h-20 sm:w-20 lg:h-24 lg:w-24">
-          <Image
-            src="/images/hero/logo.png"
-            alt={SITE.name}
-            fill
-            className="object-contain"
-            priority
-          />
-        </div>
-        <p className="mt-4 label-cap text-[var(--accent-gold)]">Partner with us</p>
-        <EditableText
-          id="home.giving.title"
-          label="Giving Heading"
-          pageKey="home"
-          as="h2"
-          className="mt-3 font-display font-semibold text-ink-on-dark text-balance"
+      <PageContainer className="py-5">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7, ease }}
+          className="gold-glow relative w-full overflow-hidden rounded-3xl glass-panel-dark text-center px-6 py-10 lg:p-[clamp(3rem,5vw,6rem)_clamp(1.5rem,4vw,5rem)]"
         >
-          <span style={{ fontSize: "clamp(2rem, 3vw + 0.6rem, 3rem)", lineHeight: 1.15 }}>
-            Every gift carries a story. Yours is welcome here.
-          </span>
-        </EditableText>
-        <EditableText
-          id="home.giving.body"
-          label="Giving Body"
-          pageKey="home"
-          as="p"
-          className="mx-auto mt-6 max-w-xl text-base text-ink-on-dark-muted"
-        >
-          Your partnership advances the Word, sustains our community, and reaches
-          lives across Ghana and beyond.
-        </EditableText>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <PillButton href="#" variant="rose" size="lg">
-            Give Now
-          </PillButton>
-          <button
-            type="button"
-            className="text-sm font-medium uppercase tracking-[0.16em] text-[var(--accent-gold-light)] hover:text-white"
+          <div className="relative mx-auto -mt-4 h-16 w-16 sm:h-20 sm:w-20 lg:h-24 lg:w-24">
+            <Image
+              src="/images/hero/logo.png"
+              alt={SITE.name}
+              fill
+              className="object-contain"
+              sizes="(max-width: 640px) 64px, (max-width: 1024px) 80px, 96px"
+            />
+          </div>
+          <p className="mt-4 label-cap text-[var(--accent-gold)]">Partner with us</p>
+          <EditableText
+            id="home.giving.title"
+            label="Giving Heading"
+            pageKey="home"
+            as="h2"
+            className="mt-3 font-display font-semibold text-ink-on-dark text-balance"
           >
-            Why give?
-          </button>
-        </div>
-      </motion.div>
+            <span style={{ fontSize: "clamp(2rem, 3vw + 0.6rem, 3rem)", lineHeight: 1.15 }}>
+              Every gift carries a story. Yours is welcome here.
+            </span>
+          </EditableText>
+          <EditableText
+            id="home.giving.body"
+            label="Giving Body"
+            pageKey="home"
+            as="p"
+            className="mx-auto mt-6 max-w-xl text-base text-ink-on-dark-muted"
+          >
+            Your partnership advances the Word, sustains our community, and reaches
+            lives across Ghana and beyond.
+          </EditableText>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <PillButton href="#" variant="rose" size="lg">
+              Give Now
+            </PillButton>
+            <button
+              type="button"
+              className="text-sm font-medium uppercase tracking-[0.16em] text-[var(--accent-gold-light)] hover:text-white"
+            >
+              Why give?
+            </button>
+          </div>
+        </motion.div>
+      </PageContainer>
     </EditableSection>
   )
 }

@@ -17,20 +17,23 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
   variable: "--font-cormorant",
   display: "swap",
+  preload: true,
 })
 
 const inter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-inter",
-  display: "swap",
+  display: "optional",
+  preload: true,
 })
 
 const quantico = Quantico({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-quantico",
-  display: "swap",
+  display: "optional",
+  preload: true,
 })
 
 export const metadata: Metadata = {

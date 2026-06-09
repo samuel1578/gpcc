@@ -99,6 +99,7 @@ export function TestimoniesList({ testimonies }: TestimoniesListProps) {
                                             alt={t.title}
                                             fill
                                             className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         />
                                     ) : (
                                         <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
@@ -162,6 +163,7 @@ export function TestimoniesList({ testimonies }: TestimoniesListProps) {
                                             alt={selectedTestimony.title}
                                             fill
                                             className="object-cover"
+                                            sizes="(max-width: 1200px) 100vw, 1200px"
                                         />
                                     ) : (
                                         <div className="absolute inset-0 bg-red-600/10" />

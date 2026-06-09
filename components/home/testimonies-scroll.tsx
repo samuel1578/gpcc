@@ -187,8 +187,6 @@ function DesktopMedia({ testimony, index, count, progress }: DesktopMediaProps) 
                     alt={testimony.title}
                     fill
                     className="object-cover"
-                    priority={index === 0}
-                    loading={index === 0 ? "eager" : "lazy"}
                     sizes="55vw"
                 />
             ) : (
@@ -278,7 +276,6 @@ function MobileMedia({ testimony, index, count, progress }: MobileMediaProps) {
                     alt={testimony.title}
                     fill
                     className="object-cover"
-                    priority={index === 0}
                     sizes="90vw"
                 />
             ) : (

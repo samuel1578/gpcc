@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { THEME_2026 } from "@/lib/site"
 import { ease } from "@/lib/motion"
 import { EditableSection, EditableText } from "@/components/design-mode/editable"
+import { PageContainer } from "@/components/layout/page-container"
 
 export function ThemeSection() {
   return (
@@ -13,7 +14,7 @@ export function ThemeSection() {
       pageKey="home"
       className="relative w-full overflow-hidden pt-2 pb-5"
     >
-      <div className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px]">
+      <PageContainer>
         <motion.div
           initial={{ opacity: 0, scale: 0.96, y: 20 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -48,7 +49,7 @@ export function ThemeSection() {
             className="mx-auto mt-6 h-px w-24 bg-gradient-to-r from-transparent via-[var(--accent-gold)] to-transparent opacity-70"
           />
         </motion.div>
-      </div>
+      </PageContainer>
     </EditableSection>
   )
 }

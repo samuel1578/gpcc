@@ -41,7 +41,6 @@ function ImageCycler() {
                             fill
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, 30vw"
-                            priority
                         />
                     </motion.div>
                 ) : (
@@ -59,7 +58,6 @@ function ImageCycler() {
                             fill
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, 30vw"
-                            priority
                         />
                     </motion.div>
                 )}

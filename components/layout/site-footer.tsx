@@ -36,6 +36,7 @@ export function SiteFooter() {
                   alt={`${SITE.name} Logo`}
                   fill
                   className="object-contain p-1.5"
+                  sizes="40px"
                 />
               </div>
               <span className="font-display text-2xl font-semibold text-white">

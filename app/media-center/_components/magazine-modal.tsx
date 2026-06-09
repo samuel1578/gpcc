@@ -61,7 +61,6 @@ function MagazineModalContent({ onClose }: MagazineModalContentProps) {
                         fill
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, 30vw"
-                        priority
                     />
                 </div>
             </div>

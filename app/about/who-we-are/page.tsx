@@ -58,6 +58,7 @@ export default function WhoWeArePage() {
                             fill
                             className="object-contain object-center lg:object-right"
                             unoptimized={true}
+                            sizes="(max-width: 1024px) 60vw, 45vw"
                         />
                     </div>
                 </motion.div>
@@ -203,6 +204,7 @@ export default function WhoWeArePage() {
                                                 fill
                                                 className="object-cover"
                                                 unoptimized={true}
+                                                sizes="(max-width: 640px) 130px, 200px"
                                             />
                                         </motion.div>
                                     </motion.div>
