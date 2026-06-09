@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
+import { PageContainer } from "@/components/layout/page-container"
 import { motion } from "framer-motion"
 import { Radio, Tv, Calendar, ArrowRight, MapPin, Sparkles } from "lucide-react"
 import { MEDIA_STATIONS } from "@/lib/site"
