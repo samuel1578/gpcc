@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useActionState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Facebook, Youtube, MessageCircle, Mail, Check } from "lucide-react"
+import { Facebook, Youtube, MessageCircle, Mail, Check, AlertCircle } from "lucide-react"
 import Image from "next/image"
 import { PageContainer } from "@/components/layout/page-container"
 import { SITE } from "@/lib/site"
@@ -10,34 +10,27 @@ import { ease } from "@/lib/motion"
 import { Reveal } from "@/components/motion/reveal"
 import { PillButton } from "@/components/ui/pill-button"
 import { EditableSection, EditableText } from "@/components/design-mode/editable"
+import { subscribeToNewsletter, type NewsletterResponse } from "@/lib/actions/newsletter"
 
 export function ConnectSection() {
   const [email, setEmail] = useState("")
-  const [submitting, setSubmitting] = useState(false)
-  const [done, setDone] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [feedback, setFeedback] = useState<NewsletterResponse | null>(null)
 
   useEffect(() => setMounted(true), [])
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (!email) return
-    setSubmitting(true)
-    try {
-      await fetch(SITE.newsletter, {
-        method: "POST",
-        headers: { Accept: "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      })
-      setDone(true)
-      setEmail("")
-      setTimeout(() => setDone(false), 4000)
-    } catch {
-      // ignore
-    } finally {
-      setSubmitting(false)
-    }
-  }
+  const [, formAction, isPending] = useActionState(
+    async (_prev: NewsletterResponse | null, formData: FormData) => {
+      const result = await subscribeToNewsletter(_prev, formData)
+      setFeedback(result)
+      if (result.success) {
+        setEmail("")
+        setTimeout(() => setFeedback(null), 4000)
+      }
+      return result
+    },
+    null,
+  )
 
   return (
     <EditableSection
@@ -84,16 +77,20 @@ export function ConnectSection() {
                   <p className="mt-2 text-sm text-ink-muted">
                     Devotionals, sermons, and event reminders — straight to your inbox.
                   </p>
-                  <form onSubmit={onSubmit} className="mt-5 flex flex-col gap-3 sm:flex-row">
+                  <form action={formAction} className="mt-5 flex flex-col gap-3 sm:flex-row">
                     <label className="relative flex-1">
                       <span className="sr-only">Email</span>
                       <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" />
                       {mounted ? (
                         <input
                           type="email"
+                          name="email"
                           required
                           value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          onChange={(e) => {
+                            setEmail(e.target.value)
+                            if (feedback) setFeedback(null)
+                          }}
                           placeholder="you@example.com"
                           className="w-full rounded-full border border-black/10 bg-white/70 py-3 pl-11 pr-5 text-sm text-ink placeholder:text-ink-muted focus:border-[var(--accent-deep)]/40 focus:outline-none focus:ring-2 focus:ring-[var(--accent-deep)]/20"
                         />
@@ -104,23 +101,31 @@ export function ConnectSection() {
                         />
                       )}
                     </label>
-                    <PillButton type="submit" disabled={submitting} variant="primary">
-                      {submitting ? "Sending…" : "Sign Up"}
+                    <PillButton type="submit" disabled={isPending} variant="primary">
+                      {isPending ? "Subscribing…" : "Sign Up"}
                     </PillButton>
                   </form>
                   <p className="mt-3 text-[11px] uppercase tracking-[0.18em] text-ink-muted [@media(min-width:1024px)_and_(max-width:1536px)]:normal-case [@media(min-width:1024px)_and_(max-width:1536px)]:tracking-normal">
                     We respect your inbox — unsubscribe anytime.
                   </p>
                   <AnimatePresence>
-                    {done && (
+                    {feedback && (
                       <motion.div
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 8 }}
                         transition={{ duration: 0.3, ease }}
-                        className="mt-4 inline-flex items-center gap-2 rounded-full bg-[var(--accent-emerald)]/15 px-4 py-2 text-sm text-[var(--accent-emerald)]"
+                        className={`mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm ${feedback.success
+                          ? "bg-[var(--accent-emerald)]/15 text-[var(--accent-emerald)]"
+                          : "bg-[var(--accent-rose)]/15 text-[var(--accent-rose)]"
+                          }`}
                       >
-                        <Check className="h-4 w-4" /> You're in. Welcome!
+                        {feedback.success ? (
+                          <Check className="h-4 w-4" />
+                        ) : (
+                          <AlertCircle className="h-4 w-4" />
+                        )}
+                        {feedback.message}
                       </motion.div>
                     )}
                   </AnimatePresence>

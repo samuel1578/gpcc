@@ -39,3 +39,11 @@ export interface Event {
     created_at: string;
     updated_at: string | null;
 }
+
+export interface NewsletterSubscriber {
+    id: string;
+    email: string;
+    created_at: string;
+    source: string;
+    status: string;
+}
