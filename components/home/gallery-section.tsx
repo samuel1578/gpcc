@@ -74,6 +74,26 @@ export function GallerySection() {
                     sizes="(max-width: 1024px) 50vw, 33vw"
                   />
                 </div>
+              ) : t.label === "Youth Encounter" ? (
+                <div className={`relative ${t.aspect}`}>
+                  <Image
+                    src="/images/media/gallert.webp"
+                    alt="Youth Encounter"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+              ) : t.label === "Praise & Worship" ? (
+                <div className={`relative ${t.aspect}`}>
+                  <Image
+                    src="/images/gallery/por.jpg"
+                    alt="Praise & Worship"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
               ) : (
                 <ImagePlaceholder label={t.label} aspect={t.aspect} rounded="rounded-2xl" />
               )}
@@ -100,6 +120,26 @@ export function GallerySection() {
                   <Image
                     src="/images/gallery/gallery3.jpg"
                     alt="Bible Teaching"
+                    fill
+                    className="object-cover"
+                    sizes="288px"
+                  />
+                </div>
+              ) : t.label === "Youth Encounter" ? (
+                <div className="relative aspect-[3/4]">
+                  <Image
+                    src="/images/media/gallert.webp"
+                    alt="Youth Encounter"
+                    fill
+                    className="object-cover"
+                    sizes="288px"
+                  />
+                </div>
+              ) : t.label === "Praise & Worship" ? (
+                <div className="relative aspect-[3/4]">
+                  <Image
+                    src="/images/gallery/por.webp"
+                    alt="Praise & Worship"
                     fill
                     className="object-cover"
                     sizes="288px"

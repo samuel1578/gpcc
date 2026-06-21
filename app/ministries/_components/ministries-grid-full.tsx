@@ -3,16 +3,16 @@
 import { motion } from "framer-motion"
 import { Shield, Heart, Zap, Baby, Music, BookOpen } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
+import Image from "next/image"
 import { fadeUp } from "@/lib/motion"
 import { Reveal, RevealStagger } from "@/components/motion/reveal"
-import { ImagePlaceholder } from "@/components/ui/image-placeholder"
 import { EditableSection } from "@/components/design-mode/editable"
 
-const items: { name: string; icon: LucideIcon; description: string }[] = [
-  { name: "Men's Ministry", icon: Shield, description: "Building men of faith, strength, and purpose through fellowship and discipleship." },
-  { name: "Women's Ministry", icon: Heart, description: "Empowering women through grace, prayer, and a sisterhood that endures." },
-  { name: "Youth Ministry", icon: Zap, description: "Raising a fearless generation on fire for God, equipped to lead." },
-  { name: "Children's Ministry", icon: Baby, description: "Nurturing young hearts in God's love through worship, story, and play." },
+const items: { name: string; icon: LucideIcon; description: string; image?: string }[] = [
+  { name: "Men's Ministry", icon: Shield, description: "Building men of faith, strength, and purpose through fellowship and discipleship.", image: "/images/media/men-ministry.webp" },
+  { name: "Women's Ministry", icon: Heart, description: "Empowering women through grace, prayer, and a sisterhood that endures.", image: "/images/media/womenier.webp" },
+  { name: "Youth Ministry", icon: Zap, description: "Raising a fearless generation on fire for God, equipped to lead.", image: "/images/media/youtt.webp" },
+  { name: "Children's Ministry", icon: Baby, description: "Nurturing young hearts in God's love through worship, story, and play.", image: "/images/media/children-ministry.png" },
   { name: "Worship & Arts", icon: Music, description: "Leading the congregation into the presence through Spirit-led worship." },
   { name: "Bible Teaching", icon: BookOpen, description: "Mid-week deep dives that help us hear, understand, and bear fruit." },
 ]
@@ -38,9 +38,23 @@ export function MinistriesGridFull() {
             key={m.name}
             variants={fadeUp}
             whileHover={{ y: -4 }}
-            className="overflow-hidden rounded-3xl glass-panel"
+            className="overflow-hidden rounded-3xl glass-panel flex flex-col"
           >
-            <ImagePlaceholder label={m.name} aspect="aspect-[16/10]" rounded="rounded-none" className="border-0 border-b border-white/35" />
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5">
+              {m.image ? (
+                <Image
+                  src={m.image}
+                  alt={m.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 450px"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center text-ink-muted/20">
+                  <m.icon className="h-12 w-12" strokeWidth={1} />
+                </div>
+              )}
+            </div>
             <div className="p-6 sm:p-7">
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-deep)]/10 text-[var(--accent-deep)]">
                 <m.icon className="h-5 w-5" strokeWidth={1.6} />

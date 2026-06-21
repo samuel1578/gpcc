@@ -72,7 +72,7 @@ export const MINISTRIES = [
     name: "Youth Ministry",
     icon: "Zap",
     description: "Raising a generation on fire for God.",
-    image: "/images/media/youth-ministry.png",
+    image: "/images/media/youtt.webp",
   },
   {
     name: "Children's Ministry",

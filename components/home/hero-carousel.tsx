@@ -12,7 +12,7 @@ import "swiper/css/pagination"
 const IMAGES = [
   { src: "/images/hero/hero121.webp", alt: "Church gathering" },
   { src: "/images/hero/hero22.webp", alt: "Church service" },
-  { src: "/images/hero/hero3.jpg", alt: "Church worship" },
+  { src: "/images/hero/heree.webp", alt: "Church worship" },
   { src: "/images/hero/hero4.jpg", alt: "Church community" },
 ]
 
