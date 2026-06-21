@@ -30,7 +30,6 @@ export const NAV: NavItem[] = [
     children: [
       { label: "Who We Are", href: "/about/who-we-are" },
       { label: "The Leadership", href: "/about/leadership" },
-      { label: "Eldership & Deacons", href: "/about/eldership-deacons" },
       { label: "Community Journey", href: "/about/community-journey" },
       { label: "Ministries", href: "/ministries" },
     ],

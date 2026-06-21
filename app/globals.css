@@ -281,6 +281,11 @@
   .swiper-pagination-bullet-active {
     background: var(--accent-gold);
   }
+
+  /* Modal Active Overrides */
+  body.modal-active header {
+    display: none !important;
+  }
 }
 
 /* ── Medium laptop range: 1024px–1536px ─────────────────────────── */
