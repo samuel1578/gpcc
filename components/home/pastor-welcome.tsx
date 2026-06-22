@@ -193,42 +193,66 @@ function ScheduleModal({ onClose }: { onClose: () => void }) {
       exit={{ opacity: 0 }}
       onClick={onClose}
       className={cn(
-        "fixed inset-0 z-[100] flex bg-black/50 px-4",
-        isMobile ? "items-end" : "items-start justify-center pt-2 sm:pt-4 backdrop-blur-md"
+        "fixed inset-0 z-[100] flex bg-black/50",
+        isMobile ? "items-end px-0" : "items-start justify-center px-4 pt-2 sm:pt-4 backdrop-blur-md"
       )}
     >
       <motion.div
         onClick={(e) => e.stopPropagation()}
-        initial={isMobile ? { y: "100%", opacity: 1, scale: 1 } : { scale: 0.96, opacity: 0, y: 16 }}
-        animate={isMobile ? { y: 0, opacity: 1, scale: 1 } : { scale: 1, opacity: 1, y: 0 }}
-        exit={isMobile ? { y: "100%", opacity: 1, scale: 1 } : { scale: 0.97, opacity: 0, y: 16 }}
+        initial={isMobile ? { y: "100%" } : { scale: 0.96, opacity: 0, y: 16 }}
+        animate={isMobile ? { y: 0 } : { scale: 1, opacity: 1, y: 0 }}
+        exit={isMobile ? { y: "100%" } : { scale: 0.97, opacity: 0, y: 16 }}
         transition={{ duration: 0.4, ease }}
         className={cn(
-          "relative w-full max-w-xl overflow-hidden shadow-[var(--shadow-dramatic)]",
-          isMobile ? "rounded-t-3xl max-h-[80vh] bg-white" : "rounded-3xl max-h-[96vh] glass-panel-strong"
+          "relative w-full overflow-hidden shadow-[var(--shadow-dramatic)] flex flex-col md:flex-row",
+          isMobile
+            ? "rounded-t-[2.5rem] max-h-[90vh] bg-white"
+            : "rounded-[2rem] max-h-[96vh] glass-panel-strong max-w-4xl lg:max-w-5xl"
         )}
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute right-4 top-4 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-black/5 text-ink hover:bg-black/10"
+          className={cn(
+            "absolute right-4 top-4 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full backdrop-blur-sm transition-colors shadow-sm",
+            isMobile ? "bg-black/5 text-ink" : "bg-white/80 text-ink hover:bg-white"
+          )}
         >
           <X className="h-4 w-4" />
         </button>
-        <div className="overflow-y-auto px-6 py-10 sm:px-10 sm:py-12">
+
+        {/* Image Column */}
+        <div className={cn(
+          "relative shrink-0",
+          isMobile ? "h-[30vh] w-full" : "md:w-[40%] lg:w-[45%]"
+        )}>
+          <Image
+            src="/images/media/solemntime.webp"
+            alt="Worship at GPCC"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            priority
+          />
+          {/* Subtle overlay for mobile to blend with white background if needed, or just for depth */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent md:hidden" />
+        </div>
+
+        {/* Content Column */}
+        <div className="flex-1 overflow-y-auto px-6 py-10 sm:px-10 sm:py-12">
           <p className="label-cap text-[var(--accent-deep)]">Join us in worship</p>
-          <h3 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">
+          <h3 className="mt-2 font-display text-3xl font-semibold sm:text-4xl text-ink">
             Service Schedule
           </h3>
-          <div className="mt-8 space-y-6">
+          <div className="mt-8 space-y-4">
             {SERVICE_TIMES.map((s, i) => (
               <motion.div
                 key={s.day}
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, ease, delay: 0.1 + i * 0.08 }}
-                className="flex items-start gap-4 rounded-2xl bg-white/40 p-4 border border-black/5"
+                className="flex items-start gap-4 rounded-2xl bg-white/40 p-4 border border-black/5 hover:bg-white/60 transition-colors"
               >
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--accent-deep)]/10 text-[var(--accent-deep)]">
                   <Calendar className="h-5 w-5" />
@@ -379,16 +403,55 @@ function PastorMessageModal({ onClose }: { onClose: () => void }) {
           </h3>
           <p className="mt-1 font-display italic text-ink-muted">{PASTOR.role}</p>
           <div className="mt-6 space-y-4 body-lg text-ink-muted text-pretty">
-            {PASTOR.fullMessage.map((p, i) => (
-              <motion.p
-                key={i}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease, delay: 0.15 + i * 0.12 }}
-              >
-                {p}
-              </motion.p>
-            ))}
+            {PASTOR.fullMessage.map((block, i) => {
+              if (block.type === "paragraph") {
+                return (
+                  <motion.p
+                    key={i}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, ease, delay: 0.15 + i * 0.12 }}
+                  >
+                    {block.content}
+                  </motion.p>
+                )
+              }
+              if (block.type === "list") {
+                return (
+                  <motion.ul
+                    key={i}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, ease, delay: 0.15 + i * 0.12 }}
+                    className="space-y-2 pl-5 list-disc"
+                  >
+                    {block.items.map((item, idx) => (
+                      <li key={idx} className="leading-relaxed">
+                        {item}
+                      </li>
+                    ))}
+                  </motion.ul>
+                )
+              }
+              if (block.type === "signature") {
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, ease, delay: 0.15 + i * 0.12 }}
+                    className="pt-4 font-display italic"
+                  >
+                    {block.content.map((line, idx) => (
+                      <p key={idx} className={cn(idx === 0 ? "mb-1" : "text-sm not-italic")}>
+                        {line}
+                      </p>
+                    ))}
+                  </motion.div>
+                )
+              }
+              return null
+            })}
           </div>
           <div className="mt-8">
             <PillButton href="/about/profile-president" variant="primary">

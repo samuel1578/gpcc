@@ -22,6 +22,11 @@ export const SITE = {
 export type NavChild = { label: string; href: string }
 export type NavItem = { label: string; href: string; children?: NavChild[] }
 
+export type PastorMessageBlock =
+  | { type: "paragraph"; content: string }
+  | { type: "list"; items: string[] }
+  | { type: "signature"; content: string[] }
+
 export const NAV: NavItem[] = [
   { label: "Home", href: "/" },
   {
@@ -113,12 +118,56 @@ export const PASTOR = {
   role: "Founder & Chairman · GPCC",
   portrait: "/images/pastors/founder.jpg",
   shortMessage:
-    "It is with profound joy that I welcome you to Global Peace Christian Centre — a place where the Word is taught with clarity, and grace is lived with sincerity.",
+    "It is a joy to introduce you to the Global Peace Christian Centre(GPCC)! Our passion is to provide a place where you can have a life changing experience with Jesus Christ our Lord, Master and Saviour and offer you the opportunity to grow spiritually",
   fullMessage: [
-    "Welcome to Global Peace Christian Centre. Whether you are searching, returning, or simply visiting, you are family here.",
-    "Our mission is simple: to hear the Word, understand it, and bear fruit a hundredfold. Every service, every ministry, every gathering is built around that calling.",
-    "We invite you to step in, be still, and discover the peace that only Christ can give. The doors are open — and so are our hearts.",
-  ],
+    { type: "paragraph", content: "Dear Beloved," },
+    {
+      type: "paragraph",
+      content:
+        "It is a joy to introduce you to the Global Peace Christian Centre (GPCC)! Our passion is to provide a place where you can have a life changing experience with Jesus Christ our Lord, Master and Saviour and offer you the opportunity to grow spiritually.",
+    },
+    {
+      type: "paragraph",
+      content:
+        "At GPCC, we believe that every person matters to God and should matter to the church. Whether you're taking your first steps in faith or you've been following Jesus for years, we want to help you discover your next steps toward God and connecting with others.",
+    },
+    {
+      type: "paragraph",
+      content:
+        "We are a Bible-believing, life-giving, charismatic, and Pentecostal church committed to creating an environment where:",
+    },
+    {
+      type: "list",
+      items: [
+        "Hearts are transformed through powerful worship and relevant Bible teaching",
+        "Families are strengthened and equipped for life's journey",
+        "Communities are impacted with God's love and grace",
+        "Lives are connected to God's purpose and plan",
+      ],
+    },
+    {
+      type: "paragraph",
+      content:
+        "Our beautiful worship facility is designed to create an atmosphere where hearts meet the presence of God.",
+    },
+    {
+      type: "paragraph",
+      content:
+        "We invite you to join us as we step in, be still, and discover the peace that only Christ can give. The doors are open — and so are our hearts.",
+    },
+    {
+      type: "paragraph",
+      content: "May God's abundant blessings be upon you and your family.",
+    },
+    {
+      type: "signature",
+      content: [
+        "In His Service,",
+        "Apostle Henry Ampomah-Boateng",
+        "Founder & Chairman, GPCC",
+      ],
+    },
+  ] as PastorMessageBlock[],
 } as const
 
 export const THEME_2026 = {
