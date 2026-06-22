@@ -294,6 +294,37 @@ export default function WhoWeArePage() {
                     </motion.div>
                 </EditableSection>
 
+                {/* Section — Community Showcase */}
+                <EditableSection
+                    id="who-we-are.showcase"
+                    label="Community Showcase"
+                    pageKey="who-we-are"
+                    className="mx-auto w-[calc(100vw-32px)] lg:w-[calc(100vw-76px)] max-w-[2800px] py-10"
+                >
+                    <motion.div
+                        {...mProps({
+                            initial: { opacity: 0, y: isMobile ? 16 : 20 },
+                            whileInView: { opacity: 1, y: 0 },
+                            transition: { duration: isMobile ? 0.5 : 0.65, ease: "easeOut" },
+                            viewport: { once: true, margin: "-10%" }
+                        })}
+                        className="relative mx-auto w-full overflow-hidden rounded-3xl shadow-2xl"
+                    >
+                        <div className="group relative aspect-[16/9] w-full overflow-hidden md:aspect-[21/9]">
+                            <Image
+                                src="/images/media/happychurch.webp"
+                                alt="GPCC Community Fellowship"
+                                fill
+                                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                sizes="(max-width: 1024px) 100vw, 92vw"
+                                priority
+                            />
+                            {/* Subtle Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
+                        </div>
+                    </motion.div>
+                </EditableSection>
+
                 {/* Section 3 — Our Vision */}
                 <EditableSection
                     id="who-we-are.vision"

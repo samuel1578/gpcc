@@ -13,7 +13,7 @@ const IMAGES = [
   { src: "/images/hero/hero121.webp", alt: "Church gathering" },
   { src: "/images/hero/hero22.webp", alt: "Church service" },
   { src: "/images/hero/heree.webp", alt: "Church worship" },
-  { src: "/images/hero/hero4.jpg", alt: "Church community" },
+  { src: "/images/hero/hero44.webp", alt: "Church community" },
 ]
 
 export function HeroCarousel() {
