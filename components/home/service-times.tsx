@@ -16,9 +16,10 @@ export function ServiceTimes() {
       pageKey="home"
       as="section"
       className="w-full"
+      style={{ isolation: "isolate" }}
     >
       <PageContainer className="py-5">
-        <div id="service-times" className="w-full rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(3rem,5vw,6rem)_clamp(1.5rem,3vw,4rem)]">
+        <div id="service-times" className="relative z-10 w-full rounded-3xl glass-panel-strong px-6 py-10 lg:p-[clamp(3rem,5vw,6rem)_clamp(1.5rem,3vw,4rem)]">
           <Reveal className="text-center">
             <p className="font-display font-semibold text-red-600" style={{ fontSize: "clamp(1.5rem,2.5vw,3rem)" }}>Join Us This Week</p>
             <EditableText
@@ -53,12 +54,12 @@ export function ServiceTimes() {
             ))}
           </RevealStagger>
 
-          <Reveal delay={0.2} className="mt-10 flex justify-center">
+          <Reveal delay={0.2} className="relative z-10 mt-10 flex justify-center">
             <a
               href={SITE.contact.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--accent-deep)]/30 bg-white/60 px-5 py-2.5 text-sm font-medium text-[var(--accent-deep)] backdrop-blur transition-colors hover:bg-white/80"
+              className="relative z-10 inline-flex items-center gap-2 rounded-full border border-[var(--accent-deep)]/30 bg-white/60 px-5 py-2.5 text-sm font-medium text-[var(--accent-deep)] backdrop-blur transition-colors hover:bg-white/80"
             >
               <MapPin className="h-4 w-4" />
               Get directions

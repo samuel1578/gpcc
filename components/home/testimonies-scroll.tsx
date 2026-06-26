@@ -101,10 +101,10 @@ export function TestimoniesScroll({ testimonies }: TestimoniesScrollProps) {
                 </div>
 
                 {/* 2. MOBILE INTIMATE VERTICAL LAYOUT */}
-                <div className="flex md:hidden h-full w-full flex-col justify-between p-6 z-10">
+                <div className="flex md:hidden h-full w-full flex-col justify-center gap-4 p-6 z-10">
 
                     {/* Sticky Media Panel (Top 40%) */}
-                    <div className="relative w-full h-[35vh] rounded-2xl overflow-hidden glass-panel shadow-xl">
+                    <div className="relative w-full h-[30vh] rounded-2xl overflow-hidden glass-panel shadow-xl">
                         {testimonies.map((t, index) => (
                             <MobileMedia
                                 key={t.id}
@@ -117,7 +117,7 @@ export function TestimoniesScroll({ testimonies }: TestimoniesScrollProps) {
                     </div>
 
                     {/* Narrative Text Panel (Bottom 55%) */}
-                    <div className="relative w-full h-[50vh] rounded-2xl glass-panel p-6 shadow-lg flex flex-col justify-center">
+                    <div className="relative w-full h-[48vh] rounded-2xl glass-panel p-6 shadow-lg flex flex-col justify-center">
                         {testimonies.map((t, index) => (
                             <MobileText
                                 key={t.id}
@@ -132,7 +132,7 @@ export function TestimoniesScroll({ testimonies }: TestimoniesScrollProps) {
                 </div>
 
                 {/* Progress Indicators (Left side layout bar) */}
-                <div className="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
+                <div className="absolute right-3 md:right-10 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
                     {testimonies.map((_, index) => {
                         const isActive = activeIndex === index
                         return (
@@ -150,9 +150,9 @@ export function TestimoniesScroll({ testimonies }: TestimoniesScrollProps) {
                                 className="group focus:outline-none"
                                 aria-label={`Go to testimony ${index + 1}`}
                             >
-                                <div className={`h-2 rounded-full transition-all duration-500 ${isActive
-                                    ? "w-8 bg-red-600"
-                                    : "w-2 bg-ink-muted/20 group-hover:bg-ink-muted/40"
+                                <div className={`rounded-full transition-all duration-500 ${isActive
+                                    ? "w-8 h-2 bg-red-600"
+                                    : "w-1.5 h-1.5 md:w-2 md:h-2 bg-ink-muted/20 group-hover:bg-ink-muted/40"
                                     }`} />
                             </button>
                         )
