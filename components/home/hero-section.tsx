@@ -29,7 +29,7 @@ export function HeroSection() {
     >
       <div
         className="relative flex w-full items-center justify-center"
-        style={{ minHeight: `${heightVh}vh` }}
+        style={{ minHeight: `${heightVh}dvh` }}
       >
         {/* Background image (placeholder-ready) */}
         <div className="absolute inset-0 -z-20">
@@ -44,15 +44,15 @@ export function HeroSection() {
           aria-hidden
         />
 
-        <div className="mx-auto flex w-full max-w-[1200px] lg:max-w-[min(92vw,1600px)] xl:max-w-[min(90vw,1800px)] 2xl:max-w-[min(90vw,2000px)] flex-col items-center pt-20 pb-24 text-center text-slate-900 xl:pt-[8vh] xl:pb-[8vh]">
+        <div className="mx-auto flex w-full max-w-[1200px] lg:max-w-[min(92vw,1600px)] xl:max-w-[min(90vw,1800px)] 2xl:max-w-[min(90vw,2000px)] flex-col items-center min-h-[100dvh] flex flex-col justify-between pt-[max(4rem,8dvh)] pb-[max(3rem,6dvh)] text-center text-slate-900 xl:pt-[8vh] xl:pb-[8vh]">
           <motion.p
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 0.9, y: 0 }}
             transition={{ duration: 0.7, ease, delay: 0.1 }}
             className="w-full px-6 sm:px-8 lg:px-12 2xl:px-16 font-display italic text-slate-800"
             style={{
-              fontSize: "clamp(1.35rem, 2.5vw, 2rem)",
-              lineHeight: 0.85,
+              fontSize: "clamp(1.1rem, 3.5vw, 2rem)",
+              lineHeight: 1.1,
             }}
           >
             Welcome to the
@@ -63,7 +63,7 @@ export function HeroSection() {
             label="Hero Title"
             pageKey="home"
             as="h1"
-            className="w-full px-6 sm:px-8 lg:px-12 2xl:px-16 -mt-1 lg:mt-[2vh] font-display font-semibold"
+            className="w-full px-6 sm:px-8 lg:px-12 2xl:px-16 mt-2 lg:mt-[2vh] font-display font-semibold"
           >
             <motion.span
               initial={{ opacity: 0, y: 24 }}
@@ -71,8 +71,8 @@ export function HeroSection() {
               transition={{ duration: 0.8, ease, delay: 0.18 }}
               className="block"
               style={{
-                fontSize: "clamp(2rem, 4.5vw, 5rem)",
-                lineHeight: 0.95,
+                fontSize: "clamp(2rem, 5.5vw, 5rem)",
+                lineHeight: 1.0,
                 letterSpacing: "-0.02em",
               }}
             >
@@ -112,22 +112,6 @@ export function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          aria-hidden
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.6 }}
-          transition={{ delay: 1.2, duration: 0.6 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-600"
-        >
-          <motion.span
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="block"
-          >
-            <ChevronDown className="h-6 w-6" />
-          </motion.span>
-        </motion.div>
       </div>
     </EditableSection>
   )

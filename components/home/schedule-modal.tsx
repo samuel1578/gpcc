@@ -30,21 +30,22 @@ export function ScheduleModal({ onClose }: { onClose: () => void }) {
             exit={{ opacity: 0 }}
             onClick={onClose}
             className={cn(
-                "fixed inset-0 z-[200] flex bg-black/60 backdrop-blur-sm",
+                "fixed inset-0 z-[200] flex bg-black/60 backdrop-blur-md",
                 isMobile ? "items-end px-4" : "items-center justify-center px-4"
             )}
         >
             <motion.div
                 onClick={(e) => e.stopPropagation()}
-                initial={isMobile ? { y: "100%" } : { scale: 0.96, opacity: 0, y: 16 }}
-                animate={isMobile ? { y: 0 } : { scale: 1, opacity: 1, y: 0 }}
-                exit={isMobile ? { y: "100%" } : { scale: 0.97, opacity: 0, y: 16 }}
+                initial={isMobile ? { y: "100%", opacity: 1 } : { scale: 0.96, opacity: 0, y: 16 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={isMobile ? { y: "100%", opacity: 1 } : { scale: 0.97, opacity: 0, y: 16 }}
                 transition={{ duration: 0.4, ease }}
+                style={{ backgroundColor: "#ffffff" }}
                 className={cn(
-                    "relative w-full overflow-y-auto shadow-[var(--shadow-dramatic)] flex flex-col md:flex-row bg-white",
+                    "relative w-full overflow-y-auto flex flex-col md:flex-row bg-white",
                     isMobile
                         ? "rounded-t-3xl max-h-[85vh]"
-                        : "rounded-3xl max-h-[96vh] max-w-2xl mx-auto"
+                        : "rounded-3xl max-h-[96vh] max-w-2xl mx-auto shadow-2xl"
                 )}
             >
                 <button

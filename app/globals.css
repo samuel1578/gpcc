@@ -144,6 +144,8 @@
         linear-gradient(180deg, rgba(245, 243, 238, 0.2), rgba(232, 226, 215, 0.15)),
         url('/images/mcg.jpg');
       background-attachment: scroll;
+      will-change: transform;
+      transform: translateZ(0);
     }
   }
 
@@ -285,6 +287,11 @@
   /* Modal Active Overrides */
   body.modal-active header {
     display: none !important;
+  }
+
+  .modal-solid {
+    background-color: #ffffff !important;
+    isolation: isolate;
   }
 }
 

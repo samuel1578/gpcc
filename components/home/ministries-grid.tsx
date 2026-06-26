@@ -11,6 +11,7 @@ import { Reveal } from "@/components/motion/reveal"
 import { PillButton } from "@/components/ui/pill-button"
 import { EditableSection, EditableText } from "@/components/design-mode/editable"
 import { PageContainer } from "@/components/layout/page-container"
+import { MinistriesScroll } from "@/components/home/ministries-scroll"
 
 export function MinistriesGrid() {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -37,24 +38,6 @@ export function MinistriesGrid() {
       pageKey="home"
       className="w-full py-5"
     >
-      <PageContainer>
-        <Reveal className="mx-auto max-w-3xl text-center">
-          <p className="font-display font-semibold text-red-600" style={{ fontSize: "clamp(1.5rem,2.5vw,3rem)" }}>Our Ministries</p>
-          <EditableText
-            id="home.ministries.title"
-            label="Ministries Heading"
-            pageKey="home"
-            as="h2"
-            className="mt-3 h-section text-ink"
-          >
-            Find your people. Find your purpose.
-          </EditableText>
-          <p className="mt-4 body-lg text-ink-muted">
-            Whatever season you’re in, there’s a community at GPCC built for you.
-          </p>
-        </Reveal>
-      </PageContainer>
-
       <div
         ref={sectionRef}
         className="relative mt-16 hidden lg:block"
@@ -154,14 +137,14 @@ export function MinistriesGrid() {
         </div>
       </div>
 
-      <PageContainer className="mt-12 lg:hidden">
-        <div className="space-y-6">
+      <PageContainer className="mt-12 hidden md:block lg:hidden">
+        <div className="grid grid-cols-2 gap-6">
           {MINISTRIES.map((ministry) => (
             <motion.article
               key={ministry.name}
               whileHover={{ y: -6 }}
               transition={{ duration: 0.5, ease }}
-              className="relative overflow-hidden rounded-2xl border-2 border-red-600 bg-white/5"
+              className="relative overflow-hidden rounded-2xl glass-panel-strong border border-white/10"
             >
               <Link
                 href="/ministries"
@@ -175,26 +158,25 @@ export function MinistriesGrid() {
                   fill
                   className="object-cover object-[center_20%]"
                   unoptimized
-                  sizes="100vw"
+                  sizes="50vw"
                 />
               </div>
-              <div className="relative z-10 px-6 py-6">
+              <div className="relative z-10 px-5 py-5">
                 <p className="label-cap text-red-600">{ministry.name}</p>
-                <h3 className="mt-3 font-display text-2xl font-semibold text-ink">{ministry.name}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-muted">{ministry.description}</p>
-                <span className="mt-4 inline-flex items-center gap-1 text-xs font-medium uppercase tracking-[0.18em] text-[var(--accent-deep)]">
+                <h3 className="mt-2 font-display text-xl font-semibold text-ink">{ministry.name}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-ink-muted line-clamp-2">{ministry.description}</p>
+                <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium uppercase tracking-[0.18em] text-[var(--accent-deep)]">
                   Explore <ArrowUpRight className="h-3.5 w-3.5" />
                 </span>
               </div>
             </motion.article>
           ))}
-          {/* Mobile CTA Slide */}
           <motion.article
             whileHover={{ y: -6 }}
             transition={{ duration: 0.5, ease }}
-            className="relative overflow-hidden rounded-2xl border-2 border-red-600 bg-white"
+            className="relative col-span-2 overflow-hidden rounded-2xl glass-panel-strong border border-white/10"
           >
-            <div className="relative aspect-video w-full overflow-hidden">
+            <div className="relative aspect-[21/6] w-full overflow-hidden">
               <Image
                 src="/images/media/MINCTA.jpg"
                 alt="Find Your Place"
@@ -204,29 +186,27 @@ export function MinistriesGrid() {
                 sizes="100vw"
               />
             </div>
-            <div className="relative z-10 px-6 py-6">
-              <p className="label-cap text-red-600">Find Your Place</p>
-              <h3 className="mt-3 font-display text-2xl font-semibold text-ink">Every ministry has a seat with your name on it.</h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-                Whether you&apos;re stepping in for the first time or looking to go
-                deeper in your faith journey, our ministries are open, welcoming,
-                and waiting for you.
-              </p>
-              <p className="mt-2 text-xs italic text-ink-muted/70">
-                Come as you are. Leave changed.
-              </p>
-              <div className="mt-6 flex flex-col gap-3">
-                <PillButton href="#service-times" variant="primary" size="sm" className="w-full">
-                  Visit Us This Sunday
+            <div className="relative z-10 px-6 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <p className="label-cap text-red-600">Find Your Place</p>
+                <h3 className="mt-1 font-display text-xl font-semibold text-ink">Every ministry has a seat with your name on it.</h3>
+              </div>
+              <div className="flex gap-3 shrink-0">
+                <PillButton href="#service-times" variant="primary" size="sm">
+                  Visit Us
                 </PillButton>
-                <PillButton href="/ministries" variant="ghost" size="sm" className="w-full">
-                  Explore All Ministries
+                <PillButton href="/ministries" variant="ghost" size="sm">
+                  Explore All
                 </PillButton>
               </div>
             </div>
           </motion.article>
         </div>
       </PageContainer>
+
+      <div className="mt-12 block md:hidden">
+        <MinistriesScroll />
+      </div>
     </EditableSection >
   )
 }

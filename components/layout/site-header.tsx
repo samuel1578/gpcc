@@ -106,7 +106,7 @@ export function SiteHeader() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 xl:flex 2xl:gap-3" aria-label="Primary">
+        <nav className="hidden items-center gap-1 lg:flex 2xl:gap-3" aria-label="Primary">
           {NAV.map((item) => {
             if (item.children) {
               return (
@@ -197,7 +197,7 @@ export function SiteHeader() {
           type="button"
           onClick={() => setMobileOpen(true)}
           className={cn(
-            "inline-flex h-12 w-12 items-center justify-center rounded-full border backdrop-blur xl:hidden",
+            "inline-flex h-12 w-12 items-center justify-center rounded-full border backdrop-blur lg:hidden",
             overHero ? "border-slate-400/30 bg-white/20 text-slate-900" : "border-white/20 bg-white/10 text-white"
           )}
           aria-label="Open menu"
@@ -215,7 +215,7 @@ export function SiteHeader() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[95] bg-black/60 backdrop-blur-sm xl:hidden"
+            className="fixed inset-0 z-[95] bg-black/60 backdrop-blur-sm lg:hidden"
             onClick={() => setMobileOpen(false)}
           >
             <motion.div
