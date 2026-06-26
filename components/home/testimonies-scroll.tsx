@@ -20,7 +20,7 @@ export function TestimoniesScroll({ testimonies }: TestimoniesScrollProps) {
     // 1. Scroll Tracking & Inertial Smoothing
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start start", "end end"]
+        offset: ["start 10%", "end end"]
     })
 
     const smoothProgress = useSpring(scrollYProgress, {
@@ -101,7 +101,7 @@ export function TestimoniesScroll({ testimonies }: TestimoniesScrollProps) {
                 </div>
 
                 {/* 2. MOBILE INTIMATE VERTICAL LAYOUT */}
-                <div className="flex md:hidden h-full w-full flex-col justify-center gap-4 p-6 z-10">
+                <div className="flex md:hidden h-full w-full flex-col justify-center gap-4 pt-[80px] pb-6 px-6 z-10">
 
                     {/* Sticky Media Panel (Top 40%) */}
                     <div className="relative w-full h-[30vh] rounded-2xl overflow-hidden glass-panel shadow-xl">

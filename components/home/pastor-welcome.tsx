@@ -194,7 +194,7 @@ function ScheduleModal({ onClose }: { onClose: () => void }) {
       onClick={onClose}
       className={cn(
         "fixed inset-0 z-[100] flex bg-black/50",
-        isMobile ? "items-end px-0" : "items-start justify-center px-4 pt-2 sm:pt-4 backdrop-blur-md"
+        isMobile ? "items-end px-4" : "items-start justify-center px-4 pt-2 sm:pt-4 backdrop-blur-md"
       )}
     >
       <motion.div
@@ -206,8 +206,8 @@ function ScheduleModal({ onClose }: { onClose: () => void }) {
         className={cn(
           "relative w-full overflow-hidden shadow-[var(--shadow-dramatic)] flex flex-col md:flex-row",
           isMobile
-            ? "rounded-t-[2.5rem] max-h-[90vh] bg-white"
-            : "rounded-[2rem] max-h-[96vh] glass-panel-strong max-w-4xl lg:max-w-5xl"
+            ? "rounded-t-3xl max-h-[85vh] bg-white overflow-y-auto w-full"
+            : "rounded-3xl max-h-[96vh] glass-panel-strong w-full max-w-2xl mx-auto"
         )}
       >
         <button
@@ -240,7 +240,7 @@ function ScheduleModal({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Content Column */}
-        <div className="flex-1 overflow-y-auto px-6 py-10 sm:px-10 sm:py-12">
+        <div className="px-6 py-8 sm:px-10">
           <p className="label-cap text-[var(--accent-deep)]">Join us in worship</p>
           <h3 className="mt-2 font-display text-3xl font-semibold sm:text-4xl text-ink">
             Service Schedule
