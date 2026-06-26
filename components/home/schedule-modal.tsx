@@ -89,7 +89,7 @@ export function ScheduleModal({ onClose }: { onClose: () => void }) {
                                 initial={{ opacity: 0, x: -12 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.4, ease, delay: 0.1 + i * 0.08 }}
-                                className="flex items-start gap-4 rounded-2xl bg-white/40 p-4 border border-black/5 hover:bg-white/60 transition-colors"
+                                className="flex items-start gap-4 rounded-2xl bg-black/[0.03] p-4 border border-black/8 hover:bg-black/[0.05] transition-colors"
                             >
                                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--accent-deep)]/10 text-[var(--accent-deep)]">
                                     <Calendar className="h-5 w-5" />
