@@ -13,10 +13,6 @@ import { ease } from "@/lib/motion"
 export function SiteHeader() {
   const pathname = usePathname() ?? "/"
 
-  if (pathname.startsWith("/admin")) {
-    return null
-  }
-
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [aboutOpen, setAboutOpen] = useState(false)
@@ -60,6 +56,10 @@ export function SiteHeader() {
       document.removeEventListener("keydown", onKey)
     }
   }, [aboutOpen])
+
+  if (pathname.startsWith("/admin")) {
+    return null
+  }
 
   const isHome = pathname === "/"
   const overHero = isHome && !scrolled
@@ -226,27 +226,34 @@ export function SiteHeader() {
               onClick={(e) => e.stopPropagation()}
               className="absolute inset-y-0 right-0 flex w-[min(86vw,380px)] flex-col glass-panel-dark text-white"
             >
-              <div className="flex items-center justify-between px-6 py-5">
-                <div className="flex items-center gap-3">
+              <div className="px-6 pt-5 pb-4">
+                {/* Close button row — top right */}
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => setMobileOpen(false)}
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10"
+                    aria-label="Close menu"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+                {/* Logo and name stacked below close button */}
+                <div className="mt-4 flex flex-col items-start gap-3">
                   <Image
                     src="/images/hero/logo.png"
                     alt={`${SITE.name} Logo`}
-                    width={56}
-                    height={56}
-                    className="h-14 w-auto object-contain"
+                    width={72}
+                    height={72}
+                    className="h-[clamp(3.5rem,10vw,4.5rem)] w-auto object-contain"
                   />
-                  <span className="font-display text-xl font-semibold text-white">
-                    {SITE.shortName}
+                  <span
+                    className="font-display font-semibold text-white leading-tight"
+                    style={{ fontSize: "clamp(1.1rem, 4.5vw, 1.5rem)" }}
+                  >
+                    {SITE.name}
                   </span>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setMobileOpen(false)}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10"
-                  aria-label="Close menu"
-                >
-                  <X className="h-5 w-5" />
-                </button>
               </div>
               <nav className="flex-1 overflow-y-auto px-2 py-4" aria-label="Mobile">
                 <ul className="space-y-1">
@@ -301,7 +308,9 @@ export function SiteHeader() {
                 </ul>
               </nav>
               <div className="border-t border-white/10 px-6 py-4 text-xs text-white/60">
-                <p>{SITE.contact.phones[0]}</p>
+                <p className="mb-1 text-white/40 uppercase tracking-[0.14em] text-[10px]">Find Us</p>
+                <p className="text-white/70">{SITE.contact.address}</p>
+                <p className="mt-2">{SITE.contact.phones[0]}</p>
                 <p>{SITE.contact.email}</p>
               </div>
             </motion.div>
