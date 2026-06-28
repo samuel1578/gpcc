@@ -134,16 +134,32 @@ export async function addImagesToAlbum(id: string, images: GalleryImage[]): Prom
 export async function deleteImageFromAlbum(id: string, imageUrl: string): Promise<void> {
     if (!WORKER_URL) throw new Error("Worker URL not configured")
 
-    const res = await fetch(`${WORKER_URL}/albums/${id}/images`, {
+    const res = await fetch(`${WORKER_URL}/albums/${id}/images/${encodeURIComponent(imageUrl)}`, {
         method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${process.env.CLOUDFLARE_WORKER_SECRET}`
+        }
+    })
+
+    if (!res.ok) throw new Error("Failed to delete image")
+
+    revalidatePath("/gallery")
+    revalidatePath(`/admin/gallery/${id}`)
+}
+
+export async function reorderAlbumImages(id: string, images: GalleryImage[]): Promise<void> {
+    if (!WORKER_URL) throw new Error("Worker URL not configured")
+
+    const res = await fetch(`${WORKER_URL}/albums/${id}`, {
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${process.env.CLOUDFLARE_WORKER_SECRET}`
         },
-        body: JSON.stringify({ imageUrl })
+        body: JSON.stringify({ images, image_count: images.length })
     })
 
-    if (!res.ok) throw new Error("Failed to delete image")
+    if (!res.ok) throw new Error("Failed to reorder images")
 
     revalidatePath("/gallery")
     revalidatePath(`/admin/gallery/${id}`)

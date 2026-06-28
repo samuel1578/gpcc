@@ -3,10 +3,26 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { X, Plus, Loader2, ImageIcon, Upload } from "lucide-react"
+import { X, Plus, Loader2, ImageIcon, Upload, GripVertical } from "lucide-react"
 import { toast } from "sonner"
-import { addImagesToAlbum, deleteImageFromAlbum, type Album, type GalleryImage } from "@/lib/actions/gallery"
+import { addImagesToAlbum, deleteImageFromAlbum, reorderAlbumImages, type Album, type GalleryImage } from "@/lib/actions/gallery"
 import { uploadToR2 } from "@/lib/upload"
+
+import {
+    DndContext,
+    closestCenter,
+    PointerSensor,
+    useSensor,
+    useSensors,
+    type DragEndEvent,
+} from "@dnd-kit/core"
+import {
+    SortableContext,
+    useSortable,
+    rectSortingStrategy,
+    arrayMove,
+} from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -20,10 +36,35 @@ interface ImageManagementProps {
 
 export function ImageManagement({ album }: ImageManagementProps) {
     const router = useRouter()
+    const [images, setImages] = useState<GalleryImage[]>(album.images)
+    const [isSavingOrder, setIsSavingOrder] = useState(false)
     const [isDeleting, setIsDeleting] = useState<string | null>(null)
     const [isAdding, setIsAdding] = useState(false)
     const [showAddForm, setShowAddForm] = useState(false)
     const [uploadProgress, setUploadProgress] = useState("")
+
+    const sensors = useSensors(useSensor(PointerSensor))
+
+    async function handleDragEnd(event: DragEndEvent) {
+        const { active, over } = event
+        if (!over || active.id === over.id) return
+
+        const oldIndex = images.findIndex(img => img.url === active.id)
+        const newIndex = images.findIndex(img => img.url === over.id)
+        const reordered = arrayMove(images, oldIndex, newIndex)
+        setImages(reordered)
+
+        try {
+            setIsSavingOrder(true)
+            await reorderAlbumImages(album.id, reordered)
+            toast.success("Order saved")
+        } catch {
+            toast.error("Failed to save order")
+            setImages(album.images) // revert on failure
+        } finally {
+            setIsSavingOrder(false)
+        }
+    }
 
     async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
         const files = Array.from(e.target.files || [])
@@ -54,13 +95,12 @@ export function ImageManagement({ album }: ImageManagementProps) {
 
     async function onDelete(imageUrl: string) {
         if (!confirm("Remove this image from the album?")) return
-
         try {
             setIsDeleting(imageUrl)
             await deleteImageFromAlbum(album.id, imageUrl)
+            setImages(prev => prev.filter(img => img.url !== imageUrl))
             toast.success("Image removed")
-            router.refresh()
-        } catch (error) {
+        } catch {
             toast.error("Failed to remove image")
         } finally {
             setIsDeleting(null)
@@ -106,30 +146,26 @@ export function ImageManagement({ album }: ImageManagementProps) {
     return (
         <div className="space-y-8">
             {/* Image Grid */}
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                {album.images.map((img, i) => (
-                    <div key={img.url + i} className="group relative aspect-square overflow-hidden rounded-2xl border border-black/5 bg-black/5 shadow-sm">
-                        <Image
-                            src={img.url}
-                            alt={img.caption}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100" />
-
-                        <button
-                            onClick={() => onDelete(img.url)}
-                            disabled={isDeleting === img.url}
-                            className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-red-600 text-white shadow-lg transition-transform hover:scale-110 disabled:opacity-50"
-                        >
-                            {isDeleting === img.url ? <Loader2 className="h-4 w-4 animate-spin" /> : <X className="h-4 w-4" />}
-                        </button>
-
-                        <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 transition-opacity group-hover:opacity-100">
-                            <p className="text-[10px] font-medium text-white line-clamp-2">{img.caption}</p>
+            <div className="space-y-2">
+                {isSavingOrder && (
+                    <p className="text-xs text-ink-muted flex items-center gap-2">
+                        <Loader2 className="h-3 w-3 animate-spin" /> Saving order...
+                    </p>
+                )}
+                <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                    <SortableContext items={images.map(img => img.url)} strategy={rectSortingStrategy}>
+                        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                            {images.map((img, i) => (
+                                <SortableImage
+                                    key={img.url}
+                                    img={img}
+                                    isDeleting={isDeleting === img.url}
+                                    onDelete={() => onDelete(img.url)}
+                                />
+                            ))}
                         </div>
-                    </div>
-                ))}
+                    </SortableContext>
+                </DndContext>
             </div>
 
             {/* Empty State */}
@@ -235,6 +271,62 @@ export function ImageManagement({ album }: ImageManagementProps) {
                         </form>
                     </Card>
                 )}
+            </div>
+        </div>
+    )
+}
+
+function SortableImage({
+    img,
+    isDeleting,
+    onDelete,
+}: {
+    img: GalleryImage
+    isDeleting: boolean
+    onDelete: () => void
+}) {
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: img.url })
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+        opacity: isDragging ? 0.5 : 1,
+    }
+
+    return (
+        <div
+            ref={setNodeRef}
+            style={style}
+            className="group relative aspect-square overflow-hidden rounded-2xl border border-black/5 bg-black/5 shadow-sm"
+        >
+            <Image
+                src={img.url}
+                alt={img.caption}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100" />
+
+            {/* Drag handle */}
+            <button
+                {...attributes}
+                {...listeners}
+                className="absolute left-2 top-2 flex h-8 w-8 cursor-grab items-center justify-center rounded-full bg-black/50 text-white opacity-0 transition-opacity group-hover:opacity-100 active:cursor-grabbing"
+            >
+                <GripVertical className="h-4 w-4" />
+            </button>
+
+            {/* Delete button */}
+            <button
+                onClick={onDelete}
+                disabled={isDeleting}
+                className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-red-600 text-white shadow-lg transition-transform hover:scale-110 disabled:opacity-50"
+            >
+                {isDeleting ? <Loader2 className="h-4 w-4 animate-spin" /> : <X className="h-4 w-4" />}
+            </button>
+
+            <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 transition-opacity group-hover:opacity-100">
+                <p className="text-[10px] font-medium text-white line-clamp-2">{img.caption}</p>
             </div>
         </div>
     )

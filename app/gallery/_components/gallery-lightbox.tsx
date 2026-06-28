@@ -31,21 +31,16 @@ export function GalleryLightbox({ images, initialIndex = 0, onClose }: GalleryLi
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] flex flex-col bg-black/95 backdrop-blur-sm"
+            className="fixed inset-0 z-[300] flex items-center justify-center bg-black/95 backdrop-blur-sm"
         >
-            <div className="flex items-center justify-between p-4 pt-6 text-white">
-                <span className="text-sm font-medium opacity-70">
-                    Gallery View
-                </span>
-                <button
-                    onClick={onClose}
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
-                >
-                    <X className="h-6 w-6" />
-                </button>
-            </div>
+            <button
+                onClick={onClose}
+                className="absolute top-24 right-6 z-[310] flex h-12 w-12 items-center justify-center rounded-full bg-white text-black shadow-2xl transition-all hover:scale-110"
+            >
+                <X className="h-6 w-6" />
+            </button>
 
-            <div className="relative flex-1">
+            <div className="relative w-full" style={{ height: "100dvh" }}>
                 <Swiper
                     modules={[Navigation, Pagination, Keyboard]}
                     navigation={{
@@ -55,23 +50,26 @@ export function GalleryLightbox({ images, initialIndex = 0, onClose }: GalleryLi
                     pagination={{ clickable: true, type: "fraction" }}
                     keyboard={{ enabled: true }}
                     initialSlide={initialIndex}
-                    className="h-full w-full"
+                    className="w-full"
+                    style={{ height: "100dvh" }}
                     spaceBetween={30}
                 >
                     {images.map((img, idx) => (
-                        <SwiperSlide key={img.url + idx} className="flex items-center justify-center p-4">
-                            <div className="relative h-full w-full max-w-6xl">
-                                <Image
+                        <SwiperSlide
+                            key={img.url + idx}
+                            className="!flex items-center justify-center"
+                            style={{ height: "100dvh", padding: "80px 64px 48px" }}
+                        >
+                            <div className="relative flex items-center justify-center w-full h-full">
+                                <img
                                     src={img.url}
                                     alt={img.caption || "Gallery Image"}
-                                    fill
-                                    className="object-contain"
-                                    sizes="100vw"
-                                    priority={idx === initialIndex}
+                                    className="max-h-full max-w-full w-auto h-auto object-contain rounded-lg shadow-2xl"
+                                    style={{ display: "block" }}
                                 />
                                 {img.caption && (
-                                    <div className="absolute inset-x-0 bottom-10 flex justify-center">
-                                        <p className="rounded-full bg-black/50 px-6 py-2 text-sm text-white backdrop-blur-md">
+                                    <div className="absolute inset-x-0 bottom-0 flex justify-center pb-2">
+                                        <p className="rounded-full bg-black/60 px-6 py-2 text-sm text-white backdrop-blur-md">
                                             {img.caption}
                                         </p>
                                     </div>
