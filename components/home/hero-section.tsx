@@ -1,6 +1,7 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { ChevronDown } from "lucide-react"
 import { SITE } from "@/lib/site"
 import { ease } from "@/lib/motion"
@@ -8,8 +9,10 @@ import { PillButton } from "@/components/ui/pill-button"
 import { HeroCarousel } from "@/components/home/hero-carousel"
 import { EditableSection, EditableText } from "@/components/design-mode/editable"
 import { EMPTY_CONFIG, useDesignConfig, useDesignMode } from "@/lib/design-mode/store"
+import { ScheduleModal } from "@/components/home/schedule-modal"
 
 export function HeroSection() {
+  const [showSchedule, setShowSchedule] = useState(false)
   const activePageKey = useDesignMode((s) => s.activePageKey)
   const config =
     useDesignConfig((s) => s.configs[activePageKey]?.["home.hero"]) ?? EMPTY_CONFIG
@@ -103,7 +106,7 @@ export function HeroSection() {
             transition={{ duration: 0.7, ease, delay: 0.5 }}
             className={`w-full px-6 sm:px-8 lg:px-12 2xl:px-16 mt-10 lg:mt-[3vh] flex flex-wrap gap-4 xl:gap-[3vw] ${justify}`}
           >
-            <PillButton href="#service-times" variant="primary" size="fluid">
+            <PillButton onClick={() => setShowSchedule(true)} variant="primary" size="fluid">
               Visit Us
             </PillButton>
             <PillButton href="/media-center" variant="outline" size="fluid" className="border-slate-400 text-slate-700 hover:bg-slate-100">
@@ -113,6 +116,10 @@ export function HeroSection() {
         </div>
 
       </div>
+
+      <AnimatePresence>
+        {showSchedule && <ScheduleModal onClose={() => setShowSchedule(false)} />}
+      </AnimatePresence>
     </EditableSection>
   )
 }
