@@ -47,10 +47,30 @@ export const NAV: NavItem[] = [
 ]
 
 export const SERVICE_TIMES = [
-  { day: "Wednesday", service: "Bible Teaching", time: "6:30 PM – 8:30 PM" },
-  { day: "Friday", service: "Prayer Meeting", time: "6:30 PM – 8:30 PM" },
-  { day: "Saturday", service: "Healing & Deliverance", time: "8:30 – 10:30 AM" },
-  { day: "Sunday", service: "Church Service", time: "8:30 – 11:30 AM" },
+  {
+    day: "Wednesday",
+    service: "Bible Teaching",
+    time: "6:30 PM – 8:30 PM",
+    description: "Dive deeper into God's Word through structured, practical teaching designed to strengthen your faith and equip you for daily life.",
+  },
+  {
+    day: "Friday",
+    service: "Prayer Meeting",
+    time: "6:30 PM – 8:30 PM",
+    description: "Join us in corporate prayer and intercession as we seek God together for breakthrough, healing, and direction as a church family.",
+  },
+  {
+    day: "Saturday",
+    service: "Healing & Deliverance",
+    time: "8:30 – 10:30 AM",
+    description: "A dedicated time of ministry for those seeking physical, emotional, and spiritual healing through prayer and the power of God.",
+  },
+  {
+    day: "Sunday",
+    service: "Church Service",
+    time: "8:30 – 11:30 AM",
+    description: "Our main gathering — worship, the Word, and warm fellowship as one family, open to everyone regardless of where you are in your journey.",
+  },
 ] as const
 
 export const MEDIA_STATIONS = [

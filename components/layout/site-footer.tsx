@@ -30,17 +30,17 @@ export function SiteFooter() {
           {/* Identity + contact */}
           <div>
             <div className="flex items-center gap-3">
-              <div className="relative h-10 w-10 overflow-hidden rounded-full border border-white/20 bg-white/10">
+              <div className="relative h-10 w-10">
                 <Image
                   src="/images/hero/logo.png"
                   alt={`${SITE.name} Logo`}
                   fill
-                  className="object-contain p-1.5"
+                  className="object-contain"
                   sizes="40px"
                 />
               </div>
               <span className="font-display text-2xl font-semibold text-white">
-                {SITE.shortName}
+                {SITE.name}
               </span>
             </div>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/60">
