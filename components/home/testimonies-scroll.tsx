@@ -175,10 +175,10 @@ interface DesktopMediaProps {
 }
 
 function DesktopMedia({ testimony, index, count, progress }: DesktopMediaProps) {
-    const { opacity, scale } = getSlideTransforms(progress, index, count, "desktop")
+    const { opacity, scale, x } = getSlideTransforms(progress, index, count, "desktop")
     return (
         <motion.div
-            style={{ opacity, scale }}
+            style={{ opacity, scale, x }}
             className="absolute inset-0 w-full h-full"
         >
             {testimony.cover_image_url ? (
@@ -209,10 +209,10 @@ interface DesktopTextProps {
 }
 
 function DesktopText({ testimony, index, count, progress, isActive }: DesktopTextProps) {
-    const { opacity, y } = getSlideTransforms(progress, index, count, "desktop")
+    const { opacity, x } = getSlideTransforms(progress, index, count, "desktop")
     return (
         <motion.div
-            style={{ opacity, y }}
+            style={{ opacity, x }}
             aria-hidden={!isActive}
             className="absolute inset-x-8 lg:inset-x-12 flex flex-col justify-center"
         >
@@ -264,10 +264,10 @@ interface MobileMediaProps {
 }
 
 function MobileMedia({ testimony, index, count, progress }: MobileMediaProps) {
-    const { opacity } = getSlideTransforms(progress, index, count, "mobile")
+    const { opacity, x } = getSlideTransforms(progress, index, count, "mobile")
     return (
         <motion.div
-            style={{ opacity }}
+            style={{ opacity, x }}
             className="absolute inset-0 w-full h-full"
         >
             {testimony.cover_image_url ? (
@@ -297,10 +297,10 @@ interface MobileTextProps {
 }
 
 function MobileText({ testimony, index, count, progress, isActive }: MobileTextProps) {
-    const { opacity, y } = getSlideTransforms(progress, index, count, "mobile")
+    const { opacity, x } = getSlideTransforms(progress, index, count, "mobile")
     return (
         <motion.div
-            style={{ opacity, y }}
+            style={{ opacity, x }}
             aria-hidden={!isActive}
             className="absolute inset-x-6 flex flex-col justify-center space-y-4"
         >
@@ -359,28 +359,31 @@ function getSlideTransforms(
     let inputRange: number[]
     let opacityOutput: number[]
     let scaleOutput: number[]
-    let yOutput: number[]
+    let xOutput: number[]
+
+    // Horizontal sweep distance
+    const sweep = device === "desktop" ? 60 : 40
 
     if (index === 0) {
         inputRange = [0, peakEnd, end]
         opacityOutput = [1, 1, 0]
-        scaleOutput = [1, 1, device === "desktop" ? 1.05 : 1.02]
-        yOutput = [0, 0, device === "desktop" ? -30 : -15]
+        scaleOutput = [1, 1, 1.05]
+        xOutput = [0, 0, -sweep] // Exit to left
     } else if (index === count - 1) {
         inputRange = [start, peakStart, 1]
         opacityOutput = [0, 1, 1]
-        scaleOutput = [device === "desktop" ? 0.95 : 0.98, 1, 1]
-        yOutput = [device === "desktop" ? 30 : 15, 0, 0]
+        scaleOutput = [0.95, 1, 1]
+        xOutput = [sweep, 0, 0] // Enter from right
     } else {
         inputRange = [start, peakStart, peakEnd, end]
         opacityOutput = [0, 1, 1, 0]
-        scaleOutput = [device === "desktop" ? 0.95 : 0.98, 1, 1, device === "desktop" ? 1.05 : 1.02]
-        yOutput = [device === "desktop" ? 30 : 15, 0, 0, device === "desktop" ? -30 : -15]
+        scaleOutput = [0.95, 1, 1, 1.05]
+        xOutput = [sweep, 0, 0, -sweep] // Enter from right, exit to left
     }
 
     const opacity = useTransform(progress, inputRange, opacityOutput)
     const scale = useTransform(progress, inputRange, scaleOutput)
-    const y = useTransform(progress, inputRange, yOutput)
+    const x = useTransform(progress, inputRange, xOutput)
 
-    return { opacity, scale, y }
+    return { opacity, scale, x }
 }
