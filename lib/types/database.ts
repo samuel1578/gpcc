@@ -47,3 +47,12 @@ export interface NewsletterSubscriber {
     source: string;
     status: string;
 }
+
+export interface FeedbackSubmission {
+    id: string;
+    name: string;
+    email: string;
+    feedback_type: string;
+    message: string;
+    created_at: string;
+}

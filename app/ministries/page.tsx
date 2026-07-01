@@ -1,6 +1,7 @@
 import { PageHero } from "@/components/layout/page-hero"
 import { ParallaxContent } from "@/components/layout/parallax-content"
 import { MinistriesGridFull } from "./_components/ministries-grid-full"
+import { ServiceMinistriesGrid } from "./_components/service-ministries-grid"
 
 export const metadata = {
   title: "Ministries",
@@ -15,9 +16,11 @@ export default function MinistriesPage() {
         eyebrow="Ministries"
         title="Find your people. Find your purpose."
         description="From men's fellowship to children's church, every ministry exists to help you grow in faith and serve in love."
+        variant="light"
       />
       <ParallaxContent>
         <MinistriesGridFull />
+        <ServiceMinistriesGrid />
       </ParallaxContent>
     </>
   )
