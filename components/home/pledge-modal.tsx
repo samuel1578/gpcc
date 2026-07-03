@@ -8,6 +8,7 @@ import { ease } from "@/lib/motion"
 import { PillButton } from "@/components/ui/pill-button"
 import { cn } from "@/lib/utils"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { createClient } from "@/lib/supabase/browser"
 
 interface PledgeFormState {
     fullName: string
@@ -32,6 +33,7 @@ export function PledgeModal({ onClose }: { onClose: () => void }) {
     const [errors, setErrors] = useState<Partial<Record<keyof PledgeFormState, string>>>({})
     const [submitting, setSubmitting] = useState(false)
     const [submitted, setSubmitted] = useState(false)
+    const [submitError, setSubmitError] = useState<string | null>(null)
 
     useEffect(() => {
         setMounted(true)
@@ -74,12 +76,27 @@ export function PledgeModal({ onClose }: { onClose: () => void }) {
         e.preventDefault()
         if (!validate()) return
         setSubmitting(true)
-        // TODO (next phase): wire this to the backend (e.g. a Supabase "pledges"
-        // table) so pledge intents are actually captured and routed to the
-        // Welfare Team. This currently only simulates a successful submission —
-        // no data is persisted or sent anywhere yet.
-        await new Promise((resolve) => setTimeout(resolve, 600))
+        setSubmitError(null)
+
+        const supabase = createClient()
+        const { error } = await supabase.from("pledges").insert({
+            full_name: form.fullName.trim(),
+            email: form.email.trim(),
+            phone: form.phone.trim(),
+            amount: Number(form.amount),
+            note: form.note.trim() || null,
+        })
+
         setSubmitting(false)
+
+        if (error) {
+            console.error("Pledge submission failed:", error)
+            setSubmitError(
+                "Something went wrong submitting your pledge. Please try again, or contact us directly."
+            )
+            return
+        }
+
         setSubmitted(true)
     }
 
@@ -231,6 +248,9 @@ export function PledgeModal({ onClose }: { onClose: () => void }) {
                                         By submitting, our Global Peace Christian Centre Welfare Team
                                         will contact you to guide you on how to complete your pledge.
                                     </p>
+                                    {submitError && (
+                                        <p className="text-sm text-red-600 text-center">{submitError}</p>
+                                    )}
                                     <PillButton
                                         type="submit"
                                         variant="rose"
