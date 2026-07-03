@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { PageContainer } from "@/components/layout/page-container"
 import { motion } from "framer-motion"
-import { Radio, Tv, Calendar, ArrowRight, MapPin, Sparkles, X } from "lucide-react"
+import { Radio, Tv, Calendar, ArrowRight, MapPin, X } from "lucide-react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination } from "swiper/modules"
 import { MEDIA_STATIONS } from "@/lib/site"
@@ -138,9 +138,7 @@ export function MediaEvents({ events }: MediaEventsProps) {
                       </div>
                     )}
                     {event.featured && (
-                      <span className="absolute top-1.5 left-1.5 p-1 rounded-full bg-red-600/90 text-white shadow-md">
-                        <Sparkles className="h-3 w-3" />
-                      </span>
+                      <span className="absolute top-1.5 left-1.5 h-3 w-3 rounded-full bg-red-600/90 shadow-md" />
                     )}
                   </div>
 

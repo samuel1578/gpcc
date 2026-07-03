@@ -18,6 +18,9 @@ export default async function EventsPage() {
         eyebrow="Events"
         title="Come and see what God is doing."
         description="Conferences, retreats, outreach weekends, and community gatherings — all year long."
+        variant="light"
+        backgroundImage="/images/events/evhero.jpg"
+        imageStrip
       />
       <ParallaxContent>
         <EventsList events={events} />

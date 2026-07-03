@@ -77,32 +77,36 @@ export function EventsList({ events }: EventsListProps) {
       className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-10 py-16 lg:py-24 space-y-16"
     >
       {/* Tab Switcher */}
-      <div className="flex flex-col items-center justify-center space-y-4">
-        <Reveal className="text-center">
-          <p className="label-cap text-[var(--accent-deep)]">Mark your calendar</p>
-          <h2 className="mt-3 h-section text-ink">Gatherings &amp; Seasons</h2>
-        </Reveal>
-        <div className="flex p-1 rounded-full bg-black/5 border border-black/5 backdrop-blur-md">
-          <button
-            onClick={() => setActiveTab("upcoming")}
-            className={`px-6 py-2.5 rounded-full text-sm font-semibold uppercase tracking-wider transition-all duration-300 ${activeTab === "upcoming"
-              ? "bg-red-600 text-white shadow-md"
-              : "text-ink-muted hover:text-ink hover:bg-black/5"
-              }`}
-          >
-            Upcoming ({upcomingEvents.length})
-          </button>
-          <button
-            onClick={() => setActiveTab("past")}
-            className={`px-6 py-2.5 rounded-full text-sm font-semibold uppercase tracking-wider transition-all duration-300 ${activeTab === "past"
-              ? "bg-red-600 text-white shadow-md"
-              : "text-ink-muted hover:text-ink hover:bg-black/5"
-              }`}
-          >
-            Past ({pastEvents.length})
-          </button>
+      <Reveal>
+        <div className="relative overflow-hidden rounded-3xl glass-panel-strong p-8 sm:p-12 border border-white/25 shadow-xl max-w-4xl mx-auto">
+          <div className="flex flex-col items-center justify-center space-y-6">
+            <div className="text-center">
+              <p className="label-cap text-[var(--accent-deep)]">Mark your calendar</p>
+              <h2 className="mt-3 h-section text-ink">Gatherings &amp; Seasons</h2>
+            </div>
+            <div className="flex p-1 rounded-full bg-black/5 border border-black/5 backdrop-blur-md">
+              <button
+                onClick={() => setActiveTab("upcoming")}
+                className={`px-6 py-2.5 rounded-full text-sm font-semibold uppercase tracking-wider transition-all duration-300 ${activeTab === "upcoming"
+                  ? "bg-red-600 text-white shadow-md"
+                  : "text-ink-muted hover:text-ink hover:bg-black/5"
+                  }`}
+              >
+                Upcoming ({upcomingEvents.length})
+              </button>
+              <button
+                onClick={() => setActiveTab("past")}
+                className={`px-6 py-2.5 rounded-full text-sm font-semibold uppercase tracking-wider transition-all duration-300 ${activeTab === "past"
+                  ? "bg-red-600 text-white shadow-md"
+                  : "text-ink-muted hover:text-ink hover:bg-black/5"
+                  }`}
+              >
+                Past ({pastEvents.length})
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
+      </Reveal>
 
       {/* Spotlight Campaign Banner (Only for Upcoming Tab & if Spotlight Event exists) */}
       {activeTab === "upcoming" && spotlightEvent && (
@@ -213,9 +217,7 @@ export function EventsList({ events }: EventsListProps) {
                         {event.event_type === "week_event" ? "Week Event" : "Season Event"}
                       </span>
                       {event.featured && (
-                        <span className="p-1 rounded-full bg-red-600 text-white shadow-md">
-                          <Sparkles className="h-3 w-3" />
-                        </span>
+                        <span className="h-3 w-3 rounded-full bg-red-600 shadow-md" />
                       )}
                     </div>
                   </div>

@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, Clock, Calendar } from "lucide-react"
 import Image from "next/image"
@@ -12,8 +13,10 @@ import { useIsMobile } from "@/hooks/use-mobile"
 
 export function ScheduleModal({ onClose }: { onClose: () => void }) {
     const isMobile = useIsMobile() ?? false
+    const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
+        setMounted(true)
         const prev = document.body.style.overflow
         document.body.style.overflow = "hidden"
         document.body.classList.add("modal-active")
@@ -23,7 +26,9 @@ export function ScheduleModal({ onClose }: { onClose: () => void }) {
         }
     }, [])
 
-    return (
+    if (!mounted) return null
+
+    return createPortal(
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -117,6 +122,7 @@ export function ScheduleModal({ onClose }: { onClose: () => void }) {
                     </div>
                 </div>
             </motion.div>
-        </motion.div>
+        </motion.div>,
+        document.body
     )
 }

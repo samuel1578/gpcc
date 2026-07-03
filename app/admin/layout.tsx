@@ -3,7 +3,7 @@
 import type { ReactNode } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { LayoutDashboard, FileText, Calendar, ImageIcon, LogOut, Mail, MessageSquare } from "lucide-react"
+import { LayoutDashboard, FileText, Calendar, ImageIcon, LogOut, Mail, MessageSquare, HeartHandshake } from "lucide-react"
 import { SITE } from "@/lib/site"
 import { cn } from "@/lib/utils"
 import { logout } from "@/lib/actions/auth"
@@ -29,6 +29,7 @@ const adminNav = [
     { label: "Newsletter", href: "/admin/newsletter", icon: Mail },
     { label: "Gallery", href: "/admin/gallery", icon: ImageIcon },
     { label: "Feedback", href: "/admin/feedback", icon: MessageSquare },
+    { label: "Pledges", href: "/admin/pledges", icon: HeartHandshake },
 ]
 
 export default function AdminLayout({ children }: { children: ReactNode }) {

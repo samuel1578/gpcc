@@ -21,22 +21,5 @@ export function DesignModeProvider({ children }: { children: React.ReactNode }) 
     setActivePage(pathToPageKey(pathname ?? "/"))
   }, [pathname, setActivePage])
 
-  // Auto-enable design mode when visiting /admin-design
-  useEffect(() => {
-    if (pathname === "/admin-design") setEnabled(true)
-  }, [pathname, setEnabled])
-
-  // Keyboard shortcut: Ctrl/Cmd + Shift + D toggles the editor
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === "d") {
-        e.preventDefault()
-        toggle()
-      }
-    }
-    window.addEventListener("keydown", onKey)
-    return () => window.removeEventListener("keydown", onKey)
-  }, [toggle])
-
   return <>{children}</>
 }

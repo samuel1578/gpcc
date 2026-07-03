@@ -56,3 +56,15 @@ export interface FeedbackSubmission {
     message: string;
     created_at: string;
 }
+
+export interface Pledge {
+    id: string;
+    full_name: string;
+    email: string;
+    phone: string;
+    amount: number;
+    note: string | null;
+    status: 'new' | 'contacted' | 'completed' | 'cancelled';
+    created_at: string;
+    updated_at: string | null;
+}

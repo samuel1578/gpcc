@@ -12,6 +12,7 @@ import { EditableSection, EditableText } from "@/components/design-mode/editable
 import { PageContainer } from "@/components/layout/page-container"
 import { cn } from "@/lib/utils"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { PledgeModal } from "@/components/home/pledge-modal"
 
 // Swiper imports
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -22,6 +23,7 @@ import 'swiper/css/pagination'
 
 export function GivingSection() {
   const [whyGiveOpen, setWhyGiveOpen] = useState(false)
+  const [pledgeOpen, setPledgeOpen] = useState(false)
 
   return (
     <EditableSection
@@ -70,7 +72,7 @@ export function GivingSection() {
             lives across Ghana and beyond.
           </EditableText>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <PillButton href="#" variant="rose" size="lg">
+            <PillButton onClick={() => setPledgeOpen(true)} variant="rose" size="lg">
               Give Now
             </PillButton>
             <button
@@ -83,12 +85,27 @@ export function GivingSection() {
           </div>
         </motion.div>
       </PageContainer>
-      {whyGiveOpen && <WhyGiveModal onClose={() => setWhyGiveOpen(false)} />}
+      {whyGiveOpen && (
+        <WhyGiveModal
+          onClose={() => setWhyGiveOpen(false)}
+          onGiveNow={() => {
+            setWhyGiveOpen(false)
+            setPledgeOpen(true)
+          }}
+        />
+      )}
+      {pledgeOpen && <PledgeModal onClose={() => setPledgeOpen(false)} />}
     </EditableSection>
   )
 }
 
-function WhyGiveModal({ onClose }: { onClose: () => void }) {
+function WhyGiveModal({
+  onClose,
+  onGiveNow,
+}: {
+  onClose: () => void
+  onGiveNow: () => void
+}) {
   const isMobile = useIsMobile()
   const [activeSlide, setActiveSlide] = useState(0)
   const [mounted, setMounted] = useState(false)
@@ -233,7 +250,7 @@ function WhyGiveModal({ onClose }: { onClose: () => void }) {
                   </motion.div>
                 ))}
                 <div className="mt-6">
-                  <PillButton href="#" variant="rose" size="md" className="w-full">
+                  <PillButton onClick={onGiveNow} variant="rose" size="md" className="w-full">
                     Give Now
                   </PillButton>
                 </div>
@@ -298,7 +315,7 @@ function WhyGiveModal({ onClose }: { onClose: () => void }) {
                   ))}
                 </div>
                 <div className="mt-8 flex items-center gap-6">
-                  <PillButton href="#" variant="rose" size="md">
+                  <PillButton onClick={onGiveNow} variant="rose" size="md">
                     Give Now
                   </PillButton>
                   <button

@@ -47,14 +47,14 @@ export function HeroSection() {
           aria-hidden
         />
 
-        <div className="mx-auto flex w-full max-w-[1200px] lg:max-w-[min(92vw,1600px)] xl:max-w-[min(90vw,1800px)] 2xl:max-w-[min(90vw,2000px)] flex-col items-center min-h-[100dvh] flex flex-col justify-between pt-[max(4rem,8dvh)] pb-[max(3rem,6dvh)] text-center text-slate-900 xl:pt-[8vh] xl:pb-[8vh]">
+        <div className="mx-auto flex w-full max-w-[1200px] lg:max-w-[min(92vw,1600px)] xl:max-w-[min(90vw,1800px)] 2xl:max-w-[min(90vw,2000px)] flex-col items-center min-h-[100dvh] flex flex-col justify-between pt-[112px] lg:pt-[128px] xl:pt-[152px] pb-[max(3rem,6dvh)] text-center text-slate-900 xl:pb-[8vh]">
           <motion.p
             initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 0.9, y: 0 }}
+            animate={{ opacity: 0.9, y: 8 }}
             transition={{ duration: 0.7, ease, delay: 0.1 }}
             className="w-full px-6 sm:px-8 lg:px-12 2xl:px-16 font-display italic text-slate-800"
             style={{
-              fontSize: "clamp(1.1rem, 3.5vw, 2rem)",
+              fontSize: "clamp(2rem, 5.5vw, 5rem)",
               lineHeight: 1.1,
             }}
           >
