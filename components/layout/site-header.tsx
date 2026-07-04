@@ -65,7 +65,12 @@ export function SiteHeader() {
   const overHero = isHome && !scrolled
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/"
-    if (href === "/about" && pathname.startsWith("/about/testimonies")) return false
+    if (href === "/about") {
+      const aboutChildren = NAV.find((n) => n.href === "/about")?.children ?? []
+      return aboutChildren.some(
+        (c) => pathname === c.href || pathname.startsWith(c.href + "/")
+      )
+    }
     return pathname === href || pathname.startsWith(href + "/")
   }
 
@@ -296,7 +301,7 @@ export function SiteHeader() {
                           className={cn(
                             "block rounded-xl px-4 py-3 text-sm font-medium uppercase tracking-[0.16em]",
                             isActive(item.href)
-                              ? "bg-white/10 text-white"
+                              ? "bg-white/10 text-red-600"
                               : "text-white/85 hover:bg-white/10",
                           )}
                         >

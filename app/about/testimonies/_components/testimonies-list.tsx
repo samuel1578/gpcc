@@ -7,7 +7,15 @@ import { motion, AnimatePresence } from "framer-motion"
 import { X, Quote } from "lucide-react"
 import { ease, fadeUp } from "@/lib/motion"
 import { Reveal, RevealStagger } from "@/components/motion/reveal"
+import { useIsMobile } from "@/hooks/use-mobile"
 import type { Testimony } from "@/lib/types/database"
+
+// Swiper imports
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 
 interface TestimoniesListProps {
     testimonies: Testimony[]
@@ -31,6 +39,18 @@ export function TestimoniesList({ testimonies }: TestimoniesListProps) {
         }
     }, [slug, testimonies])
 
+    useEffect(() => {
+        if (selectedTestimony) {
+            const prev = document.body.style.overflow
+            document.body.style.overflow = "hidden"
+            document.body.classList.add("modal-active")
+            return () => {
+                document.body.style.overflow = prev
+                document.body.classList.remove("modal-active")
+            }
+        }
+    }, [selectedTestimony])
+
     const handleOpen = (t: Testimony) => {
         const params = new URLSearchParams(searchParams.toString())
         params.set("slug", t.slug)
@@ -43,6 +63,8 @@ export function TestimoniesList({ testimonies }: TestimoniesListProps) {
         const query = params.toString()
         router.push(query ? `?${query}` : "/about/testimonies", { scroll: false })
     }
+
+    const isMobile = useIsMobile()
 
     if (testimonies.length === 0) {
         return (
@@ -82,7 +104,67 @@ export function TestimoniesList({ testimonies }: TestimoniesListProps) {
                         <div className="mt-2 h-1 w-20 bg-red-600 rounded-full" />
                     </Reveal>
 
-                    <RevealStagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8" staggerChildren={0.08}>
+                    {/* Mobile Swiper */}
+                    <div className="md:hidden">
+                        <Swiper
+                            modules={[Pagination]}
+                            slidesPerView={1.15}
+                            centeredSlides={true}
+                            spaceBetween={16}
+                            pagination={{ clickable: true }}
+                            className="testimony-swiper-mobile"
+                        >
+                            {items.map((t) => (
+                                <SwiperSlide key={t.id}>
+                                    <motion.article
+                                        key={t.id}
+                                        variants={fadeUp}
+                                        transition={{ duration: 0.5, ease }}
+                                        whileHover={{ y: -8 }}
+                                        onClick={() => handleOpen(t)}
+                                        className="group cursor-pointer overflow-hidden rounded-3xl glass-panel hover:shadow-[var(--shadow-elevated)] transition-all duration-300 h-full"
+                                    >
+                                        <div className="relative aspect-[4/3] w-full overflow-hidden">
+                                            {t.cover_image_url ? (
+                                                <Image
+                                                    src={t.cover_image_url}
+                                                    alt={t.title}
+                                                    fill
+                                                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                />
+                                            ) : (
+                                                <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
+                                                    <p className="text-ink-muted text-xs uppercase tracking-widest font-semibold opacity-30">GPCC Story</p>
+                                                </div>
+                                            )}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                        </div>
+                                        <div className="p-7">
+                                            <div className="flex items-center justify-between gap-4">
+                                                <p className="text-[10px] uppercase tracking-[0.2em] text-red-600 font-bold">
+                                                    {t.is_confidential ? "Testimony" : (t.person_role || t.category || "Testimony")}
+                                                </p>
+                                                <span className="h-px flex-1 bg-black/5" />
+                                            </div>
+                                            <h3 className="mt-3 font-display text-2xl font-semibold text-ink group-hover:text-red-600 transition-colors">
+                                                {t.title}
+                                            </h3>
+                                            <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-ink-muted">
+                                                {t.excerpt}
+                                            </p>
+                                            <p className="mt-6 text-xs font-semibold text-ink uppercase tracking-wider">
+                                                — {t.is_confidential ? "Confidential" : (t.person_name || "Anonymous")}
+                                            </p>
+                                        </div>
+                                    </motion.article>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+
+                    {/* Desktop Grid */}
+                    <RevealStagger className="hidden md:grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8" staggerChildren={0.08}>
                         {items.map((t) => (
                             <motion.article
                                 key={t.id}
@@ -155,8 +237,8 @@ export function TestimoniesList({ testimonies }: TestimoniesListProps) {
                                 <X className="h-5 w-5" />
                             </button>
 
-                            <div className="overflow-y-auto custom-scrollbar">
-                                <div className="relative aspect-[21/9] w-full">
+                            <div className={isMobile ? "flex flex-col flex-1 min-h-0 overflow-hidden" : "overflow-y-auto custom-scrollbar"}>
+                                <div className={`relative aspect-[21/9] w-full ${isMobile ? "shrink-0" : ""}`}>
                                     {selectedTestimony.cover_image_url ? (
                                         <Image
                                             src={selectedTestimony.cover_image_url}
@@ -171,7 +253,7 @@ export function TestimoniesList({ testimonies }: TestimoniesListProps) {
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#f5f3ee] via-transparent to-transparent" />
                                 </div>
 
-                                <div className="px-8 pb-16 pt-4 lg:px-16 lg:pb-24">
+                                <div className={`px-8 pb-16 pt-4 lg:px-16 lg:pb-24 ${isMobile ? "flex-1 overflow-y-auto custom-scrollbar" : ""}`}>
                                     <div className="max-w-3xl mx-auto">
                                         <p className="text-xs font-bold uppercase tracking-[0.3em] text-red-600">
                                             {selectedTestimony.is_confidential ? "Story of Faith" : (selectedTestimony.person_role || selectedTestimony.category || "Story of Faith")}
@@ -216,6 +298,29 @@ export function TestimoniesList({ testimonies }: TestimoniesListProps) {
                     </div>
                 )}
             </AnimatePresence>
+
+            <style jsx global>{`
+                .testimony-swiper-mobile {
+                    padding-bottom: 48px !important;
+                    overflow: visible !important;
+                }
+                .testimony-swiper-mobile .swiper-pagination {
+                    bottom: 0px !important;
+                }
+                .testimony-swiper-mobile .swiper-pagination-bullet {
+                    background: #000 !important;
+                    opacity: 0.15 !important;
+                    width: 6px;
+                    height: 6px;
+                    transition: all 0.3s ease;
+                }
+                .testimony-swiper-mobile .swiper-pagination-bullet-active {
+                    background: #dc2626 !important;
+                    opacity: 1 !important;
+                    width: 20px;
+                    border-radius: 4px;
+                }
+            `}</style>
         </div>
     )
 }

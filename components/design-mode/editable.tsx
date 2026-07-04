@@ -223,6 +223,7 @@ type EditableImageProps = Omit<ImageProps, "width" | "height" | "style"> & {
   defaultWidth: number
   defaultHeight: number
   wrapperClassName?: string
+  fill?: boolean
 }
 
 export function EditableImage({
@@ -234,6 +235,7 @@ export function EditableImage({
   className,
   wrapperClassName,
   alt,
+  fill,
   ...rest
 }: EditableImageProps) {
   const { config, enabled, isSelected, selectElement } = useEditable(id, "image", label, pageKey)
@@ -254,16 +256,18 @@ export function EditableImage({
         enabled && "outline-dashed outline-1 outline-offset-2 outline-amber-400/70 cursor-pointer",
         isSelected && "outline-2 outline-amber-500",
         wrapperClassName,
+        fill && "absolute inset-0 block",
       )}
-      style={{ width: w, height: h, borderRadius: radius }}
+      style={fill ? { borderRadius: radius } : { width: w, height: h, borderRadius: radius }}
     >
       <Image
         {...rest}
         alt={alt}
-        width={w}
-        height={h}
+        fill={fill}
+        width={fill ? undefined : w}
+        height={fill ? undefined : h}
         className={cn("h-full w-full", className)}
-        style={{ objectFit: fit as CSSProperties["objectFit"], objectPosition: pos }}
+        style={{ objectFit: fill ? "cover" : (fit as CSSProperties["objectFit"]), objectPosition: fill ? "center" : pos }}
       />
     </span>
   )

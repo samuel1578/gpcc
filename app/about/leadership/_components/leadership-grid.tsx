@@ -2,7 +2,9 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
+import { useState } from "react"
+import { ProfileComingSoonModal } from "@/components/layout/under-construction"
 import { ArrowUpRight } from "lucide-react"
 import { ease, fadeUp } from "@/lib/motion"
 import { Reveal, RevealStagger } from "@/components/motion/reveal"
@@ -169,11 +171,6 @@ export function LeadershipGrid() {
                 <p className="mt-6 body-lg text-ink-muted">
                   The Elders who offer guidance and support to the church community. They stand as pillars of faith, providing spiritual oversight and ensuring the well-being of the flock.
                 </p>
-                <div className="mt-8">
-                  <PillButton href="/about/eldership-deacons" variant="primary">
-                    Learn about Eldership
-                  </PillButton>
-                </div>
               </Reveal>
             </div>
           </div>
@@ -225,6 +222,8 @@ export function LeadershipGrid() {
 }
 
 function PastorCard({ pastor, index }: { pastor: any; index: number }) {
+  const [open, setOpen] = useState(false)
+
   return (
     <Reveal delay={index * 0.05}>
       <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl glass-panel-strong transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
@@ -249,13 +248,33 @@ function PastorCard({ pastor, index }: { pastor: any; index: number }) {
             {pastor.bio}
           </p>
           <div className="mt-5 xl:mt-6 pt-5 xl:pt-6 border-t border-black/5">
-            <Link
-              href="/about/leadership"
-              className="inline-flex items-center gap-2 text-[10px] xl:text-xs font-bold uppercase tracking-widest text-[var(--accent-deep)] transition-colors hover:text-red-600"
-            >
-              View Profile
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </Link>
+            {index === 0 ? (
+              <Link
+                href="/about/profile-president"
+                className="inline-flex items-center gap-2 text-[10px] xl:text-xs font-bold uppercase tracking-widest text-[var(--accent-deep)] transition-colors hover:text-red-600"
+              >
+                View Profile
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </Link>
+            ) : (
+              <>
+                <button
+                  onClick={() => setOpen(true)}
+                  className="inline-flex items-center gap-2 text-[10px] xl:text-xs font-bold uppercase tracking-widest text-[var(--accent-deep)] transition-colors hover:text-red-600"
+                >
+                  View Profile
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </button>
+                <AnimatePresence>
+                  {open && (
+                    <ProfileComingSoonModal
+                      name={pastor.name}
+                      onClose={() => setOpen(false)}
+                    />
+                  )}
+                </AnimatePresence>
+              </>
+            )}
           </div>
         </div>
       </article>

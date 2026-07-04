@@ -14,6 +14,7 @@ export default function SermonsPage() {
                 eyebrow="Media Center"
                 title="Sermons"
                 description="Powerful messages and teachings from our pastors and guest speakers — coming soon."
+                variant="light"
             />
             <UnderConstruction />
         </PageTransition>

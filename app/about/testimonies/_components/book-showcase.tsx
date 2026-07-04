@@ -44,7 +44,7 @@ export function BookShowcase() {
                                     alt="Jesus Walks Into My Room - Front Cover"
                                     defaultWidth={450}
                                     defaultHeight={640}
-                                    className="object-cover"
+                                    fill
                                     priority
                                 />
                             </div>
@@ -59,7 +59,7 @@ export function BookShowcase() {
                                     alt="Jesus Walks Into My Room - Back Cover"
                                     defaultWidth={450}
                                     defaultHeight={640}
-                                    className="object-cover"
+                                    fill
                                 />
                             </div>
 

@@ -311,6 +311,17 @@ function PublicationModalContent({ onClose }: PublicationModalContentProps) {
 export function PublicationModal() {
     const [open, setOpen] = React.useState(false)
 
+    React.useEffect(() => {
+        if (open) {
+            document.body.classList.add("modal-active")
+        } else {
+            document.body.classList.remove("modal-active")
+        }
+        return () => {
+            document.body.classList.remove("modal-active")
+        }
+    }, [open])
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
