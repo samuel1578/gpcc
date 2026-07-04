@@ -26,12 +26,20 @@ export default async function GalleryAdminPage() {
                             Manage event albums and their photos.
                         </p>
                     </div>
-                    <Button asChild className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white gap-2">
-                        <Link href="/admin/gallery/new">
-                            <Plus className="h-4 w-4" />
-                            New Album
-                        </Link>
-                    </Button>
+                    <div className="flex flex-col gap-3 sm:flex-row">
+                        <Button asChild variant="outline" className="w-full sm:w-auto gap-2 bg-white/50">
+                            <Link href="/admin/gallery/spotlight">
+                                <ImageIcon className="h-4 w-4" />
+                                Homepage Spotlight
+                            </Link>
+                        </Button>
+                        <Button asChild className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white gap-2">
+                            <Link href="/admin/gallery/new">
+                                <Plus className="h-4 w-4" />
+                                New Album
+                            </Link>
+                        </Button>
+                    </div>
                 </div>
             </Reveal>
 
