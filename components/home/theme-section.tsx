@@ -12,9 +12,9 @@ export function ThemeSection() {
       id="home.theme"
       label="Theme of the Year"
       pageKey="home"
-      className="relative w-full overflow-hidden pt-2 pb-5"
+      className="relative w-full overflow-hidden"
     >
-      <PageContainer>
+      <PageContainer className="py-5">
         <motion.div
           initial={{ opacity: 0, scale: 0.96, y: 20 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}

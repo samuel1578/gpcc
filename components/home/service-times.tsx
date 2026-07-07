@@ -41,9 +41,9 @@ export function ServiceTimes() {
             </EditableText>
           </Reveal>
 
-          {/* Desktop Grid (sm+) */}
+          {/* Desktop Grid (xl+) */}
           <RevealStagger
-            className="mt-12 hidden sm:grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
+            className="mt-12 hidden xl:grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
             staggerChildren={0.07}
           >
             {SERVICE_TIMES.map((s, index) => (
@@ -57,8 +57,8 @@ export function ServiceTimes() {
             ))}
           </RevealStagger>
 
-          {/* Mobile Swiper (<sm) */}
-          <div className="mt-8 block sm:hidden">
+          {/* Mobile Swiper (<xl) */}
+          <div className="mt-8 block xl:hidden">
             <Swiper
               modules={[Pagination]}
               spaceBetween={16}
@@ -142,7 +142,7 @@ function ServiceCard({
         <p className="mt-1.5 text-xs sm:text-sm text-ink-muted">{service.time}</p>
 
         {/* Mobile Indicator */}
-        <div className="mt-4 flex justify-center sm:hidden">
+        <div className="mt-4 flex justify-center xl:hidden">
           <ChevronDown
             className={cn(
               "h-4 w-4 text-ink-muted transition-transform duration-300",
@@ -153,7 +153,7 @@ function ServiceCard({
       </div>
 
       {/* Desktop Overlay (Hover Reveal) */}
-      <div className="absolute inset-0 z-20 hidden items-center justify-center bg-white/95 p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:flex">
+      <div className="absolute inset-0 z-20 hidden items-center justify-center bg-white/95 p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 xl:flex">
         <p className="text-sm leading-relaxed text-ink">
           {service.description}
         </p>
@@ -167,7 +167,7 @@ function ServiceCard({
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease }}
-            className="sm:hidden"
+            className="xl:hidden"
           >
             <p className="mt-4 text-xs leading-relaxed text-ink-muted">
               {service.description}

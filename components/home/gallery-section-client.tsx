@@ -22,16 +22,19 @@ export function GallerySectionClient({ images }: { images: SpotlightImage[] }) {
         >
             <PageContainer className="py-5">
                 <Reveal className="mx-auto max-w-3xl text-center">
-                    <p className="font-display font-semibold text-red-600" style={{ fontSize: "clamp(1.5rem,2.5vw,3rem)" }}>Our Community</p>
-                    <EditableText
-                        id="home.gallery.title"
-                        label="Gallery Heading"
-                        pageKey="home"
-                        as="h2"
-                        className="mt-3 h-section text-ink"
-                    >
-                        A life shared, a faith lived.
-                    </EditableText>
+                    <div className="w-full rounded-2xl glass-panel px-6 py-5 lg:py-4 text-center shrink-0">
+                        <p className="font-display font-semibold text-red-600 text-xl lg:text-lg uppercase lg:normal-case tracking-wide lg:tracking-normal">Our Community</p>
+                        <EditableText
+                            id="home.gallery.title"
+                            label="Gallery Heading"
+                            pageKey="home"
+                            as="h2"
+                            className="mt-1 font-display font-semibold text-ink leading-tight"
+                            style={{ fontSize: "clamp(1.3rem, 4vw, 1.8rem)" }}
+                        >
+                            A life shared, a faith lived.
+                        </EditableText>
+                    </div>
                 </Reveal>
 
                 {/* Desktop / tablet — masonry-ish grid */}

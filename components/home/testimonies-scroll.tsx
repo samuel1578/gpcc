@@ -3,46 +3,39 @@
 import { useRef, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { motion, useScroll, useSpring, useTransform, useMotionValueEvent, type MotionValue } from "framer-motion"
-import { ArrowRight, Quote } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import { ArrowRight, Quote, ChevronLeft, ChevronRight } from "lucide-react"
 import type { Testimony } from "@/lib/types/database"
+import { cn } from "@/lib/utils"
+
+// Swiper imports
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { EffectFade } from 'swiper/modules'
+import type { Swiper as SwiperType } from 'swiper'
+
+// Swiper styles
+import 'swiper/css'
+import 'swiper/css/effect-fade'
 
 interface TestimoniesScrollProps {
     testimonies: Testimony[]
 }
 
 export function TestimoniesScroll({ testimonies }: TestimoniesScrollProps) {
-    const containerRef = useRef<HTMLDivElement>(null)
+    const swiperRef = useRef<SwiperType>(null)
+    const mobileSwiperRef = useRef<SwiperType>(null)
     const [activeIndex, setActiveIndex] = useState(0)
 
     const count = testimonies.length
 
-    // 1. Scroll Tracking & Inertial Smoothing
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start 10%", "end end"]
-    })
-
-    const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 80,
-        damping: 26,
-        restDelta: 0.001
-    })
-
-    // Low-frequency state update for accessibility and active slide indicators
-    useMotionValueEvent(smoothProgress, "change", (latest) => {
-        const index = Math.min(Math.floor(latest * count), count - 1)
-        if (index !== activeIndex && index >= 0) {
-            setActiveIndex(index)
-        }
-    })
+    const textVariants = {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y: -20 }
+    }
 
     return (
-        <div
-            ref={containerRef}
-            className="relative w-full"
-            style={{ height: `${count * 100}vh` }}
-        >
+        <div className="relative w-full">
             {/* Ambient Background System (GPU Accelerated Breathing Glows) */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
                 <div
@@ -66,324 +59,263 @@ export function TestimoniesScroll({ testimonies }: TestimoniesScrollProps) {
                 }
             `}</style>
 
-            {/* Sticky Viewport Container */}
-            <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex items-center z-10">
+            {/* Viewport Container */}
+            <div className="relative xl:h-[100dvh] w-full overflow-hidden flex flex-col xl:flex-row items-center z-10">
 
                 {/* 1. DESKTOP EXPERIENTIAL SPLIT LAYOUT */}
-                <div className="hidden md:flex h-full w-full flex-row items-center justify-between px-8 lg:px-16 max-w-[2800px] mx-auto">
-
-                    {/* Sticky Media Panel (Left 55%) */}
-                    <div className="relative w-[55%] h-[70vh] rounded-3xl overflow-hidden glass-panel-strong shadow-2xl">
-                        {testimonies.map((t, index) => (
-                            <DesktopMedia
-                                key={t.id}
-                                testimony={t}
-                                index={index}
-                                count={count}
-                                progress={smoothProgress}
-                            />
-                        ))}
+                <div className="hidden xl:flex h-full w-full flex-col items-center justify-center px-8 xl:px-16 max-w-[2800px] mx-auto gap-8">
+                    {/* Heading Card */}
+                    <div className="w-full max-w-[1600px] rounded-2xl glass-panel px-6 py-4 text-center shrink-0">
+                        <p className="font-display font-semibold text-red-600 text-lg">
+                            Our Testimonies
+                        </p>
+                        <h2 className="mt-1 font-display font-semibold text-ink leading-tight"
+                            style={{ fontSize: "clamp(1.3rem, 4vw, 1.8rem)" }}>
+                            Real stories, real impact
+                        </h2>
                     </div>
 
-                    {/* Narrative Text Panel (Right 40%) */}
-                    <div className="relative w-[40%] h-[70vh] rounded-3xl glass-panel p-8 lg:p-12 shadow-xl flex flex-col justify-center">
-                        {testimonies.map((t, index) => (
-                            <DesktopText
-                                key={t.id}
-                                testimony={t}
-                                index={index}
-                                count={count}
-                                progress={smoothProgress}
-                                isActive={activeIndex === index}
-                            />
-                        ))}
+                    <div className="w-full rounded-3xl overflow-hidden glass-panel-strong border-white/10 shadow-2xl">
+                        <Swiper
+                            modules={[EffectFade]}
+                            effect="fade"
+                            speed={800}
+                            allowTouchMove={false}
+                            onSwiper={(swiper) => {
+                                swiperRef.current = swiper
+                            }}
+                            onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+                            className="w-full"
+                        >
+                            {testimonies.map((t, index) => (
+                                <SwiperSlide key={t.id}>
+                                    <div className="flex flex-row items-center justify-between min-h-[70vh]">
+                                        {/* Media Panel (Left 55%) */}
+                                        <div className="relative w-[55%] h-[70vh] overflow-hidden">
+                                            {t.cover_image_url ? (
+                                                <Image
+                                                    src={t.cover_image_url}
+                                                    alt={t.title}
+                                                    fill
+                                                    className="object-cover"
+                                                    sizes="55vw"
+                                                />
+                                            ) : (
+                                                <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
+                                                    <p className="text-ink-muted text-xs uppercase tracking-widest font-semibold opacity-30">GPCC Testimony</p>
+                                                </div>
+                                            )}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                                        </div>
+
+                                        {/* Narrative Text Panel (Right 45%) */}
+                                        <div className="relative w-[45%] h-[70vh] p-8 lg:p-12 flex flex-col justify-center">
+                                            <AnimatePresence mode="wait">
+                                                {activeIndex === index && (
+                                                    <motion.div
+                                                        key={`desktop-text-${index}`}
+                                                        variants={textVariants}
+                                                        initial="initial"
+                                                        animate="animate"
+                                                        exit="exit"
+                                                        transition={{ duration: 0.5, ease: "easeOut" }}
+                                                        className="relative"
+                                                    >
+                                                        {/* Quote Icon Background */}
+                                                        <div className="absolute -top-10 -left-6 text-red-500/5 pointer-events-none">
+                                                            <Quote className="h-24 w-24 fill-current" />
+                                                        </div>
+
+                                                        <div className="relative z-10 space-y-6">
+                                                            <p className="text-xs uppercase tracking-[0.2em] text-red-600 font-semibold">
+                                                                {t.is_confidential ? "Confidential Story" : (t.person_name || "Anonymous")}
+                                                            </p>
+
+                                                            <h3 className="font-display font-bold leading-[1.1] text-ink text-3xl lg:text-4xl xl:text-5xl tracking-tight">
+                                                                "{t.quote || t.title}"
+                                                            </h3>
+
+                                                            {t.scripture_reference && (
+                                                                <p className="text-sm font-display italic text-ink-muted/80">
+                                                                    — {t.scripture_reference}
+                                                                </p>
+                                                            )}
+
+                                                            <p className="body-lg text-ink-muted leading-relaxed line-clamp-3">
+                                                                {t.excerpt}
+                                                            </p>
+
+                                                            <div className="pt-4">
+                                                                <Link
+                                                                    href={`/about/testimonies?slug=${t.slug}`}
+                                                                    className="inline-flex flex-center gap-2 px-6 py-3 rounded-full bg-red-600 text-white font-medium shadow-lg shadow-red-600/10 hover:bg-red-700 hover:shadow-red-600/20 transition-all duration-300 group w-fit"
+                                                                >
+                                                                    Read full story
+                                                                    <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </div>
+                                    </div>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+
+                    {/* Desktop Control Bar */}
+                    <div className="flex items-center gap-8 z-20">
+                        <button
+                            onClick={() => swiperRef.current?.slidePrev()}
+                            className="p-2 rounded-full border border-ink/10 hover:bg-ink/5 transition-colors group"
+                            aria-label="Previous testimony"
+                        >
+                            <ChevronLeft className="w-6 h-6 text-ink-muted group-hover:text-ink" />
+                        </button>
+
+                        <div className="flex gap-3">
+                            {testimonies.map((_, index) => {
+                                const isActive = activeIndex === index
+                                return (
+                                    <button
+                                        key={index}
+                                        onClick={() => {
+                                            swiperRef.current?.slideTo(index)
+                                            setActiveIndex(index)
+                                        }}
+                                        className="group focus:outline-none"
+                                        aria-label={`Go to testimony ${index + 1}`}
+                                    >
+                                        <div className={`rounded-full transition-all duration-500 ${isActive
+                                            ? "w-8 h-2 bg-red-600"
+                                            : "w-1.5 h-1.5 bg-ink-muted/20 group-hover:bg-ink-muted/40"
+                                            }`} />
+                                    </button>
+                                )
+                            })}
+                        </div>
+
+                        <button
+                            onClick={() => swiperRef.current?.slideNext()}
+                            className="p-2 rounded-full border border-ink/10 hover:bg-ink/5 transition-colors group"
+                            aria-label="Next testimony"
+                        >
+                            <ChevronRight className="w-6 h-6 text-ink-muted group-hover:text-ink" />
+                        </button>
                     </div>
                 </div>
 
                 {/* 2. MOBILE INTIMATE VERTICAL LAYOUT */}
-                <div className="flex md:hidden h-full w-full flex-col justify-center gap-4 pt-[80px] pb-6 px-6 z-10">
-
-                    {/* Sticky Media Panel (Top 40%) */}
-                    <div className="relative w-full h-[30vh] rounded-2xl overflow-hidden glass-panel shadow-xl">
-                        {testimonies.map((t, index) => (
-                            <MobileMedia
-                                key={t.id}
-                                testimony={t}
-                                index={index}
-                                count={count}
-                                progress={smoothProgress}
-                            />
-                        ))}
+                <div className="flex xl:hidden h-full w-full flex-col justify-center gap-3 pt-[72px] pb-12 px-6 z-10">
+                    {/* Heading Card */}
+                    <div className="w-full rounded-2xl glass-panel px-6 py-5 text-center shrink-0">
+                        <p className="font-display font-semibold text-red-600 text-xl uppercase tracking-wide">
+                            Our Testimonies
+                        </p>
+                        <h2 className="mt-1 font-display font-semibold text-ink leading-tight"
+                            style={{ fontSize: "clamp(1.3rem, 4vw, 1.8rem)" }}>
+                            Real stories, real impact
+                        </h2>
                     </div>
 
-                    {/* Narrative Text Panel (Bottom 55%) */}
-                    <div className="relative w-full h-[48vh] rounded-2xl glass-panel p-6 shadow-lg flex flex-col justify-center">
+                    <Swiper
+                        slidesPerView={1.15}
+                        spaceBetween={12}
+                        onSwiper={(swiper) => {
+                            mobileSwiperRef.current = swiper
+                        }}
+                        onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+                        className="w-full !overflow-visible"
+                    >
                         {testimonies.map((t, index) => (
-                            <MobileText
-                                key={t.id}
-                                testimony={t}
-                                index={index}
-                                count={count}
-                                progress={smoothProgress}
-                                isActive={activeIndex === index}
-                            />
-                        ))}
-                    </div>
-                </div>
+                            <SwiperSlide key={t.id}>
+                                <div className="flex flex-col gap-4">
+                                    {/* Media Panel */}
+                                    <div className="relative w-full h-[30vh] rounded-2xl overflow-hidden glass-panel shadow-xl">
+                                        {t.cover_image_url ? (
+                                            <Image
+                                                src={t.cover_image_url}
+                                                alt={t.title}
+                                                fill
+                                                className="object-cover"
+                                                sizes="90vw"
+                                            />
+                                        ) : (
+                                            <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
+                                                <p className="text-ink-muted text-xs uppercase tracking-widest font-semibold opacity-30">GPCC Testimony</p>
+                                            </div>
+                                        )}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                                    </div>
 
-                {/* Progress Indicators (Left side layout bar) */}
-                <div className="absolute right-3 md:right-10 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
-                    {testimonies.map((_, index) => {
-                        const isActive = activeIndex === index
-                        return (
-                            <button
-                                key={index}
-                                onClick={() => {
-                                    if (containerRef.current) {
-                                        const scrollTarget = (index / count) * containerRef.current.scrollHeight
-                                        window.scrollTo({
-                                            top: containerRef.current.offsetTop + scrollTarget,
-                                            behavior: "smooth"
-                                        })
-                                    }
-                                }}
-                                className="group focus:outline-none"
-                                aria-label={`Go to testimony ${index + 1}`}
-                            >
-                                <div className={`rounded-full transition-all duration-500 ${isActive
-                                    ? "w-8 h-2 bg-red-600"
-                                    : "w-1.5 h-1.5 md:w-2 md:h-2 bg-ink-muted/20 group-hover:bg-ink-muted/40"
-                                    }`} />
-                            </button>
-                        )
-                    })}
+                                    {/* Narrative Text Panel */}
+                                    <div className="relative w-full rounded-2xl glass-panel shadow-lg flex flex-col overflow-hidden h-auto min-h-[280px] px-6 pt-6 pb-12 text-center items-center">
+                                        <AnimatePresence mode="wait">
+                                            {activeIndex === index && (
+                                                <motion.div
+                                                    key={`mobile-text-${index}`}
+                                                    variants={textVariants}
+                                                    initial="initial"
+                                                    animate="animate"
+                                                    exit="exit"
+                                                    transition={{ duration: 0.4, ease: "easeOut" }}
+                                                    className="space-y-4"
+                                                >
+                                                    <p className="text-[10px] uppercase tracking-[0.2em] text-red-600 font-semibold">
+                                                        {t.is_confidential ? "Confidential" : (t.person_name || "Anonymous")}
+                                                    </p>
+
+                                                    <h3 className="font-display font-bold leading-tight text-ink text-xl sm:text-2xl">
+                                                        "{t.quote || t.title}"
+                                                    </h3>
+
+                                                    {t.scripture_reference && (
+                                                        <p className="text-xs font-display italic text-ink-muted/80">
+                                                            — {t.scripture_reference}
+                                                        </p>
+                                                    )}
+
+                                                    <p className="text-sm text-ink-muted leading-relaxed line-clamp-3">
+                                                        {t.excerpt}
+                                                    </p>
+
+                                                    <div className="pt-2">
+                                                        <Link
+                                                            href={`/about/testimonies?slug=${t.slug}`}
+                                                            className="inline-flex items-center gap-1.5 text-sm font-semibold text-red-600 hover:underline"
+                                                        >
+                                                            Read story
+                                                            <ArrowRight className="h-4 w-4" />
+                                                        </Link>
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+
+                                        {/* Pinned Mobile Dots */}
+                                        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-3">
+                                            {testimonies.map((_, dotIndex) => {
+                                                const isActive = activeIndex === dotIndex
+                                                return (
+                                                    <div
+                                                        key={dotIndex}
+                                                        className={`rounded-full transition-all duration-500 ${isActive
+                                                            ? "w-8 h-1.5 bg-red-600"
+                                                            : "w-1.5 h-1.5 bg-ink-muted/20"
+                                                            }`}
+                                                    />
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 </div>
             </div>
         </div>
     )
-}
-
-/**
- * Child components to satisfy React Rules of Hooks
- */
-
-interface DesktopMediaProps {
-    testimony: Testimony
-    index: number
-    count: number
-    progress: MotionValue<number>
-}
-
-function DesktopMedia({ testimony, index, count, progress }: DesktopMediaProps) {
-    const { opacity, scale, x } = getSlideTransforms(progress, index, count, "desktop")
-    return (
-        <motion.div
-            style={{ opacity, scale, x }}
-            className="absolute inset-0 w-full h-full"
-        >
-            {testimony.cover_image_url ? (
-                <Image
-                    src={testimony.cover_image_url}
-                    alt={testimony.title}
-                    fill
-                    className="object-cover"
-                    sizes="55vw"
-                />
-            ) : (
-                <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
-                    <p className="text-ink-muted text-xs uppercase tracking-widest font-semibold opacity-30">GPCC Testimony</p>
-                </div>
-            )}
-            {/* Subtle Overlay Vignette */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
-        </motion.div>
-    )
-}
-
-interface DesktopTextProps {
-    testimony: Testimony
-    index: number
-    count: number
-    progress: MotionValue<number>
-    isActive: boolean
-}
-
-function DesktopText({ testimony, index, count, progress, isActive }: DesktopTextProps) {
-    const { opacity, x } = getSlideTransforms(progress, index, count, "desktop")
-    return (
-        <motion.div
-            style={{ opacity, x }}
-            aria-hidden={!isActive}
-            className="absolute inset-x-8 lg:inset-x-12 flex flex-col justify-center"
-        >
-            {/* Quote Icon Background */}
-            <div className="absolute -top-10 -left-6 text-red-500/5 pointer-events-none">
-                <Quote className="h-24 w-24 fill-current" />
-            </div>
-
-            <div className="relative z-10 space-y-6">
-                <p className="text-xs uppercase tracking-[0.2em] text-red-600 font-semibold">
-                    {testimony.is_confidential ? "Confidential Story" : (testimony.person_name || "Anonymous")}
-                </p>
-
-                {/* Oversized Quote / Title */}
-                <h3 className="font-display font-bold leading-[1.1] text-ink text-3xl lg:text-4xl xl:text-5xl tracking-tight">
-                    "{testimony.quote || testimony.title}"
-                </h3>
-
-                {testimony.scripture_reference && (
-                    <p className="text-sm font-display italic text-ink-muted/80">
-                        — {testimony.scripture_reference}
-                    </p>
-                )}
-
-                <p className="body-lg text-ink-muted leading-relaxed line-clamp-3">
-                    {testimony.excerpt}
-                </p>
-
-                <div className="pt-4">
-                    <Link
-                        href={`/about/testimonies?slug=${testimony.slug}`}
-                        tabIndex={isActive ? 0 : -1}
-                        className="inline-flex flex-center gap-2 px-6 py-3 rounded-full bg-red-600 text-white font-medium shadow-lg shadow-red-600/10 hover:bg-red-700 hover:shadow-red-600/20 transition-all duration-300 group w-fit"
-                    >
-                        Read full story
-                        <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                </div>
-            </div>
-        </motion.div>
-    )
-}
-
-interface MobileMediaProps {
-    testimony: Testimony
-    index: number
-    count: number
-    progress: MotionValue<number>
-}
-
-function MobileMedia({ testimony, index, count, progress }: MobileMediaProps) {
-    const { opacity, x } = getSlideTransforms(progress, index, count, "mobile")
-    return (
-        <motion.div
-            style={{ opacity, x }}
-            className="absolute inset-0 w-full h-full"
-        >
-            {testimony.cover_image_url ? (
-                <Image
-                    src={testimony.cover_image_url}
-                    alt={testimony.title}
-                    fill
-                    className="object-cover"
-                    sizes="90vw"
-                />
-            ) : (
-                <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
-                    <p className="text-ink-muted text-xs uppercase tracking-widest font-semibold opacity-30">GPCC Testimony</p>
-                </div>
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-        </motion.div>
-    )
-}
-
-interface MobileTextProps {
-    testimony: Testimony
-    index: number
-    count: number
-    progress: MotionValue<number>
-    isActive: boolean
-}
-
-function MobileText({ testimony, index, count, progress, isActive }: MobileTextProps) {
-    const { opacity, x } = getSlideTransforms(progress, index, count, "mobile")
-    return (
-        <motion.div
-            style={{ opacity, x }}
-            aria-hidden={!isActive}
-            className="absolute inset-x-6 flex flex-col justify-center space-y-4"
-        >
-            <p className="text-[10px] uppercase tracking-[0.2em] text-red-600 font-semibold">
-                {testimony.is_confidential ? "Confidential" : (testimony.person_name || "Anonymous")}
-            </p>
-
-            <h3 className="font-display font-bold leading-tight text-ink text-xl sm:text-2xl">
-                "{testimony.quote || testimony.title}"
-            </h3>
-
-            {testimony.scripture_reference && (
-                <p className="text-xs font-display italic text-ink-muted/80">
-                    — {testimony.scripture_reference}
-                </p>
-            )}
-
-            <p className="text-sm text-ink-muted leading-relaxed line-clamp-3">
-                {testimony.excerpt}
-            </p>
-
-            <div className="pt-2">
-                <Link
-                    href={`/about/testimonies?slug=${testimony.slug}`}
-                    tabIndex={isActive ? 0 : -1}
-                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-red-600 hover:underline"
-                >
-                    Read story
-                    <ArrowRight className="h-4 w-4" />
-                </Link>
-            </div>
-        </motion.div>
-    )
-}
-
-/**
- * Dynamic Segment Range Mapping for any N slides
- * Returns GPU-safe Framer Motion values for opacity, scale, and translation
- */
-function getSlideTransforms(
-    progress: MotionValue<number>,
-    index: number,
-    count: number,
-    device: "desktop" | "mobile"
-) {
-    const W = 1 / count
-    const mid = (index + 0.5) * W
-
-    // Calculate segment range boundaries
-    const start = Math.max(0, mid - 0.6 * W)
-    const peakStart = Math.max(0, mid - 0.2 * W)
-    const peakEnd = Math.min(1, mid + 0.2 * W)
-    const end = Math.min(1, mid + 0.6 * W)
-
-    // Build responsive input/output mapping
-    let inputRange: number[]
-    let opacityOutput: number[]
-    let scaleOutput: number[]
-    let xOutput: number[]
-
-    // Horizontal sweep distance
-    const sweep = device === "desktop" ? 60 : 40
-
-    if (index === 0) {
-        inputRange = [0, peakEnd, end]
-        opacityOutput = [1, 1, 0]
-        scaleOutput = [1, 1, 1.05]
-        xOutput = [0, 0, -sweep] // Exit to left
-    } else if (index === count - 1) {
-        inputRange = [start, peakStart, 1]
-        opacityOutput = [0, 1, 1]
-        scaleOutput = [0.95, 1, 1]
-        xOutput = [sweep, 0, 0] // Enter from right
-    } else {
-        inputRange = [start, peakStart, peakEnd, end]
-        opacityOutput = [0, 1, 1, 0]
-        scaleOutput = [0.95, 1, 1, 1.05]
-        xOutput = [sweep, 0, 0, -sweep] // Enter from right, exit to left
-    }
-
-    const opacity = useTransform(progress, inputRange, opacityOutput)
-    const scale = useTransform(progress, inputRange, scaleOutput)
-    const x = useTransform(progress, inputRange, xOutput)
-
-    return { opacity, scale, x }
 }

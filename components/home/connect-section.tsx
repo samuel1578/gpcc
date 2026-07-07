@@ -49,7 +49,7 @@ export function ConnectSection() {
                 src="/images/media/stay.jpg"
                 alt="Community at Global Peace Christian Centre"
                 fill
-                className="object-cover object-center"
+                className="object-cover object-top"
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 quality={85}
               />

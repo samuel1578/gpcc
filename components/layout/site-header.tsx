@@ -88,7 +88,7 @@ export function SiteHeader() {
         {/* Brand */}
         <Link
           href="/"
-          className="flex items-center gap-3"
+          className="flex items-center gap-3 flex-1 min-w-0"
           aria-label={`${SITE.name} home`}
         >
           <Image
@@ -101,7 +101,16 @@ export function SiteHeader() {
           />
           <span
             className={cn(
-              "hidden truncate text-sm lg:text-lg xl:text-2xl 2xl:text-3xl font-display font-semibold sm:inline-block",
+              "min-[360px]:hidden truncate text-sm font-display font-semibold",
+              overHero ? "text-slate-900" : "text-white",
+            )}
+            style={{ letterSpacing: "-0.02em" }}
+          >
+            GPCC
+          </span>
+          <span
+            className={cn(
+              "hidden min-[360px]:inline-block truncate sm:max-w-none text-[clamp(0.9rem,3.8vw,1.2rem)] lg:text-lg xl:text-2xl 2xl:text-3xl font-display font-semibold",
               overHero ? "text-slate-900" : "text-white",
             )}
             style={{ letterSpacing: "-0.02em" }}

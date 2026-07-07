@@ -17,15 +17,15 @@ export function MinistriesGrid() {
       id="home.ministries"
       label="Ministries"
       pageKey="home"
-      className="w-full py-5"
+      className="w-full"
     >
-      {/* 1. DESKTOP & MOBILE SCROLL-JACK (lg+ and <md) */}
-      <div className="block md:hidden lg:block">
+      {/* 1. DESKTOP, TABLET & MOBILE CAROUSEL */}
+      <div className="block py-5">
         <MinistriesScroll />
       </div>
 
-      {/* 2. TABLET STATIC GRID (md to lg) */}
-      <PageContainer className="mt-12 hidden md:block lg:hidden">
+      {/* 2. DECOMMISSIONED TABLET STATIC GRID (md to lg) */}
+      <PageContainer className="hidden">
         <div className="grid grid-cols-2 gap-6">
           {MINISTRIES.map((ministry) => (
             <motion.article
