@@ -5,6 +5,7 @@ import { Calendar, MapPin, Clock, BookOpen, Sparkles, ChevronLeft } from "lucide
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { format } from "date-fns"
+import { AdaptivePoster } from "../adaptive-poster"
 
 interface EventDetailPageProps {
     params: Promise<{
@@ -261,25 +262,12 @@ function WeekEventLayout({ event, dateLabel, scheduleItems }: LayoutProps) {
                 {/* Hero Header Block */}
                 <div className="grid gap-12 lg:grid-cols-12 items-start">
                     {/* Poster Side */}
-                    <Reveal className="lg:col-span-5 flex justify-center">
-                        <div className="relative aspect-[3/4] w-full max-w-[420px] rounded-3xl overflow-hidden shadow-[var(--shadow-soft)] border border-black/5 bg-white">
-                            {event.cover_image ? (
-                                <img
-                                    src={event.cover_image}
-                                    alt={event.title}
-                                    className="h-full w-full object-cover"
-                                />
-                            ) : (
-                                <div className="flex h-full w-full items-center justify-center bg-black/5 text-ink-muted/40">
-                                    <Calendar className="h-16 w-16" />
-                                </div>
-                            )}
-                            {event.featured && (
-                                <span className="absolute top-4 left-4 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-red-600 text-white px-3 py-1 rounded-full shadow-md">
-                                    <Sparkles className="h-3 w-3" /> Featured Event
-                                </span>
-                            )}
-                        </div>
+                    <Reveal className="lg:col-span-5 flex justify-center w-full">
+                        <AdaptivePoster
+                            src={event.cover_image}
+                            alt={event.title}
+                            featured={event.featured}
+                        />
                     </Reveal>
 
                     {/* Details Side */}
@@ -339,8 +327,49 @@ function WeekEventLayout({ event, dateLabel, scheduleItems }: LayoutProps) {
                             </div>
                         </Reveal>
 
+                        {/* Timeline Schedule Section — nested under Timing/Location, before Event Details */}
+                        {scheduleItems.length > 0 && (
+                            <div className="space-y-8 pt-4">
+                                <Reveal>
+                                    <div className="space-y-1">
+                                        <p className="label-cap text-red-600">Day by Day</p>
+                                        <h2 className="font-display text-2xl font-bold text-ink">
+                                            Agenda &amp; Schedule
+                                        </h2>
+                                        <p className="text-sm text-ink-muted">
+                                            Join us for each of these scheduled sessions during the week.
+                                        </p>
+                                    </div>
+                                </Reveal>
+
+                                <RevealStagger className="relative border-l-2 border-red-600/20 pl-6 space-y-6 py-2" staggerChildren={0.07}>
+                                    {scheduleItems.map((item: any, idx: number) => (
+                                        <div key={idx} className="relative group">
+                                            {/* Timeline Node Bullet */}
+                                            <div className="absolute -left-[27px] top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-red-600 border-4 border-[#f5f3ee] shadow-sm group-hover:scale-125 transition-transform duration-300" />
+
+                                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-black/5 hover:shadow-md transition-shadow duration-300 shadow-sm">
+                                                <div className="space-y-1">
+                                                    <span className="text-[10px] font-bold text-red-600 uppercase tracking-widest bg-red-500/10 px-2.5 py-1 rounded-full">
+                                                        {item.day}
+                                                    </span>
+                                                    <h4 className="font-display text-base sm:text-lg font-bold text-ink pt-1 leading-tight">
+                                                        {item.title}
+                                                    </h4>
+                                                </div>
+                                                <div className="flex items-center gap-2 text-sm text-ink-muted font-semibold shrink-0 bg-black/5 px-3 py-1.5 rounded-xl border border-black/5">
+                                                    <Clock className="h-4 w-4 text-red-600" />
+                                                    <span>{item.time}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </RevealStagger>
+                            </div>
+                        )}
+
                         {/* About/Description */}
-                        <div className="space-y-4">
+                        <div className="space-y-4 pt-4">
                             <h3 className="font-display text-2xl font-bold text-ink border-b border-black/5 pb-2">
                                 Event Details
                             </h3>
@@ -355,47 +384,6 @@ function WeekEventLayout({ event, dateLabel, scheduleItems }: LayoutProps) {
                         </div>
                     </div>
                 </div>
-
-                {/* Timeline Schedule Section */}
-                {scheduleItems.length > 0 && (
-                    <div className="space-y-8 pt-8 border-t border-black/5">
-                        <Reveal>
-                            <div className="text-center max-w-2xl mx-auto space-y-2">
-                                <p className="label-cap text-red-600">Day by Day</p>
-                                <h2 className="font-display text-3xl sm:text-4xl font-bold text-ink">
-                                    Agenda &amp; Schedule
-                                </h2>
-                                <p className="text-sm text-ink-muted">
-                                    Join us for each of these scheduled sessions during the week.
-                                </p>
-                            </div>
-                        </Reveal>
-
-                        <RevealStagger className="max-w-4xl mx-auto relative border-l-2 border-red-600/20 pl-6 sm:pl-8 space-y-10 py-4" staggerChildren={0.07}>
-                            {scheduleItems.map((item: any, idx: number) => (
-                                <div key={idx} className="relative group">
-                                    {/* Timeline Node Bullet */}
-                                    <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 border-4 border-[#f5f3ee] shadow-sm group-hover:scale-125 transition-transform duration-300" />
-
-                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-black/5 hover:shadow-md transition-shadow duration-300 shadow-sm">
-                                        <div className="space-y-1">
-                                            <span className="text-[10px] font-bold text-red-600 uppercase tracking-widest bg-red-500/10 px-2.5 py-1 rounded-full">
-                                                {item.day}
-                                            </span>
-                                            <h4 className="font-display text-lg sm:text-xl font-bold text-ink pt-1.5 leading-tight">
-                                                {item.title}
-                                            </h4>
-                                        </div>
-                                        <div className="flex items-center gap-2 text-sm text-ink-muted font-semibold shrink-0 bg-black/5 px-4 py-2 rounded-xl border border-black/5">
-                                            <Clock className="h-4 w-4 text-red-600" />
-                                            <span>{item.time}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </RevealStagger>
-                    </div>
-                )}
             </div>
         </div>
     )
