@@ -75,150 +75,152 @@ export function SiteHeader() {
   }
 
   return (
-    <motion.header
-      initial={{ y: -8, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease }}
-      className={cn(
-        "fixed inset-x-0 top-0 z-[80] transition-all duration-300",
-        overHero ? "bg-transparent" : "glass-panel-dark-strong",
-      )}
-    >
-      <div className="flex h-[72px] lg:h-[80px] xl:h-[96px] w-full items-center justify-between px-4 sm:px-6 lg:px-10 2xl:px-16">
-        {/* Brand */}
-        <Link
-          href="/"
-          className="flex items-center gap-3 flex-1 min-w-0"
-          aria-label={`${SITE.name} home`}
-        >
-          <Image
-            src="/images/hero/logo.png"
-            alt={`${SITE.name} Logo`}
-            width={96}
-            height={96}
-            className="h-[clamp(52px,4.5vw,60px)] object-contain 2xl:h-[clamp(44px,6vw,96px)]"
-            style={{ width: "auto" }}
-          />
-          <span
-            className={cn(
-              "min-[360px]:hidden truncate text-sm font-display font-semibold",
-              overHero ? "text-slate-900" : "text-white",
-            )}
-            style={{ letterSpacing: "-0.02em" }}
+    <>
+      <motion.header
+        initial={{ y: -8, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease }}
+        className={cn(
+          "fixed inset-x-0 top-0 z-[80] transition-all duration-300",
+          overHero ? "bg-transparent" : "glass-panel-dark-strong",
+        )}
+      >
+        <div className="flex h-[72px] lg:h-[80px] xl:h-[96px] w-full items-center justify-between px-4 sm:px-6 lg:px-10 2xl:px-16">
+          {/* Brand */}
+          <Link
+            href="/"
+            className="flex items-center gap-3 flex-1 min-w-0"
+            aria-label={`${SITE.name} home`}
           >
-            GPCC
-          </span>
-          <span
-            className={cn(
-              "hidden min-[360px]:inline-block truncate sm:max-w-none text-[clamp(0.9rem,3.8vw,1.2rem)] lg:text-lg xl:text-2xl 2xl:text-3xl font-display font-semibold",
-              overHero ? "text-slate-900" : "text-white",
-            )}
-            style={{ letterSpacing: "-0.02em" }}
-          >
-            {SITE.name}
-          </span>
-        </Link>
+            <Image
+              src="/images/hero/logo.png"
+              alt={`${SITE.name} Logo`}
+              width={96}
+              height={96}
+              className="h-[clamp(52px,4.5vw,60px)] object-contain 2xl:h-[clamp(44px,6vw,96px)]"
+              style={{ width: "auto" }}
+            />
+            <span
+              className={cn(
+                "min-[360px]:hidden truncate text-sm font-display font-semibold",
+                overHero ? "text-slate-900" : "text-white",
+              )}
+              style={{ letterSpacing: "-0.02em" }}
+            >
+              GPCC
+            </span>
+            <span
+              className={cn(
+                "hidden min-[360px]:inline-block truncate sm:max-w-none text-[clamp(0.9rem,3.8vw,1.2rem)] lg:text-lg xl:text-2xl 2xl:text-3xl font-display font-semibold",
+                overHero ? "text-slate-900" : "text-white",
+              )}
+              style={{ letterSpacing: "-0.02em" }}
+            >
+              {SITE.name}
+            </span>
+          </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 xl:flex 2xl:gap-3" aria-label="Primary">
-          {NAV.map((item) => {
-            if (item.children) {
-              return (
-                <div key={item.label} className="relative" data-about-dropdown>
-                  <button
-                    type="button"
-                    onClick={() => setAboutOpen((v) => !v)}
-                    aria-haspopup="true"
-                    aria-expanded={aboutOpen}
-                    className={cn(
-                      "inline-flex items-center gap-1 px-3 py-2 text-[12px] lg:text-[13px] xl:text-[13px] 2xl:text-[clamp(15px,1.4vw,22px)] xl:px-2 2xl:px-[clamp(0.75rem,1.2vw,2rem)] font-medium uppercase tracking-[0.12em] xl:tracking-[0.1em] 2xl:tracking-[0.16em] transition-colors",
-                      isActive("/about")
-                        ? "text-red-600"
-                        : overHero ? "text-slate-800 hover:text-slate-900" : "text-white/85 hover:text-white",
-                    )}
-                  >
-                    {item.label}
-                    <ChevronDown
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-1 xl:flex 2xl:gap-3" aria-label="Primary">
+            {NAV.map((item) => {
+              if (item.children) {
+                return (
+                  <div key={item.label} className="relative" data-about-dropdown>
+                    <button
+                      type="button"
+                      onClick={() => setAboutOpen((v) => !v)}
+                      aria-haspopup="true"
+                      aria-expanded={aboutOpen}
                       className={cn(
-                        "h-3.5 w-3.5 transition-transform",
-                        aboutOpen && "rotate-180",
+                        "inline-flex items-center gap-1 px-3 py-2 text-[12px] lg:text-[13px] xl:text-[13px] 2xl:text-[clamp(15px,1.4vw,22px)] xl:px-2 2xl:px-[clamp(0.75rem,1.2vw,2rem)] font-medium uppercase tracking-[0.12em] xl:tracking-[0.1em] 2xl:tracking-[0.16em] transition-colors",
+                        isActive("/about")
+                          ? "text-red-600"
+                          : overHero ? "text-slate-800 hover:text-slate-900" : "text-white/85 hover:text-white",
                       )}
-                    />
-                    {isActive("/about") && (
-                      <motion.span
-                        layoutId="nav-underline"
-                        className="absolute -bottom-0.5 left-3 right-3 h-[2px] bg-red-600"
+                    >
+                      {item.label}
+                      <ChevronDown
+                        className={cn(
+                          "h-3.5 w-3.5 transition-transform",
+                          aboutOpen && "rotate-180",
+                        )}
                       />
-                    )}
-                  </button>
-                  <AnimatePresence>
-                    {aboutOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 8 }}
-                        transition={{ duration: 0.2, ease }}
-                        className="absolute right-0 top-full mt-3 w-72 overflow-hidden rounded-2xl glass-panel-dark p-2 shadow-[var(--shadow-elevated)]"
-                      >
-                        <ul>
-                          {item.children.map((c) => (
-                            <li key={c.href}>
-                              <Link
-                                href={c.href}
-                                className={cn(
-                                  "block rounded-lg px-3 py-2 text-sm transition-colors",
-                                  isActive(c.href)
-                                    ? "bg-white/10 text-white"
-                                    : "text-white/80 hover:bg-white/10 hover:text-white",
-                                )}
-                              >
-                                {c.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                      {isActive("/about") && (
+                        <motion.span
+                          layoutId="nav-underline"
+                          className="absolute -bottom-0.5 left-3 right-3 h-[2px] bg-red-600"
+                        />
+                      )}
+                    </button>
+                    <AnimatePresence>
+                      {aboutOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 8 }}
+                          transition={{ duration: 0.2, ease }}
+                          className="absolute right-0 top-full mt-3 w-72 overflow-hidden rounded-2xl glass-panel-dark p-2 shadow-[var(--shadow-elevated)]"
+                        >
+                          <ul>
+                            {item.children.map((c) => (
+                              <li key={c.href}>
+                                <Link
+                                  href={c.href}
+                                  className={cn(
+                                    "block rounded-lg px-3 py-2 text-sm transition-colors",
+                                    isActive(c.href)
+                                      ? "bg-white/10 text-white"
+                                      : "text-white/80 hover:bg-white/10 hover:text-white",
+                                  )}
+                                >
+                                  {c.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                )
+              }
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "relative px-3 py-2 text-[12px] lg:text-[13px] xl:text-[13px] 2xl:text-[clamp(15px,1.4vw,22px)] xl:px-2 2xl:px-[clamp(0.75rem,1.2vw,2rem)] font-medium uppercase tracking-[0.12em] xl:tracking-[0.1em] 2xl:tracking-[0.16em] transition-colors",
+                    isActive(item.href)
+                      ? "text-red-600"
+                      : overHero ? "text-slate-800 hover:text-slate-900" : "text-white/85 hover:text-white",
+                  )}
+                >
+                  {item.label}
+                  {isActive(item.href) && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute -bottom-0.5 left-3 right-3 h-[2px] bg-red-600"
+                    />
+                  )}
+                </Link>
               )
-            }
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "relative px-3 py-2 text-[12px] lg:text-[13px] xl:text-[13px] 2xl:text-[clamp(15px,1.4vw,22px)] xl:px-2 2xl:px-[clamp(0.75rem,1.2vw,2rem)] font-medium uppercase tracking-[0.12em] xl:tracking-[0.1em] 2xl:tracking-[0.16em] transition-colors",
-                  isActive(item.href)
-                    ? "text-red-600"
-                    : overHero ? "text-slate-800 hover:text-slate-900" : "text-white/85 hover:text-white",
-                )}
-              >
-                {item.label}
-                {isActive(item.href) && (
-                  <motion.span
-                    layoutId="nav-underline"
-                    className="absolute -bottom-0.5 left-3 right-3 h-[2px] bg-red-600"
-                  />
-                )}
-              </Link>
-            )
-          })}
-        </nav>
+            })}
+          </nav>
 
-        {/* Mobile toggle */}
-        <button
-          type="button"
-          onClick={() => setMobileOpen(true)}
-          className={cn(
-            "inline-flex h-12 w-12 items-center justify-center rounded-full border backdrop-blur xl:hidden",
-            overHero ? "border-slate-400/30 bg-white/20 text-slate-900" : "border-white/20 bg-white/10 text-white"
-          )}
-          aria-label="Open menu"
-        >
-          <Menu className="h-6 w-6" />
-        </button>
-      </div>
+          {/* Mobile toggle */}
+          <button
+            type="button"
+            onClick={() => setMobileOpen(true)}
+            className={cn(
+              "inline-flex h-12 w-12 items-center justify-center rounded-full border backdrop-blur xl:hidden",
+              overHero ? "border-slate-400/30 bg-white/20 text-slate-900" : "border-white/20 bg-white/10 text-white"
+            )}
+            aria-label="Open menu"
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+        </div>
+      </motion.header>
 
       {/* Mobile menu */}
       <AnimatePresence>
@@ -331,6 +333,6 @@ export function SiteHeader() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   )
 }
